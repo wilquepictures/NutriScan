@@ -183,7 +183,7 @@
         }
     </style>
 </head>
-<body class="p-4">
+<body class="p-4 flex flex-col items-center">
     <div class="container flex flex-col gap-6">
         <h1 class="nutriscan-logo">NutriScan</h1>
         
@@ -191,15 +191,15 @@
             <p data-translate="quote">"Your body can stand almost anything. It’s your mind that you have to convince"</p>
         </div>
         
-        <div class="flex border-b border-gray-200 -mx-6 px-6 overflow-x-auto">
-            <button class="tab-button active" data-tab="dashboard" data-translate="tab.dashboard">Dashboard</button>
-            <button class="tab-button" data-tab="profile" data-translate="tab.profile">Profiel</button>
-            <button class="tab-button" data-tab="manual-entry" data-translate="tab.calories">Calorieën</button>
-            <button class="tab-button" data-tab="fitness" data-translate="tab.fitness">Fitness</button>
-            <button class="tab-button" data-tab="agenda" data-translate="tab.agenda">Agenda</button>
-            <button class="tab-button" data-tab="metingen" data-translate="tab.measurements">Metingen</button>
-            <button class="tab-button" data-tab="history" data-translate="tab.history">Geschiedenis</button>
-        </div>
+      <div class="flex flex-col md:flex-row border-b border-gray-200 -mx-6 px-6">
+    <button class="tab-button active" data-tab="dashboard" data-translate="tab.dashboard">Dashboard</button>
+    <button class="tab-button" data-tab="profile" data-translate="tab.profile">Profiel</button>
+    <button class="tab-button" data-tab="manual-entry" data-translate="tab.calories">Calorieën</button>
+    <button class="tab-button" data-tab="fitness" data-translate="tab.fitness">Fitness</button>
+    <button class="tab-button" data-tab="agenda" data-translate="tab.agenda">Agenda</button>
+    <button class="tab-button" data-tab="metingen" data-translate="tab.measurements">Metingen</button>
+    <button class="tab-button" data-tab="history" data-translate="tab.history">Geschiedenis</button>
+</div>
         
         <div id="dashboard" class="tab-content flex flex-col gap-6">
             <h2 class="text-2xl font-semibold mb-2" data-translate="dailyOverview">Overzicht Vandaag</h2>
@@ -237,7 +237,7 @@
         
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800" data-translate="goalToday">Doel voor vandaag</h2>
-                <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center justify-between">
                     <span class="text-gray-600" data-translate="yourDailyGoal">Jouw Dagelijks Doel:</span>
                     <span class="font-bold text-xl text-green-600" id="daily-goal-display">0 kcal</span>
                 </div>
@@ -325,7 +325,7 @@
 
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
                 <h3 class="text-lg font-semibold mb-2" data-translate="today">Vandaag</h3>
-                <div id="daily-log" class="flex items-center justify-between">
+                <div class="flex items-center justify-between">
                     <span class="text-gray-600 font-medium" data-translate="totalToday">Totaal Vandaag:</span>
                     <span class="font-bold text-xl text-green-600" id="dailyTotalDisplay">0</span><span class="font-bold text-xl text-green-600"> kcal</span>
                 </div>
@@ -359,12 +359,12 @@
                             <input type="number" placeholder="Gewicht (kg)" min="1" step="0.1" class="flex-grow p-2 border rounded" data-translate-placeholder="weightPlaceholder">
                             <input type="number" placeholder="Herhalingen" min="1" class="flex-grow p-2 border rounded" data-translate-placeholder="repsPlaceholder">
                         </div>
+                        <button id="add-set-btn" class="btn-secondary w-full mb-2" data-translate="addSet">Set toevoegen</button>
                     </div>
                     <div>
                         <label for="weight-notes" class="block text-sm font-medium text-gray-700 mb-1" data-translate="notes">Notities (optioneel)</label>
                         <textarea id="weight-notes" name="notes" rows="3" placeholder="Bijv. Ik voelde me vandaag sterk." class="mt-1 input-style" data-translate-placeholder="notesPlaceholder"></textarea>
                     </div>
-                    <button id="add-set-btn" class="btn-secondary w-full mb-2" data-translate="addSet">Set toevoegen</button>
                     <button id="log-weight-btn" class="btn-primary w-full" data-translate="save">Opslaan</button>
                 </div>
             </div>
@@ -385,6 +385,22 @@
                     <input type="number" id="cardio-distance" placeholder="Afstand (km)" min="0.1" step="0.1" class="mt-1 input-style" data-translate-placeholder="distancePlaceholder">
                     <button id="log-cardio-btn" class="btn-primary w-full" data-translate="addCardio">Cardio Toevoegen</button>
                 </div>
+            </div>
+            
+            <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800" data-translate="manualCalorieBurn">Handmatige Calorieën Verbranden</h3>
+                <p class="text-gray-600 mb-4" data-translate="manualBurnText">Handmatig verbrande calorieën toevoegen, bijvoorbeeld na een groepsles.</p>
+                <form id="manual-burned-calories-form" class="space-y-4">
+                    <div>
+                        <label for="manual-burn-date" class="block text-sm font-medium text-gray-700" data-translate="date">Datum</label>
+                        <input type="date" id="manual-burn-date" required class="input-style">
+                    </div>
+                    <div>
+                        <label for="manual-burn-amount" class="block text-sm font-medium text-gray-700" data-translate="burnedAmount">Verbrande Calorieën (kcal)</label>
+                        <input type="number" id="manual-burn-amount" placeholder="Bijv. 350" required class="input-style" min="1" data-translate-placeholder="burnedAmountPlaceholder">
+                    </div>
+                    <button type="submit" class="btn-primary w-full" data-translate="logBurn">Verbranding Loggen</button>
+                </form>
             </div>
         
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
@@ -474,7 +490,6 @@
             </div>
         </div>
     </div>
-    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -488,14 +503,14 @@
             messagingSenderId: "1033379364886",
             appId: "1:1033379364886:web:6e1c070f64c1c91104e1c7"
         };
-    
+        
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
         let userProfileData = {};
         let userProfileRef, dailyLogRef, consumedItemsCollectionRef, trainingLogsCollectionRef, measurementsCollectionRef;
         let currentLanguage = 'nl'; // Standaardtaal
-
+        
         // NIEUW: Vertaalobject
         const translations = {
             nl: {
@@ -574,6 +589,11 @@
                 durationPlaceholder: "Duur (minuten)",
                 distancePlaceholder: "Afstand (km)",
                 addCardio: "Cardio Toevoegen",
+                manualCalorieBurn: "Handmatige Calorieën Verbranden",
+                manualBurnText: "Handmatig verbrande calorieën toevoegen, bijvoorbeeld na een groepsles.",
+                burnedAmount: "Verbrande Calorieën (kcal)",
+                burnedAmountPlaceholder: "Bijv. 350",
+                logBurn: "Verbranding Loggen",
                 totalBurnedToday: "Totaal Verbrand Vandaag",
                 burnedCalories: "Verbrande Calorieën:",
                 trainingAgenda: "Trainingsagenda",
@@ -617,7 +637,12 @@
                 logMeasurementsError: "Er is een fout opgetreden bij het opslaan van uw meting.",
                 minWeightEntry: "Vul ten minste de datum, oefening en één set in.",
                 minMeasurementEntry: "Vul ten minste de datum en één meting in.",
-                noData: "N/A"
+                noData: "N/A",
+                logBurnSuccess: "Handmatig verbrande calorieën gelogd.",
+                logBurnError: "Een fout bij het handmatig loggen.",
+                weightTraining: "Krachttraining",
+                cardioTraining: "Cardio training",
+                plannedTraining: "Geplande training"
             },
             fr: {
                 title: "NutriScan",
@@ -691,10 +716,15 @@
                 cycling: "Vélo",
                 elliptical: "Elliptique",
                 rowing: "Aviron",
-                swimming: "Natation",
-                durationPlaceholder: "Durée (minuten)",
+                swimming: "Nage",
+                durationPlaceholder: "Durée (minutes)",
                 distancePlaceholder: "Distance (km)",
                 addCardio: "Ajouter du Cardio",
+                manualCalorieBurn: "Calories Brûlées Manuellement",
+                manualBurnText: "Ajoutez manuellement les calories brûlées, par exemple après un cours de groupe.",
+                burnedAmount: "Calories Brûlées (kcal)",
+                burnedAmountPlaceholder: "Ex. 350",
+                logBurn: "Enregistrer la Combustion",
                 totalBurnedToday: "Total Brûlé Aujourd'hui",
                 burnedCalories: "Calories brûlées:",
                 trainingAgenda: "Agenda d'entraînement",
@@ -705,7 +735,7 @@
                 yourAgenda: "Votre Agenda",
                 noAgendaText: "Aucun entraînement prévu.",
                 measurements: "Mesures corporelles",
-                measurementsText: "Suivez vos mesures corporelles pour voir vos progrès.",
+                measurementsText: "Suivez vos mesures corporelles vooruitgang te zien.",
                 weight: "Poids (kg)",
                 weightKgPlaceholder: "Poids en kg",
                 fatPercentage: "Pourcentage de graisse (%)",
@@ -738,10 +768,15 @@
                 logMeasurementsError: "Une erreur est survenue lors de la sauvegarde de votre mesure.",
                 minWeightEntry: "Veuillez entrer au moins la date, l'exercice en een serie.",
                 minMeasurementEntry: "Veuillez entrer au moins la date et une mesure.",
-                noData: "N/A"
+                noData: "N/A",
+                logBurnSuccess: "Calories brûlées manuellement enregistrées.",
+                logBurnError: "Une erreur est survenue lors de l'enregistrement manuel.",
+                weightTraining: "Musculation",
+                cardioTraining: "Entraînement cardio",
+                plannedTraining: "Entraînement prévu"
             }
         };
-
+        
         // NIEUW: Functie om de pagina te vertalen
         function translatePage(lang) {
             const elements = document.querySelectorAll('[data-translate]');
@@ -775,7 +810,7 @@
             });
             document.title = translations[lang].title;
         }
-
+        
         // Selecteer alle DOM-elementen
         const tabButtons = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
@@ -814,7 +849,7 @@
         const measurementsList = document.getElementById('measurements-list');
         const noMeasurementsText = document.getElementById('no-measurements-text');
         const addSetBtn = document.getElementById('add-set-btn');
-
+        
         // Nieuwe DOM-elementen voor de handmatige invoer
         const foodInput = document.getElementById('foodInput');
         const gramsInput = document.getElementById('gramsInput');
@@ -824,7 +859,9 @@
         const dailyTotalDisplay = document.getElementById('dailyTotalDisplay');
         const dailyConsumedList = document.getElementById('dailyConsumedList');
         const languageSelect = document.getElementById('language-select');
-
+        const manualBurnedCaloriesForm = document.getElementById('manual-burned-calories-form');
+        
+        
         function showModal(messageKey, ...params) {
             let message = translations[currentLanguage][messageKey] || messageKey;
             params.forEach((param, index) => {
@@ -833,7 +870,7 @@
             modalMessage.textContent = message;
             modal.classList.remove('hidden');
         }
-
+        
         function calculateBmi(height, weight) {
             if (!height || !weight || height <= 0 || weight <= 0) return { bmi: 0, status: "" };
             const heightInMeters = height / 100;
@@ -857,7 +894,7 @@
             };
             return { bmi: bmi.toFixed(1), status: statusTranslations[status][currentLanguage] || status };
         }
-
+        
         function calculateBmr(gender, height, weight, age) {
             if (!gender || !height || !weight || !age) return 0;
             if (gender === 'male') {
@@ -866,28 +903,28 @@
                 return 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
             }
         }
-
+        
         function calculateDailyGoal(currentWeight, targetWeight, bmr) {
             if (!currentWeight || !targetWeight || !bmr) return { goal: 0, time: 0 };
             const diff = currentWeight - targetWeight;
             if (diff === 0) return { goal: bmr, time: 0 };
-
+        
             const caloriesPerKg = 7700;
             const dailyDeficit = (diff > 0) ? 500 : -500;
             const dailyGoal = bmr + dailyDeficit;
             const timeInWeeks = (Math.abs(diff) * caloriesPerKg) / Math.abs(dailyDeficit * 7);
-
+        
             return {
                 goal: Math.max(0, Math.round(dailyGoal)),
                 time: Math.round(timeInWeeks)
             };
         }
-
+        
         function updateProgress(currentWeight, initialWeight, targetWeight) {
             if (!initialWeight || !targetWeight || !currentWeight) return;
             let progress = 0;
             const isLosingWeight = initialWeight > targetWeight;
-
+        
             if (isLosingWeight) {
                 const totalChange = initialWeight - targetWeight;
                 const achievedChange = initialWeight - currentWeight;
@@ -903,11 +940,11 @@
             }
             
             progress = Math.min(100, Math.max(0, progress));
-
+        
             progressFill.style.width = `${progress}%`;
             progressText.textContent = `${Math.round(progress)}%`;
         }
-
+        
         function updateUIWithProfileData(data) {
             document.getElementById('gender').value = data.gender || '';
             document.getElementById('height').value = data.height || '';
@@ -919,10 +956,10 @@
             currentLanguage = data.language || 'nl';
             languageSelect.value = currentLanguage;
             translatePage(currentLanguage);
-
+        
             currentWeightDisplay.textContent = `${translations[currentLanguage].current} ${data.currentWeight || 0} kg`;
             targetWeightDisplay.textContent = `${translations[currentLanguage].target} ${data.targetWeight || 0} kg`;
-
+        
             if (data.height && data.currentWeight) {
                 const { bmi, status } = calculateBmi(data.height, data.currentWeight);
                 bmiResult.textContent = bmi;
@@ -931,7 +968,7 @@
                 bmiResult.textContent = translations[currentLanguage].noData;
                 bmiStatus.textContent = "";
             }
-
+        
             if (data.gender && data.height && data.currentWeight && data.age && data.targetWeight) {
                 const bmr = calculateBmr(data.gender, data.height, data.currentWeight, data.age);
                 const { goal, time } = calculateDailyGoal(data.currentWeight, data.targetWeight, bmr);
@@ -948,7 +985,7 @@
                 progressText.textContent = '0%';
             }
         }
-
+        
         function updateUIWithDailyLog(data) {
             const consumed = data.consumedCalories || 0;
             const burned = data.burnedCalories || 0;
@@ -960,7 +997,7 @@
             dailyTotalDisplay.textContent = consumed;
             updateRemainingCalories();
         }
-
+        
         function updateRemainingCalories() {
             const dailyGoal = parseInt(dailyCalorieGoalEl.textContent) || 0;
             const consumed = parseInt(consumedCaloriesDisplay.textContent.match(/\d+/)?.[0] || 0);
@@ -983,7 +1020,7 @@
                 return [];
             }
         }
-
+        
         async function renderDailyConsumedItems() {
             const items = await getTodaysConsumedItems();
             dailyConsumedList.innerHTML = '';
@@ -1005,7 +1042,7 @@
                 dailyConsumedList.appendChild(emptyMessage);
             }
         }
-
+        
         async function addConsumedItemToLog(foodName, grams, calories, calsPer100g) {
             try {
                 if (dailyLogRef && consumedItemsCollectionRef) {
@@ -1016,7 +1053,7 @@
                     const today = new Date().toISOString().slice(0, 10);
                     
                     await setDoc(dailyLogRef, { consumedCalories: newConsumed, date: today }, { merge: true });
-
+        
                     const newConsumedItem = {
                         name: foodName,
                         grams: grams,
@@ -1026,11 +1063,11 @@
                         timestamp: new Date().toISOString()
                     };
                     await setDoc(doc(consumedItemsCollectionRef), newConsumedItem);
-
+        
                     // Update of creëer de voedingsdatabase-document
                     const foodDocRef = doc(db, 'foodDatabase', foodName.toLowerCase());
                     await setDoc(foodDocRef, { caloriesPer100g: calsPer100g });
-
+        
                     showModal('foodAdded', { foodName }, { calories });
                 } else {
                     showModal('errorInit');
@@ -1040,38 +1077,78 @@
                 showModal('errorAddingFood');
             }
         }
-
-
+        
+        
         async function loadTrainingLogs() {
             try {
                 if (!trainingLogsCollectionRef) {
                     console.log("trainingLogsCollectionRef is not initialized yet.");
                     return;
                 }
-                const querySnapshot = await getDocs(trainingLogsCollectionRef);
+                
+                const q = query(trainingLogsCollectionRef, orderBy("date", "desc"));
+                const querySnapshot = await getDocs(q);
+                
                 trainingAgendaList.innerHTML = `<h3 class="text-xl font-semibold mb-2">${translations[currentLanguage].yourAgenda}</h3>`;
                 if (querySnapshot.empty) {
                     trainingAgendaList.innerHTML += `<p class="text-center text-gray-500" id="no-agenda-text">${translations[currentLanguage].noAgendaText}</p>`;
                     return;
                 }
+                
+                const logsByDate = {};
                 querySnapshot.forEach(doc => {
                     const data = doc.data();
-                    const div = document.createElement('div');
-                    div.classList.add('card', 'flex', 'justify-between', 'items-center');
-                    div.innerHTML = `
-                        <div>
-                            <p class="font-medium">${data.date}</p>
-                            <p class="text-sm text-gray-600">${data.muscleGroups}</p>
-                        </div>
-                        <button class="btn-red text-sm" data-id="${doc.id}">${translations[currentLanguage].save}</button>
-                    `;
-                    trainingAgendaList.appendChild(div);
+                    if (!logsByDate[data.date]) {
+                        logsByDate[data.date] = [];
+                    }
+                    logsByDate[data.date].push(data);
                 });
+        
+                for (const date in logsByDate) {
+                    const logsForDate = logsByDate[date];
+                    const dateTitle = document.createElement('h4');
+                    dateTitle.classList.add('font-bold', 'text-gray-800', 'mt-4');
+                    dateTitle.textContent = date;
+                    trainingAgendaList.appendChild(dateTitle);
+        
+                    logsForDate.forEach(data => {
+                        const div = document.createElement('div');
+                        div.classList.add('card', 'mt-2');
+        
+                        if (data.type === 'weight') {
+                            let setsHtml = '';
+                            data.sets.forEach(set => {
+                                if (set.weight && set.reps) {
+                                    setsHtml += `<span class="text-sm text-gray-600 ml-4">${set.weight} kg x ${set.reps} reps</span><br>`;
+                                }
+                            });
+                            
+                            div.innerHTML = `
+                                <p class="font-medium">${translations[currentLanguage].weightTraining}: ${data.exercise}</p>
+                                <div class="mt-2">${setsHtml}</div>
+                                ${data.notes ? `<p class="text-sm italic mt-2">${data.notes}</p>` : ''}
+                            `;
+                        } else if (data.type === 'cardio') {
+                            div.innerHTML = `
+                                <p class="font-medium">${translations[currentLanguage].cardioTraining}: ${data.activity}</p>
+                                <p class="text-sm text-gray-600">${translations[currentLanguage].durationPlaceholder.split('(')[0]}: ${data.duration} min</p>
+                                ${data.distance ? `<p class="text-sm text-gray-600">${translations[currentLanguage].distancePlaceholder.split('(')[0]}: ${data.distance} km</p>` : ''}
+                                <p class="text-sm text-red-600 font-semibold">${translations[currentLanguage].burnedCalories.split(':')[0]}: ${data.caloriesBurned} kcal</p>
+                            `;
+                        } else if (data.muscleGroups) { // Dit is de training agenda log
+                            div.innerHTML = `
+                                <p class="font-medium">${translations[currentLanguage].plannedTraining}: ${data.muscleGroups}</p>
+                            `;
+                        }
+                        trainingAgendaList.appendChild(div);
+                    });
+                }
+        
             } catch (e) {
-                console.error("Fout bij het laden van agenda:", e);
+                console.error("Fout bij het laden van de agenda:", e);
             }
         }
-
+        
         async function loadMeasurements() {
             try {
                 if (!measurementsCollectionRef) return;
@@ -1101,7 +1178,7 @@
                 console.error("Fout bij het laden van metingen:", e);
             }
         }
-
+        
         async function loadHistory() {
             try {
                 if (!auth.currentUser) return;
@@ -1129,29 +1206,53 @@
                 logList.innerHTML = `<p class="text-center text-gray-500">${translations[currentLanguage].noHistoryText}</p>`;
             }
         }
-
+        
         // Hoofd-initialisatiefunctie en event listeners
         document.addEventListener('DOMContentLoaded', async () => {
-            const today = new Date();
             
+            // Event listeners voor tabbladen verplaatst naar buiten de anonieme aanmelding.
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    button.classList.add('active');
+                    document.getElementById(button.dataset.tab).classList.remove('hidden');
+    
+                    if (button.dataset.tab === 'agenda') {
+                        loadTrainingLogs();
+                    }
+                    if (button.dataset.tab === 'metingen') {
+                        loadMeasurements();
+                    }
+                    if (button.dataset.tab === 'history') {
+                        loadHistory();
+                    }
+                });
+            });
+            
+            modalCloseBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+        
             signInAnonymously(auth);
-
+        
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
                     const uid = user.uid;
+                    const today = new Date().toISOString().slice(0, 10);
                     userProfileRef = doc(db, 'artifacts/nutriscan-b3449/users', uid);
-                    dailyLogRef = doc(db, `artifacts/nutriscan-b3449/users/${uid}/dailyLogs`, today.toISOString().slice(0, 10));
+                    dailyLogRef = doc(db, `artifacts/nutriscan-b3449/users/${uid}/dailyLogs`, today);
                     consumedItemsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${uid}/consumedItems`);
                     trainingLogsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${uid}/trainingLogs`);
                     measurementsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${uid}/measurements`);
-
+        
                     onSnapshot(userProfileRef, (docSnap) => {
                         if (docSnap.exists()) {
                             userProfileData = docSnap.data();
                             updateUIWithProfileData(userProfileData);
                         }
                     });
-
+        
                     onSnapshot(dailyLogRef, (docSnap) => {
                         if (docSnap.exists()) {
                             updateUIWithDailyLog(docSnap.data());
@@ -1163,30 +1264,7 @@
                     onSnapshot(consumedItemsCollectionRef, () => {
                         renderDailyConsumedItems();
                     });
-
-                    modalCloseBtn.addEventListener('click', () => {
-                        modal.classList.add('hidden');
-                    });
-            
-                    tabButtons.forEach(button => {
-                        button.addEventListener('click', () => {
-                            tabButtons.forEach(btn => btn.classList.remove('active'));
-                            tabContents.forEach(content => content.classList.add('hidden'));
-                            button.classList.add('active');
-                            document.getElementById(button.dataset.tab).classList.remove('hidden');
-            
-                            if (button.dataset.tab === 'agenda') {
-                                loadTrainingLogs();
-                            }
-                            if (button.dataset.tab === 'metingen') {
-                                loadMeasurements();
-                            }
-                            if (button.dataset.tab === 'history') {
-                                loadHistory();
-                            }
-                        });
-                    });
-
+        
                     // NIEUW: Taalverandering opslaan en toepassen
                     languageSelect.addEventListener('change', async () => {
                         const newLang = languageSelect.value;
@@ -1199,7 +1277,7 @@
                         updateUIWithDailyLog({ consumedCalories: 0, burnedCalories: 0 }); // Zorg voor juiste vertaling van de dagelijkse logs
                         renderDailyConsumedItems();
                     });
-
+        
                     foodInput.addEventListener('input', async () => {
                         const foodName = foodInput.value.toLowerCase().trim();
                         if (foodName.length > 0) {
@@ -1214,12 +1292,12 @@
                             }
                         }
                     });
-
+        
                     addCaloriesButton.addEventListener('click', async () => {
                         const foodName = foodInput.value.trim();
                         const grams = parseFloat(gramsInput.value);
                         const caloriesPer100g = parseFloat(caloriesPer100gInput.value);
-
+        
                         if (foodName && !isNaN(grams) && grams > 0 && !isNaN(caloriesPer100g) && caloriesPer100g >= 0) {
                             const totalCalories = Math.round((caloriesPer100g / 100) * grams);
                             await addConsumedItemToLog(foodName, grams, totalCalories, caloriesPer100g);
@@ -1231,7 +1309,7 @@
                             showModal('enterAllFields');
                         }
                     });
-
+        
                     document.getElementById('log-weight-btn').addEventListener('click', async () => {
                         const date = document.getElementById('weight-date').value;
                         const exercise = document.getElementById('weight-exercise-name').value;
@@ -1240,12 +1318,12 @@
                             weight: parseFloat(setDiv.querySelector('input:nth-of-type(1)').value),
                             reps: parseInt(setDiv.querySelector('input:nth-of-type(2)').value)
                         })).filter(set => !isNaN(set.weight) && !isNaN(set.reps));
-
+        
                         if (!date || !exercise || sets.length === 0) {
                             showModal('minWeightEntry');
                             return;
                         }
-
+        
                         const logEntry = { date, exercise, sets, notes, type: 'weight' };
                         try {
                             if (trainingLogsCollectionRef) {
@@ -1260,7 +1338,7 @@
                             showModal('logWeightError');
                         }
                     });
-
+        
                     document.getElementById('add-set-btn').addEventListener('click', () => {
                         const setsContainer = document.getElementById('sets-container');
                         const setDiv = document.createElement('div');
@@ -1271,7 +1349,7 @@
                         `;
                         setsContainer.appendChild(setDiv);
                     });
-
+        
                     profileForm.addEventListener('submit', async (e) => {
                         e.preventDefault();
                         const formData = new FormData(profileForm);
@@ -1297,18 +1375,20 @@
                             showModal('saveProfileError');
                         }
                     });
-
+        
                     logCardioBtn.addEventListener('click', async () => {
                         const activity = cardioActivity.value;
                         const duration = parseInt(cardioDuration.value);
                         const distance = parseFloat(cardioDistance.value);
+                        const date = new Date().toISOString().slice(0, 10);
+                        
                         if (!activity || isNaN(duration) || duration <= 0) {
                             showModal('chooseActivity');
                             return;
                         }
                         const caloriesBurned = duration * 8;
                         const logEntry = {
-                            date: new Date().toISOString().slice(0, 10),
+                            date,
                             activity,
                             duration,
                             distance: isNaN(distance) ? null : distance,
@@ -1316,11 +1396,17 @@
                             type: 'cardio'
                         };
                         try {
-                            if (dailyLogRef) {
+                            if (dailyLogRef && trainingLogsCollectionRef) {
+                                // Update daily log
                                 const docSnap = await getDoc(dailyLogRef);
                                 const currentData = docSnap.exists() ? docSnap.data() : { consumedCalories: 0, burnedCalories: 0 };
                                 const newBurned = (currentData.burnedCalories || 0) + caloriesBurned;
-                                await setDoc(dailyLogRef, { burnedCalories: newBurned }, { merge: true });
+                                await setDoc(dailyLogRef, { burnedCalories: newBurned, date }, { merge: true });
+                                
+                                // Add to training logs
+                                const newTrainingDocRef = doc(trainingLogsCollectionRef);
+                                await setDoc(newTrainingDocRef, logEntry);
+                                
                                 showModal('logCardioSuccess', { calories: caloriesBurned });
                                 cardioActivity.value = '';
                                 cardioDuration.value = '';
@@ -1333,7 +1419,35 @@
                             showModal('logCardioError');
                         }
                     });
-            
+        
+                    manualBurnedCaloriesForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const date = document.getElementById('manual-burn-date').value;
+                        const caloriesBurned = parseInt(document.getElementById('manual-burn-amount').value);
+        
+                        if (!date || isNaN(caloriesBurned) || caloriesBurned <= 0) {
+                            showModal('enterAllFields');
+                            return;
+                        }
+                        
+                        const dailyLogForDateRef = doc(db, `artifacts/nutriscan-b3449/users/${auth.currentUser.uid}/dailyLogs`, date);
+        
+                        try {
+                            const docSnap = await getDoc(dailyLogForDateRef);
+                            const currentData = docSnap.exists() ? docSnap.data() : { consumedCalories: 0, burnedCalories: 0 };
+                            const newBurned = (currentData.burnedCalories || 0) + caloriesBurned;
+                            
+                            await setDoc(dailyLogForDateRef, { burnedCalories: newBurned, date }, { merge: true });
+                            
+                            showModal('logBurnSuccess', { calories: caloriesBurned });
+                            document.getElementById('manual-burn-date').value = '';
+                            document.getElementById('manual-burn-amount').value = '';
+                        } catch (e) {
+                            console.error("Fout bij het handmatig loggen van calorieën:", e);
+                            showModal('logBurnError');
+                        }
+                    });
+        
                     trainingAgendaForm.addEventListener('submit', async (e) => {
                         e.preventDefault();
                         const date = document.getElementById('training-date').value;
@@ -1345,7 +1459,8 @@
                         const logEntry = { date, muscleGroups: groups };
                         try {
                             if (trainingLogsCollectionRef) {
-                                await setDoc(doc(trainingLogsCollectionRef, date), logEntry);
+                                const newDocRef = doc(trainingLogsCollectionRef);
+                                await setDoc(newDocRef, logEntry);
                                 showModal('logTrainingSuccess');
                                 loadTrainingLogs();
                             } else {
@@ -1356,7 +1471,7 @@
                             showModal('logTrainingError');
                         }
                     });
-            
+                    
                     measurementsForm.addEventListener('submit', async (e) => {
                         e.preventDefault();
                         const date = document.getElementById('measurement-date').value;
