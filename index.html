@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title data-translate="title">NutriScan</title>
-    <link rel="manifest" href="./manifest.json">
+    <link rel="manifest" href="./manifest.json" />
     <script>
         if ('serviceWorker' in navigator) {
           window.addEventListener('load', () => {
@@ -14,9 +14,12 @@
           });
         }
     </script>
+
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
     <style>
         /* Algemene stijlen */
         body {
@@ -25,7 +28,7 @@
             color: #374151;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 2rem auto;
             padding: 1.5rem;
             background-color: #ffffff;
@@ -40,6 +43,7 @@
             border: 1px solid #d1d5db;
             margin-top: 0.5rem;
             font-size: 1rem;
+            box-sizing: border-box;
         }
         button {
             padding: 0.75rem 1.5rem;
@@ -50,39 +54,34 @@
         button:hover {
             transform: translateY(-1px);
         }
-        /* Stijlen van het eerste bestand, aangepast voor Tailwind */
         .nutriscan-logo {
             font-family: 'Georgia', serif;
             color: #2E8B57;
-            font-size: 5em;
+            font-size: 3.2rem;
             text-align: center;
         }
         .slogan {
             color: #696969;
             font-style: normal;
-            margin-bottom: 3em;
+            margin-bottom: 1.5rem;
             text-align: center;
         }
         .quote-box {
             background-color: #E6F9EA;
             border: 1px solid #C0E8C4;
-            padding: 20px;
+            padding: 16px;
             margin: 0 auto;
             max-width: 600px;
             font-style: italic;
             line-height: 1.5;
             text-align: center;
         }
-        /* Primaire knopstijlen aangepast */
         .btn-primary {
             background-color: #008080;
             color: #ffffff;
             border: none;
         }
-        .btn-primary:hover {
-            background-color: #006666;
-        }
-        /* Secundaire knopstijlen toegevoegd */
+        .btn-primary:hover { background-color: #006666; }
         .btn-secondary {
             background-color: transparent;
             color: #008080;
@@ -92,24 +91,16 @@
             cursor: pointer;
             margin-top: 20px;
         }
-        .btn-secondary:hover {
-            background-color: rgba(0, 128, 128, 0.1);
-        }
-        .card {
-            background-color: #f9fafb;
-            padding: 1rem;
-            border-radius: 0.75rem;
-            border: 1px solid #e5e7eb;
-        }
+        .card { background-color: #f9fafb; padding: 1rem; border-radius: 0.75rem; border: 1px solid #e5e7eb; }
         .tab-button {
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 1.25rem;
             border-radius: 0.5rem 0.5rem 0 0;
             font-weight: 500;
             background-color: #e5e7eb;
             color: #4b5563;
             border-bottom: none;
             cursor: pointer;
-            transition: background-color 0.2s;
+            margin-right: 0.4rem;
         }
         .tab-button.active {
             background-color: #ffffff;
@@ -121,125 +112,51 @@
             height: 1.5rem;
             border-radius: 0.5rem;
             overflow: hidden;
+            position: relative;
         }
         .progress-bar-fill {
             background-color: #10b981;
             height: 100%;
             transition: width 0.5s ease-in-out;
             border-radius: 0.5rem;
+            width: 0%;
         }
         .loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
+            position: absolute; inset: 0; display:flex; align-items:center; justify-content:center; z-index:10;
+            background-color: rgba(255,255,255,0.8);
         }
         .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border-left-color: #2563eb;
-            animation: spin 1s ease infinite;
+            border: 4px solid rgba(0,0,0,0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: #2563eb; animation: spin 1s linear infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
-        .btn-red {
-            background-color: #dc2626;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-        }
-        .btn-red:hover {
-            background-color: #b91c1c;
-        }
-        .btn-green {
-            background-color: #10b981;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-        }
-        .btn-green:hover {
-            background-color: #059669;
-        }
-        .table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .measurements-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .measurements-table th, .measurements-table td {
-            padding: 0.75rem;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: left;
-            white-space: nowrap;
-        }
-        .measurements-table th {
-            font-weight: 600;
-            color: #4b5563;
-            background-color: #f9fafb;
-        }
-        .full-width-input {
-            width: 100%;
-        }
-        #food-suggestions {
-            border: 1px solid #ccc;
-            max-height: 150px;
-            overflow-y: auto;
-            position: absolute;
-            z-index: 10;
-            width: calc(100% - 3rem);
-            background: white;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        #food-suggestions div {
-            padding: 10px;
-            cursor: pointer;
-        }
-        #food-suggestions div:hover {
-            background-color: #f0f0f0;
-        }
- </style>
+        @keyframes spin { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
+        .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border-width:0; }
+        .table-container { overflow-x:auto; -webkit-overflow-scrolling: touch; }
+        .measurements-table th, .measurements-table td { padding:0.75rem; border-bottom:1px solid #e5e7eb; text-align:left; white-space:nowrap; }
+        .measurements-table th { font-weight:600; color:#4b5563; background-color:#f9fafb; }
+        #food-suggestions { border:1px solid #ccc; max-height:150px; overflow-y:auto; position:absolute; z-index:50; width:calc(100% - 2rem); background:white; box-shadow:0 4px 6px rgba(0,0,0,0.1); display:none; }
+        #food-suggestions div { padding:10px; cursor:pointer; }
+        #food-suggestions div:hover { background-color:#f0f0f0; }
+        .hidden { display:none !important; }
+    </style>
 </head>
 <body class="p-4 flex flex-col items-center">
     <div class="container flex flex-col gap-6">
         <h1 class="nutriscan-logo">NutriScan</h1>
-        
         <div class="quote-box">
             <p data-translate="quote">"Your body can stand almost anything. It’s your mind that you have to convince"</p>
         </div>
-        
-      <div class="flex flex-col md:flex-row border-b border-gray-200 -mx-6 px-6">
-    <button class="tab-button active" data-tab="dashboard" data-translate="tab.dashboard">Dashboard</button>
-    <button class="tab-button" data-tab="profile" data-translate="tab.profile">Profiel</button>
-    <button class="tab-button" data-tab="manual-entry" data-translate="tab.calories">Calorieën</button>
-    <button class="tab-button" data-tab="fitness" data-translate="tab.fitness">Fitness</button>
-    <button class="tab-button" data-tab="agenda" data-translate="tab.agenda">Agenda</button>
-    <button class="tab-button" data-tab="metingen" data-translate="tab.measurements">Metingen</button>
-    <button class="tab-button" data-tab="history" data-translate="tab.history">Geschiedenis</button>
-</div>
-        
+
+        <div class="flex flex-col md:flex-row border-b border-gray-200 -mx-6 px-6">
+            <button class="tab-button active" data-tab="dashboard" data-translate="tab.dashboard">Dashboard</button>
+            <button class="tab-button" data-tab="profile" data-translate="tab.profile">Profiel</button>
+            <button class="tab-button" data-tab="manual-entry" data-translate="tab.calories">Calorieën</button>
+            <button class="tab-button" data-tab="fitness" data-translate="tab.fitness">Fitness</button>
+            <button class="tab-button" data-tab="agenda" data-translate="tab.agenda">Agenda</button>
+            <button class="tab-button" data-tab="metingen" data-translate="tab.measurements">Metingen</button>
+            <button class="tab-button" data-tab="history" data-translate="tab.history">Geschiedenis</button>
+        </div>
+
+        <!-- Dashboard -->
         <div id="dashboard" class="tab-content flex flex-col gap-6">
             <h2 class="text-2xl font-semibold mb-2" data-translate="dailyOverview">Overzicht Vandaag</h2>
             <div id="results-section" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -260,7 +177,7 @@
                     <span class="text-gray-600 font-medium mt-1" data-translate="timeToGoal">Haalbaar In (weken)</span>
                 </div>
             </div>
-        
+
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800" data-translate="calories">Calorieën</h2>
                 <div class="flex flex-col md:flex-row justify-between items-center mb-4 text-sm font-medium text-gray-700">
@@ -273,7 +190,7 @@
                     <span class="font-bold text-xl text-blue-600" id="net-calories-display">0 kcal</span>
                 </div>
             </div>
-        
+
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800" data-translate="goalToday">Doel voor vandaag</h2>
                 <div class="flex items-center justify-between">
@@ -289,7 +206,7 @@
                     <span class="font-bold text-xl" id="calories-remaining-display">0 kcal</span>
                 </div>
             </div>
-        
+
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800" data-translate="weightProgress">Gewichtsvoortgang</h2>
                 <div class="mb-2 text-sm font-medium text-gray-700 flex justify-between">
@@ -302,7 +219,8 @@
                 </div>
             </div>
         </div>
-        
+
+        <!-- Profile -->
         <div id="profile" class="tab-content hidden">
             <h2 class="text-2xl font-semibold mb-4 text-gray-800" data-translate="personalInfo">Persoonlijke Gegevens</h2>
             <form id="profile-form" class="space-y-4">
@@ -322,19 +240,19 @@
                 </div>
                 <div>
                     <label for="height" class="block text-sm font-medium text-gray-700" data-translate="height">Lengte (cm)</label>
-                    <input type="number" id="height" name="height" required class="mt-1 block w-full rounded-md shadow-sm" min="50" max="250">
+                    <input type="number" id="height" name="height" required min="50" max="250">
                 </div>
                 <div>
                     <label for="age" class="block text-sm font-medium text-gray-700" data-translate="age">Leeftijd</label>
-                    <input type="number" id="age" name="age" required class="mt-1 block w-full rounded-md shadow-sm" min="10" max="120">
+                    <input type="number" id="age" name="age" required min="10" max="120">
                 </div>
                 <div>
                     <label for="current-weight" class="block text-sm font-medium text-gray-700" data-translate="currentWeight">Huidig Gewicht (kg)</label>
-                    <input type="number" id="current-weight" name="current-weight" required class="mt-1 block w-full rounded-md shadow-sm" min="20" max="300" step="0.1">
+                    <input type="number" id="current-weight" name="current-weight" required min="20" max="300" step="0.1">
                 </div>
                 <div>
                     <label for="target-weight" class="block text-sm font-medium text-gray-700" data-translate="targetWeight">Streefgewicht (kg)</label>
-                    <input type="number" id="target-weight" name="target-weight" required class="mt-1 block w-full rounded-md shadow-sm" min="20" max="300" step="0.1">
+                    <input type="number" id="target-weight" name="target-weight" required min="20" max="300" step="0.1">
                 </div>
                 <div>
                     <label for="activity-factor" class="block text-sm font-medium text-gray-700" data-translate="activityFactor">Activiteitsfactor</label>
@@ -354,10 +272,11 @@
                         <option value="gain" data-translate="gainWeight">Spieren opbouwen</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-primary w-full shadow-md hover:shadow-lg" data-translate="saveAndCalculate">Opslaan & Berekenen</button>
+                <button type="submit" class="btn-primary w-full shadow-md hover:shadow-lg" data-translate="saveAndCalculate">Opslaan &amp; Berekenen</button>
             </form>
         </div>
-        
+
+        <!-- Manual Entry -->
         <div id="manual-entry" class="tab-content hidden flex flex-col gap-6">
             <h2 class="text-2xl font-semibold mb-2" data-translate="manualEntry">Handmatige Calorieën Registratie</h2>
             <p class="text-gray-600" data-translate="manualEntryText">Voer het voedingsmiddel en de details in om calorieën toe te voegen.</p>
@@ -365,28 +284,26 @@
             <div class="space-y-4 relative">
                 <div class="flex flex-col space-y-2">
                     <label for="foodInput" class="text-sm font-medium text-gray-700" data-translate="food">Voedingsmiddel</label>
-                    <input type="text" id="foodInput" placeholder="Bijv. banaan of water" class="input" data-translate-placeholder="foodPlaceholder">
-                    <div id="food-suggestions" class="absolute top-full left-0 right-0 z-10 hidden"></div>
+                    <input type="text" id="foodInput" placeholder="Bijv. banaan of water" data-translate-placeholder="foodPlaceholder">
+                    <div id="food-suggestions" class="hidden" aria-hidden="true"></div>
                 </div>
                 <div id="grams-input-container" class="flex flex-col space-y-2">
                     <label for="gramsInput" class="text-sm font-medium text-gray-700" data-translate="grams">Gewicht (in grammen)</label>
-                    <input type="number" id="gramsInput" placeholder="Bijv. 120" class="input" step="0.1" data-translate-placeholder="gramsPlaceholder">
+                    <input type="number" id="gramsInput" placeholder="Bijv. 120" step="0.1" data-translate-placeholder="gramsPlaceholder">
                 </div>
                 <div id="liters-input-container" class="flex flex-col space-y-2 hidden">
-                    <label for="litersInput" class="text-sm font-medium text-gray-700" data-translate="liters">Gewicht (in liters)</label>
-                    <input type="number" id="litersInput" placeholder="Bijv. 0.5" class="input" step="0.01" data-translate-placeholder="litersPlaceholder">
+                    <label for="litersInput" class="text-sm font-medium text-gray-700" data-translate="liters">Aantal (L)</label>
+                    <input type="number" id="litersInput" placeholder="Bijv. 0.5" step="0.01" data-translate-placeholder="litersPlaceholder">
                 </div>
                 <div id="cals-per-100g-container" class="flex flex-col space-y-2">
                     <label for="caloriesPer100gInput" class="text-sm font-medium text-gray-700" data-translate="caloriesPer100g">Calorieën per 100g</label>
-                    <input type="number" id="caloriesPer100gInput" placeholder="Bijv. 89" class="input" data-translate-placeholder="caloriesPer100gPlaceholder" step="0.1">
+                    <input type="number" id="caloriesPer100gInput" placeholder="Bijv. 89" step="0.1" data-translate-placeholder="caloriesPer100gPlaceholder">
                 </div>
                 <div id="cals-per-liter-container" class="flex flex-col space-y-2 hidden">
                     <label for="caloriesPerLiterInput" class="text-sm font-medium text-gray-700" data-translate="caloriesPerLiter">Calorieën per 1L</label>
-                    <input type="number" id="caloriesPerLiterInput" placeholder="Bijv. 40" class="input" step="0.1" data-translate-placeholder="caloriesPerLiterPlaceholder">
+                    <input type="number" id="caloriesPerLiterInput" placeholder="Bijv. 40" step="0.1" data-translate-placeholder="caloriesPerLiterPlaceholder">
                 </div>
-                <button id="addCaloriesButton" class="btn-primary w-full shadow-md hover:shadow-lg" data-translate="addCalories">
-                    Voeg Calorieën toe
-                </button>
+                <button id="addCaloriesButton" class="btn-primary w-full shadow-md hover:shadow-lg" data-translate="addCalories">Voeg Calorieën toe</button>
             </div>
             <div id="resultDisplay" class="text-lg font-medium mt-4 text-center text-green-600"></div>
 
@@ -399,32 +316,33 @@
                                 <th data-translate="date">Datum</th>
                                 <th data-translate="food">Voedingsmiddel</th>
                                 <th data-translate="weight-grams">Gewicht (g)</th>
-                                <th data-translate="weight-liters">Gewicht (L)</th>
+                                <th data-translate="weight-liters">Aantal (L)</th>
                                 <th data-translate="totalCalories">Totaal (kcal)</th>
                             </tr>
                         </thead>
                         <tbody id="dailyConsumedTableBody">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
                 <p class="text-center text-gray-500 mt-4" id="no-food-text" data-translate="noFoodAdded">Nog geen voedsel toegevoegd vandaag.</p>
             </div>
         </div>
-        
+
+        <!-- Fitness -->
         <div id="fitness" class="tab-content hidden flex flex-col gap-6">
             <h2 class="text-2xl font-semibold mb-2" data-translate="fitnessTracker">Fitness Tracker</h2>
             <p class="text-gray-600" data-translate="fitnessText">Log je workouts en houd de verbrande calorieën bij.</p>
-        
+
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
                 <h3 class="text-xl font-semibold mb-4 text-gray-800" data-translate="addStrengthTraining">Krachttraining toevoegen</h3>
                 <div class="space-y-4">
                     <div>
                         <label for="weight-date" class="block text-sm font-medium text-gray-700 mb-1" data-translate="date">Datum</label>
-                        <input type="date" id="weight-date" name="weight-date" class="input-style" required>
+                        <input type="date" id="weight-date" name="weight-date" required>
                     </div>
                     <div>
                         <label for="weight-exercise-name" class="block text-sm font-medium text-gray-700 mb-1" data-translate="exercise">Oefening</label>
-                        <input type="text" id="weight-exercise-name" placeholder="Naam van de oefening" class="mt-1 input-style" data-translate-placeholder="exercisePlaceholder">
+                        <input type="text" id="weight-exercise-name" placeholder="Naam van de oefening" data-translate-placeholder="exercisePlaceholder">
                     </div>
                     <div id="sets-container" class="space-y-4">
                         <h4 class="text-lg font-semibold text-gray-700" data-translate="sets">Sets</h4>
@@ -433,23 +351,23 @@
                             <input type="number" placeholder="Herhalingen" min="1" class="flex-grow p-2 border rounded" data-translate-placeholder="repsPlaceholder">
                         </div>
                     </div>
-                    <button id="add-set-btn" class="btn-secondary w-full mb-2" data-translate="addSet">Set toevoegen</button>
+                    <button id="add-set-btn" type="button" class="btn-secondary w-full mb-2" data-translate="addSet">Set toevoegen</button>
                     <div>
                         <label for="weight-notes" class="block text-sm font-medium text-gray-700 mb-1" data-translate="notes">Notities (optioneel)</label>
-                        <textarea id="weight-notes" name="notes" rows="3" placeholder="Bijv. Ik voelde me vandaag sterk." class="mt-1 input-style" data-translate-placeholder="notesPlaceholder"></textarea>
+                        <textarea id="weight-notes" name="notes" rows="3" placeholder="Bijv. Ik voelde me vandaag sterk." data-translate-placeholder="notesPlaceholder"></textarea>
                     </div>
-                    <button id="log-weight-btn" class="btn-primary w-full" data-translate="save">Opslaan</button>
+                    <button id="log-weight-btn" type="button" class="btn-primary w-full" data-translate="save">Opslaan</button>
                 </div>
             </div>
-        
+
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
                 <h3 class="text-xl font-semibold mb-4 text-gray-800" data-translate="cardio">Cardio</h3>
                 <div class="space-y-4">
-                     <div>
+                    <div>
                         <label for="cardio-date" class="block text-sm font-medium text-gray-700 mb-1" data-translate="date">Datum</label>
-                        <input type="date" id="cardio-date" name="cardio-date" class="input-style" required>
+                        <input type="date" id="cardio-date" name="cardio-date" required>
                     </div>
-                    <select id="cardio-activity" class="mt-1 input-style" data-translate-placeholder="chooseActivity">
+                    <select id="cardio-activity" class="mt-1" data-translate-placeholder="chooseActivity">
                         <option value="" data-translate="chooseActivity">Kies activiteit...</option>
                         <option value="hardlopen" data-translate="running">Hardlopen</option>
                         <option value="wandelen" data-translate="walking">Wandelen</option>
@@ -458,28 +376,12 @@
                         <option value="roeien" data-translate="rowing">Roeien</option>
                         <option value="zwemmen" data-translate="swimming">Zwemmen</option>
                     </select>
-                    <input type="number" id="cardio-duration" placeholder="Duur (minuten)" min="1" class="mt-1 input-style" data-translate-placeholder="durationPlaceholder">
-                    <input type="number" id="cardio-distance" placeholder="Afstand (km)" min="0.1" step="0.1" class="mt-1 input-style" data-translate-placeholder="distancePlaceholder">
-                    <button id="log-cardio-btn" class="btn-primary w-full" data-translate="addCardio">Cardio Toevoegen</button>
+                    <input type="number" id="cardio-duration" placeholder="Duur (minuten)" min="1" step="0.1" data-translate-placeholder="durationPlaceholder">
+                    <input type="number" id="cardio-distance" placeholder="Afstand (km)" min="0.1" step="0.1" data-translate-placeholder="distancePlaceholder">
+                    <button id="log-cardio-btn" type="button" class="btn-primary w-full" data-translate="addCardio">Cardio Toevoegen</button>
                 </div>
             </div>
-            
-            <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800" data-translate="manualCalorieBurn">Handmatige Calorieën Verbranden</h3>
-                <p class="text-gray-600 mb-4" data-translate="manualBurnText">Handmatig verbrande calorieën toevoegen, bijvoorbeeld na een groepsles.</p>
-                <form id="manual-burned-calories-form" class="space-y-4">
-                    <div>
-                        <label for="manual-burn-date" class="block text-sm font-medium text-gray-700" data-translate="date">Datum</label>
-                        <input type="date" id="manual-burn-date" required class="input-style">
-                    </div>
-                    <div>
-                        <label for="manual-burn-amount" class="block text-sm font-medium text-gray-700" data-translate="burnedAmount">Verbrande Calorieën (kcal)</label>
-                        <input type="number" id="manual-burn-amount" placeholder="Bijv. 350" required class="input-style" min="1" data-translate-placeholder="burnedAmountPlaceholder" step="0.1">
-                    </div>
-                    <button type="submit" class="btn-primary w-full" data-translate="logBurn">Verbranding Loggen</button>
-                </form>
-            </div>
-        
+
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
                 <h3 class="text-xl font-semibold mb-2 text-gray-800" data-translate="totalBurnedToday">Totaal Verbrand Vandaag</h3>
                 <div class="flex items-center justify-between">
@@ -488,91 +390,94 @@
                 </div>
             </div>
         </div>
-        
-       <div id="agenda" class="tab-content hidden flex flex-col gap-6">
-    <h2 class="text-2xl font-semibold mb-2" data-translate="trainingLogs">Trainingslogboeken</h2>
-    <p class="text-gray-600" data-translate="trainingLogsText">Een overzicht van al je krachttraining en cardio sessies.</p>
-    <div id="training-history" class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-        <h4 class="text-xl font-semibold mb-2" data-translate="yourHistory">Jouw Historie</h4>
-        <div class="table-container mt-4">
-            <table class="measurements-table min-w-full bg-white">
-                <thead>
-                    <tr>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="date">Datum</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="exercise">Oefening</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="reps">Herhalingen</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="sets">Sets</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="cardio">Cardio</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="duration">Duur</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="distance">Afstand</th>
-                    </tr>
-                </thead>
-                <tbody id="trainingHistoryTableBody" class="text-gray-700">
-                    </tbody>
-            </table>
-        </div>
-        <p class="text-center text-gray-500 mt-4" id="no-training-history-text" data-translate="noHistoryText">Nog geen logboeken beschikbaar.</p>
-    </div>
-</div>
 
-      <div id="metingen" class="tab-content hidden flex flex-col gap-6">
-    <h2 class="text-2xl font-semibold mb-2" data-translate="measurements">Lichaamsmetingen</h2>
-    <p class="text-gray-600" data-translate="measurementsText">Houd je lichaamsmaten bij om je vooruitgang te zien.</p>
-    <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-        <form id="measurements-form" class="space-y-4">
-            <div>
-                <label for="measurement-date" class="block text-sm font-medium text-gray-700" data-translate="date">Datum</label>
-                <input type="date" id="measurement-date" required>
+        <!-- Agenda -->
+        <div id="agenda" class="tab-content hidden flex flex-col gap-6">
+            <h2 class="text-2xl font-semibold mb-2" data-translate="trainingLogs">Trainingslogboeken</h2>
+            <p class="text-gray-600" data-translate="trainingLogsText">Een overzicht van al je krachttraining en cardio sessies.</p>
+            <div id="training-history" class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+                <h4 class="text-xl font-semibold mb-2" data-translate="yourHistory">Jouw Historie</h4>
+                <div class="table-container mt-4">
+                    <table class="measurements-table min-w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="date">Datum</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="exercise">Oefening</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="reps">Herhalingen</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="sets">Sets</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="cardio">Cardio</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="duration">Duur</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="distance">Afstand</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trainingHistoryTableBody" class="text-gray-700"></tbody>
+                    </table>
+                </div>
+                <p class="text-center text-gray-500 mt-4" id="no-training-history-text" data-translate="noHistoryText">Nog geen logboeken beschikbaar.</p>
             </div>
-            <div>
-                <label for="measurement-weight" class="block text-sm font-medium text-gray-700" data-translate="weight">Gewicht (kg)</label>
-                <input type="number" id="measurement-weight" placeholder="Gewicht in kg" step="0.1" data-translate-placeholder="weightKgPlaceholder">
-            </div>
-            <div>
-                <label for="measurement-fat" class="block text-sm font-medium text-gray-700" data-translate="fatPercentage">Vetpercentage (%)</label>
-                <input type="number" id="measurement-fat" placeholder="Vetpercentage" step="0.1" data-translate-placeholder="fatPercentagePlaceholder">
-            </div>
-            <div>
-                <label for="measurement-water" class="block text-sm font-medium text-gray-700" data-translate="waterPercentage">Vochtpercentage (%)</label>
-                <input type="number" id="measurement-water" placeholder="Vochtpercentage" step="0.1" data-translate-placeholder="waterPercentagePlaceholder">
-            </div>
-            <div>
-                <label for="measurement-waist" class="block text-sm font-medium text-gray-700" data-translate="waist">Taille (cm)</label>
-                <input type="number" id="measurement-waist" placeholder="Omtrek" step="0.1" data-translate-placeholder="waistPlaceholder">
-            </div>
-            <div>
-                <label for="measurement-hip" class="block text-sm font-medium text-gray-700" data-translate="hip">Heup (cm)</label>
-                <input type="number" id="measurement-hip" placeholder="Omtrek" step="0.1" data-translate-placeholder="hipPlaceholder">
-            </div>
-            <div>
-                <label for="measurement-buttocks" class="block text-sm font-medium text-gray-700" data-translate="buttocks">Poep (cm)</label>
-                <input type="number" id="measurement-buttocks" placeholder="Omtrek" step="0.1" data-translate-placeholder="buttocksPlaceholder">
-            </div>
-            <button type="submit" class="btn-primary w-full" data-translate="saveMeasurements">Metingen Opslaan</button>
-        </form>
-    </div>
-    <div id="measurements-list" class="mt-4 space-y-2">
-        <h3 class="text-xl font-semibold mb-2" data-translate="yourHistory">Jouw Historie</h3>
-        <div class="table-container">
-            <table class="measurements-table min-w-full bg-white">
-                <thead>
-                    <tr>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="date">Datum</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="weight">Gewicht (kg)</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="fatPercentage">Vetpercentage (%)</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="waterPercentage">Vochtpercentage (%)</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="waist">Taille (cm)</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="hip">Heup (cm)</th>
-                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="buttocks">Poep (cm)</th>
-                    </tr>
-                </thead>
-                <tbody id="measurements-table-body" class="text-gray-700">
-                    </tbody>
-            </table>
         </div>
-        <p class="text-center text-gray-500" id="no-measurements-text" data-translate="noMeasurementsText">Nog geen metingen opgeslagen.</p>
-    </div>
-</div>
+
+        <!-- Metingen -->
+        <div id="metingen" class="tab-content hidden flex flex-col gap-6">
+            <h2 class="text-2xl font-semibold mb-2" data-translate="measurements">Lichaamsmetingen</h2>
+            <p class="text-gray-600" data-translate="measurementsText">Houd je lichaamsmaten bij om je vooruitgang te zien.</p>
+            <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+                <form id="measurements-form" class="space-y-4">
+                    <div>
+                        <label for="measurement-date" class="block text-sm font-medium text-gray-700" data-translate="date">Datum</label>
+                        <input type="date" id="measurement-date" required>
+                    </div>
+                    <div>
+                        <label for="measurement-weight" class="block text-sm font-medium text-gray-700" data-translate="weight">Gewicht (kg)</label>
+                        <input type="number" id="measurement-weight" placeholder="Gewicht in kg" step="0.1" data-translate-placeholder="weightKgPlaceholder">
+                    </div>
+                    <div>
+                        <label for="measurement-fat" class="block text-sm font-medium text-gray-700" data-translate="fatPercentage">Vetpercentage (%)</label>
+                        <input type="number" id="measurement-fat" placeholder="Vetpercentage" step="0.1" data-translate-placeholder="fatPercentagePlaceholder">
+                    </div>
+                    <div>
+                        <label for="measurement-water" class="block text-sm font-medium text-gray-700" data-translate="waterPercentage">Vochtpercentage (%)</label>
+                        <input type="number" id="measurement-water" placeholder="Vochtpercentage" step="0.1" data-translate-placeholder="waterPercentagePlaceholder">
+                    </div>
+                    <div>
+                        <label for="measurement-waist" class="block text-sm font-medium text-gray-700" data-translate="waist">Taille (cm)</label>
+                        <input type="number" id="measurement-waist" placeholder="Omtrek" step="0.1" data-translate-placeholder="waistPlaceholder">
+                    </div>
+                    <div>
+                        <label for="measurement-hip" class="block text-sm font-medium text-gray-700" data-translate="hip">Heup (cm)</label>
+                        <input type="number" id="measurement-hip" placeholder="Omtrek" step="0.1" data-translate-placeholder="hipPlaceholder">
+                    </div>
+                    <div>
+                        <label for="measurement-buttocks" class="block text-sm font-medium text-gray-700" data-translate="buttocks">Poep (cm)</label>
+                        <input type="number" id="measurement-buttocks" placeholder="Omtrek" step="0.1" data-translate-placeholder="buttocksPlaceholder">
+                    </div>
+                    <button type="submit" class="btn-primary w-full" data-translate="saveMeasurements">Metingen Opslaan</button>
+                </form>
+            </div>
+
+            <div id="measurements-list" class="mt-4 space-y-2">
+                <h3 class="text-xl font-semibold mb-2" data-translate="yourHistory">Jouw Historie</h3>
+                <div class="table-container">
+                    <table class="measurements-table min-w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="date">Datum</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="weight">Gewicht (kg)</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="fatPercentage">Vetpercentage (%)</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="waterPercentage">Vochtpercentage (%)</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="waist">Taille (cm)</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="hip">Heup (cm)</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="buttocks">Poep (cm)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="measurements-table-body" class="text-gray-700"></tbody>
+                    </table>
+                </div>
+                <p class="text-center text-gray-500" id="no-measurements-text" data-translate="noMeasurementsText">Nog geen metingen opgeslagen.</p>
+            </div>
+        </div>
+
+        <!-- History -->
         <div id="history" class="tab-content hidden flex flex-col gap-6">
             <h2 class="text-2xl font-semibold mb-2" data-translate="dailyLogs">Dagelijkse Logboeken</h2>
             <p class="text-gray-600" data-translate="dailyLogsText">Een overzicht van al je activiteiten.</p>
@@ -580,7 +485,7 @@
                 <p class="text-center text-gray-500" id="no-history-text" data-translate="noHistoryText">Nog geen logboeken beschikbaar.</p>
             </div>
         </div>
-        
+
         <div id="modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-20">
             <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
                 <p id="modal-message" class="text-gray-800 text-lg mb-4"></p>
@@ -588,605 +493,536 @@
             </div>
         </div>
     </div>
+
+    <!-- Firebase (stabiele 10.x import) -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        // Import foodDatabase.js
-        // Zorg ervoor dat je dit bestand lokaal hebt
-        // import { foodData } from './foodDatabase.js';
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import {
+        getFirestore, doc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where, addDoc, getDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-        // Vervang de dummy-database door je eigen data als je foodDatabase.js niet hebt
-        const localFoodDatabase = {
-            'banaan': { 'caloriesPer100g': 89 },
-            'appel': { 'caloriesPer100g': 52 },
-            'water': { 'caloriesPerLiter': 0 },
-            'melk': { 'caloriesPerLiter': 610 }
-        };
+    // Lokaal voedselbestand (voor suggesties)
+    const localFoodDatabase = {
+        'banaan': { 'caloriesPer100g': 89 },
+        'appel': { 'caloriesPer100g': 52 },
+        'water': { 'caloriesPerLiter': 0 },
+        'melk': { 'caloriesPerLiter': 610 }
+    };
 
-        const firebaseConfig = {
-            apiKey: 
-            authDomain: "nutriscan-b3449.firebaseapp.com",
-            projectId: "nutriscan-b3449",
-            storageBucket: "nutriscan-b3449.appspot.com",
-            messagingSenderId: "1033379364886",
-            appId: "1:1033379364886:web:6e1c070f64c1c91104e1c7"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        let userProfileData = {};
-        let userProfileRef, dailyLogRef, consumedItemsCollectionRef, trainingLogsCollectionRef, measurementsCollectionRef;
-        let currentLanguage = 'nl'; // Standaardtaal
-        //const localFoodDatabase = foodData;
+    // Firebase config - vervang zonodig met jouw keys
+    const firebaseConfig = {
+        apiKey:
+        authDomain: "nutriscan-b3449.firebaseapp.com",
+        projectId: "nutriscan-b3449",
+        storageBucket: "nutriscan-b3449.appspot.com",
+        messagingSenderId: "1033379364886",
+        appId: "1:1033379364886:web:6e1c070f64c1c91104e1c7"
+    };
 
-        // NIEUW: Vertaalobject
-        const translations = {
-            nl: {
-                title: "NutriScan",
-                quote: "\"Your body can stand almost anything. It’s your mind that you have to convince\"",
-                tab: {
-                    dashboard: "Dashboard",
-                    profile: "Profiel",
-                    calories: "Calorieën",
-                    fitness: "Fitness",
-                    agenda: "Agenda",
-                    measurements: "Metingen",
-                    history: "Geschiedenis"
-                },
-                dailyOverview: "Overzicht Vandaag",
-                bmi: "BMI",
-                dailyGoal: "Dagelijks Doel (kcal)",
-                timeToGoal: "Haalbaar In (weken)",
-                consumed: "Verbruikt: ",
-                burned: "Verbrand: ",
-                netCalories: "Netto Calorieën: ",
-                goalToday: "Doel voor vandaag",
-                yourDailyGoal: "Jouw Dagelijks Doel:",
-                netCaloriesToday: "Netto Calorieën:",
-                caloriesRemaining: "Calorieën Over:",
-                weightProgress: "Gewichtsvoortgang",
-                current: "Huidig:",
-                target: "Doel:",
-                personalInfo: "Persoonlijke Gegevens",
-                language: "Taal",
-                lang_nl: "Nederlands",
-                lang_fr: "Français",
-                gender: "Geslacht",
-                male: "Man",
-                female: "Vrouw",
-                height: "Lengte (cm)",
-                age: "Leeftijd",
-                currentWeight: "Huidig Gewicht (kg)",
-                targetWeight: "Streefgewicht (kg)",
-                activityFactor: "Activiteitsfactor",
-                activity: {
-                    sedentary: "Zittend werk",
-                    light: "Licht actief (1-3x/week sport)",
-                    moderate: "Gemiddeld actief (3-5x/week sport)",
-                    veryActive: "Zeer actief (6-7x/week sport)",
-                    extreme: "Extreem actief (zwaar werk + 2x sport)"
-                },
-                weightGoal: "Wat zou u willen?",
-                maintainWeight: "Gewicht behouden",
-                loseWeight: "Gewicht verliezen",
-                gainWeight: "Spieren opbouwen",
-                saveAndCalculate: "Opslaan & Berekenen",
-                manualEntry: "Handmatige Calorieën Registratie",
-                manualEntryText: "Voer het voedingsmiddel en de details in om calorieën toe te voegen.",
-                food: "Voedingsmiddel",
-                foodPlaceholder: "Bijv. banaan of water",
-                grams: "Gewicht (in grammen)",
-                gramsPlaceholder: "Bijv. 120",
-                liters: "Gewicht (in liters)",
-                litersPlaceholder: "Bijv. 0.5",
-                caloriesPer100g: "Calorieën per 100g",
-                caloriesPer100gPlaceholder: "Bijv. 89",
-                caloriesPerLiter: "Calorieën per 1L",
-                caloriesPerLiterPlaceholder: "Bijv. 40",
-                addCalories: "Voeg Calorieën toe",
-                today: "Vandaag",
-                totalToday: "Totaal Vandaag:",
-                nutritionOverview: "Overzicht Voeding",
-                yourHistory: "Jouw Historie",
-                noFoodAdded: "Nog geen voedsel toegevoegd vandaag.",
-                fitnessTracker: "Fitness Tracker",
-                fitnessText: "Log je workouts en houd de verbrande calorieën bij.",
-                addStrengthTraining: "Krachttraining toevoegen",
-                date: "Datum",
-                exercise: "Oefening",
-                exercisePlaceholder: "Naam van de oefening",
-                sets: "Sets",
-                weightPlaceholder: "Gewicht (kg)",
-                repsPlaceholder: "Herhalingen",
-                addSet: "Set toevoegen",
-                notes: "Notities (optioneel)",
-                notesPlaceholder: "Bijv. Ik voelde me vandaag sterk."
-                ,
-                save: "Opslaan",
-                cardio: "Cardio",
-                chooseActivity: "Kies activiteit...",
-                running: "Hardlopen",
-                walking: "Wandelen",
-                cycling: "Fietsen",
-                elliptical: "Crosstrainer",
-                rowing: "Roeien",
-                swimming: "Zwemmen",
-                durationPlaceholder: "Duur (minuten)",
-                distancePlaceholder: "Afstand (km)",
-                addCardio: "Cardio Toevoegen",
-                manualCalorieBurn: "Handmatige Calorieën Verbranden",
-                manualBurnText: "Handmatig verbrande calorieën toevoegen, bijvoorbeeld na een groepsles.",
-                burnedAmount: "Verbrande Calorieën (kcal)",
-                burnedAmountPlaceholder: "Bijv. 350",
-                logBurn: "Verbranding Loggen",
-                totalBurnedToday: "Totaal Verbrand Vandaag",
-                burnedCalories: "Verbrande Calorieën:",
-                measurements: "Lichaamsmetingen",
-                measurementsText: "Houd je lichaamsmaten bij om je vooruitgang te zien.",
-                weight: "Gewicht",
-                weightKgPlaceholder: "Gewicht in kg",
-                fatPercentage: "Vetpercentage (%)",
-                fatPercentagePlaceholder: "Vetpercentage",
-                waterPercentage: "Vochtpercentage (%)",
-                waterPercentagePlaceholder: "Vochtpercentage",
-                waist: "Taille (cm)",
-                waistPlaceholder: "Omtrek",
-                hip: "Heup (cm)",
-                hipPlaceholder: "Omtrek",
-                buttocks: "Poep (cm)",
-                buttocksPlaceholder: "Omtrek",
-                saveMeasurements: "Metingen Opslaan",
-                yourHistory: "Jouw Historie",
-                noMeasurementsText: "Nog geen metingen opgeslagen.",
-                dailyLogs: "Dagelijkse Logboeken",
-                dailyLogsText: "Een overzicht van al je activiteiten.",
-                noHistoryText: "Nog geen logboeken beschikbaar.",
-                close: "Sluiten",
-                // Modal berichten
-                noData: "Geen gegevens",
-                foodAdded: "Toegevoegd: {foodName} ({calories} kcal)",
-                enterAllFields: "Vul alle verplichte velden in.",
-                errorInit: "Fout: Initialisatie van de database mislukt.",
-                errorAddingFood: "Fout bij het toevoegen van voedsel.",
-                minWeightEntry: "Vul minimaal een datum, oefening en ten minste één set in.",
-                logWeightSuccess: "Krachttraining succesvol gelogd.",
-                logWeightError: "Fout bij het loggen van krachttraining.",
-                saveProfileSuccess: "Profiel succesvol opgeslagen.",
-                saveProfileError: "Fout bij het opslaan van profiel.",
-                logCardioSuccess: "Cardio training gelogd. Verbrande calorieën: {calories} kcal.",
-                logCardioError: "Fout bij het loggen van cardio training.",
-                logBurnSuccess: "Handmatig verbrande calorieën succesvol gelogd: {calories} kcal.",
-                logBurnError: "Fout bij het handmatig loggen van calorieën.",
-                logTrainingSuccess: "Training succesvol in de agenda opgeslagen.",
-                logTrainingError: "Fout bij het opslaan van training.",
-                minMeasurementEntry: "Vul minimaal een datum en één meting in.",
-                logMeasurementsSuccess: "Metingen succesvol opgeslagen.",
-                logMeasurementsError: "Fout bij het opslaan van meting.",
-                weightTraining: "Krachttraining",
-                cardioTraining: "Cardio",
-                plannedTraining: "Geplande training",
-                quantity: "Hoeveelheid",
-                calories: "Calorieën",
-                reps: "Herhalingen",
-                duration: "Duur",
-                distance: "Afstand",
-                "weight-grams": "Gewicht (g)",
-                "weight-liters": "Gewicht (L)",
-                "calories-per-100g": "Calorieën (100g)",
-                "calories-per-liter": "Calorieën (1L)",
-                totalCalories: "Totaal (kcal)",
-                trainingLogs: "Trainingslogboeken",
-                trainingLogsText: "Een overzicht van al je krachttraining en cardio sessies."
-            },
-            fr: {
-                title: "NutriScan",
-                quote: "\"Votre corps peut presque tout supporter. C'est votre esprit que vous devez convaincre\"",
-                tab: {
-                    dashboard: "Tableau de bord",
-                    profile: "Profil",
-                    calories: "Calories",
-                    fitness: "Fitness",
-                    agenda: "Agenda",
-                    measurements: "Mensurations",
-                    history: "Historique"
-                },
-                dailyOverview: "Aperçu du jour",
-                bmi: "IMC",
-                dailyGoal: "Objectif quotidien (kcal)",
-                timeToGoal: "Temps pour atteindre l'objectif (semaines)",
-                consumed: "Consommé: ",
-                burned: "Brûlé: ",
-                netCalories: "Calories nettes: ",
-                goalToday: "Objectif pour aujourd'hui",
-                yourDailyGoal: "Votre objectif quotidien:",
-                netCaloriesToday: "Calories nettes:",
-                caloriesRemaining: "Calories restantes:",
-                weightProgress: "Progression du poids",
-                current: "Actuel:",
-                target: "Cible:",
-                personalInfo: "Informations personnelles",
-                language: "Langue",
-                lang_nl: "Néerlandais",
-                lang_fr: "Français",
-                gender: "Sexe",
-                male: "Homme",
-                female: "Femme",
-                height: "Taille (cm)",
-                age: "Âge",
-                currentWeight: "Poids actuel (kg)",
-                targetWeight: "Poids cible (kg)",
-                activityFactor: "Facteur d'activité",
-                activity: {
-                    sedentary: "Travail sédentaire",
-                    light: "Légèrement actif (1-3x/semaine de sport)",
-                    moderate: "Modérément actif (3-5x/semaine de sport)",
-                    veryActive: "Très actif (6-7x/semaine de sport)",
-                    extreme: "Extrêmement actif (travail lourd + 2x sport)"
-                },
-                weightGoal: "Que voudriez-vous?",
-                maintainWeight: "Maintenir le poids",
-                loseWeight: "Perdre du poids",
-                gainWeight: "Prendre du muscle",
-                saveAndCalculate: "Enregistrer & Calculer",
-                manualEntry: "Saisie manuelle des calories",
-                manualEntryText: "Entrez les aliments et les détails pour ajouter des calories.",
-                food: "Aliment",
-                foodPlaceholder: "Ex. banane ou eau",
-                grams: "Poids (en grammes)",
-                gramsPlaceholder: "Ex. 120",
-                liters: "Poids (en litres)",
-                litersPlaceholder: "Ex. 0.5",
-                caloriesPer100g: "Calories pour 100g",
-                caloriesPer100gPlaceholder: "Ex. 89",
-                caloriesPerLiter: "Calories pour 1L",
-                caloriesPerLiterPlaceholder: "Ex. 40",
-                addCalories: "Ajouter des calories",
-                today: "Aujourd'hui",
-                totalToday: "Total aujourd'hui:",
-                nutritionOverview: "Aperçu de la nutrition",
-                yourHistory: "Votre historique",
-                noFoodAdded: "Aucun aliment ajouté aujourd'hui.",
-                fitnessTracker: "Suivi de fitness",
-                fitnessText: "Enregistrez vos entraînements en suivez les calories brûlées.",
-                addStrengthTraining: "Ajouter de la musculation",
-                date: "Date",
-                exercise: "Exercice",
-                exercisePlaceholder: "Nom de l'exercice",
-                sets: "Séries",
-                weightPlaceholder: "Poids (kg)",
-                repsPlaceholder: "Répétitions",
-                addSet: "Ajouter une série",
-                notes: "Notes (optionnel)",
-                notesPlaceholder: "Ex. Je me sentais fort aujourd'hui.",
-                save: "Enregistrer",
-                cardio: "Cardio",
-                chooseActivity: "Choisir une activité...",
-                running: "Course à pied",
-                walking: "Marche",
-                cycling: "Vélo",
-                elliptical: "Vélo elliptique",
-                rowing: "Aviron",
-                swimming: "Nage",
-                durationPlaceholder: "Durée (minuten)",
-                distancePlaceholder: "Afstand (km)",
-                addCardio: "Ajouter du cardio",
-                manualCalorieBurn: "Calories brûlées manuellement",
-                manualBurnText: "Ajouter manuellement les calories brûlées, par voorbeeld après een cours collectif.",
-                burnedAmount: "Calories brûlées (kcal)",
-                burnedAmountPlaceholder: "Ex. 350",
-                logBurn: "Enregistrer les calories brûlées",
-                totalBurnedToday: "Total brûlé aujourd'hui",
-                burnedCalories: "Calories brûlées:",
-                measurements: "Mensurations corporelles",
-                measurementsText: "Suivez vos mensurations corporelles voor voir vos progrès.",
-                weight: "Poids",
-                weightKgPlaceholder: "Poids en kg",
-                fatPercentage: "Pourcentage de graisse (%)",
-                fatPercentagePlaceholder: "Pourcentage de graisse",
-                waterPercentage: "Pourcentage d'eau (%)",
-                waterPercentagePlaceholder: "Pourcentage d'eau",
-                waist: "Taille (cm)",
-                waistPlaceholder: "Tour de taille",
-                hip: "Hanche (cm)",
-                hipPlaceholder: "Tour de hanche",
-                buttocks: "Fessier (cm)",
-                buttocksPlaceholder: "Tour de fessier",
-                saveMeasurements: "Enregistrer les mensurations",
-                yourHistory: "Votre historique",
-                noMeasurementsText: "Aucune mesure enregistrée.",
-                dailyLogs: "Journaux quotidiens",
-                dailyLogsText: "Un aperçu de toutes vos activités.",
-                noHistoryText: "Aucun journal disponible.",
-                close: "Fermer",
-                // Modal messages
-                noData: "Pas de données",
-                foodAdded: "Ajouté: {foodName} ({calories} kcal)",
-                enterAllFields: "Veuillez remplir tous les champs obligatoires.",
-                errorInit: "Erreur: L'initialisation de la base de données a échoué.",
-                errorAddingFood: "Erreur lors de l'ajout d'aliments.",
-                minWeightEntry: "Veuillez entrer au moins une date, un exercice et au moins une série.",
-                logWeightSuccess: "Musculation enregistrée avec succès.",
-                logWeightError: "Erreur lors de l'enregistrement de la musculation.",
-                saveProfileSuccess: "Profil enregistré avec succès.",
-                saveProfileError: "Erreur lors de l'enregistrement du profil.",
-                logCardioSuccess: "Entraînement cardio enregistré. Calories brûlées: {calories} kcal.",
-                logCardioError: "Erreur lors de l'enregistrement de l'entraînement cardio.",
-                logBurnSuccess: "Calories brûlées manuellement enregistrées avec succès: {calories} kcal.",
-                logBurnError: "Erreur lors de l'enregistrement des calories manuellement.",
-                logTrainingSuccess: "Entraînement enregistré avec succès dans l'agenda.",
-                logTrainingError: "Erreur lors de l'enregistrement de l'entraînement.",
-                minMeasurementEntry: "Veuillez entrer au moins une date en een mesure.",
-                logMeasurementsSuccess: "Mensurations enregistrées avec succès.",
-                logMeasurementsError: "Erreur lors de l'enregistrement des mensurations.",
-                weightTraining: "Musculation",
-                cardioTraining: "Cardio",
-                plannedTraining: "Entraînement planifié",
-                quantity: "Quantité",
-                calories: "Calories",
-                reps: "Répétitions",
-                duration: "Durée",
-                distance: "Afstand",
-                "weight-grams": "Poids (g)",
-                "weight-liters": "Poids (L)",
-                "calories-per-100g": "Calorieën (100g)",
-                "calories-per-liter": "Calorieën (1L)",
-                totalCalories: "Totaal (kcal)",
-                trainingLogs: "Journaux d'entraînement",
-                trainingLogsText: "Un aperçu de toutes vos séances de musculation et de cardio."
+    // Init firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    // Global refs
+    let userProfileData = {};
+    let userProfileRef = null;
+    let dailyLogRef = null;
+    let consumedItemsCollectionRef = null;
+    let trainingLogsCollectionRef = null;
+    let measurementsCollectionRef = null;
+    let dailyLogsCollectionRef = null; // collection for history list
+    let currentLanguage = 'nl';
+
+    // Translations (opgekuist, enkel waar nodig)
+    const translations = {
+        nl: {
+            title: "NutriScan",
+            quote: "\"Your body can stand almost anything. It’s your mind that you have to convince\"",
+            "tab.dashboard": "Dashboard",
+            "tab.profile": "Profiel",
+            "tab.calories": "Calorieën",
+            "tab.fitness": "Fitness",
+            "tab.agenda": "Agenda",
+            "tab.measurements": "Metingen",
+            "tab.history": "Geschiedenis",
+            dailyOverview: "Overzicht Vandaag",
+            bmi: "BMI",
+            dailyGoal: "Dagelijks Doel (kcal)",
+            timeToGoal: "Haalbaar In (weken)",
+            consumed: "Verbruikt: ",
+            burned: "Verbrand: ",
+            netCalories: "Netto Calorieën: ",
+            goalToday: "Doel voor vandaag",
+            yourDailyGoal: "Jouw Dagelijks Doel:",
+            netCaloriesToday: "Netto Calorieën:",
+            caloriesRemaining: "Calorieën Over:",
+            weightProgress: "Gewichtsvoortgang",
+            current: "Huidig:",
+            target: "Doel:",
+            personalInfo: "Persoonlijke Gegevens",
+            language: "Taal",
+            lang_nl: "Nederlands",
+            lang_fr: "Français",
+            gender: "Geslacht",
+            male: "Man",
+            female: "Vrouw",
+            height: "Lengte (cm)",
+            age: "Leeftijd",
+            currentWeight: "Huidig Gewicht (kg)",
+            targetWeight: "Streefgewicht (kg)",
+            activityFactor: "Activiteitsfactor",
+            "activity.sedentary": "Zittend werk",
+            "activity.light": "Licht actief (1-3x/week sport)",
+            "activity.moderate": "Gemiddeld actief (3-5x/week sport)",
+            "activity.veryActive": "Zeer actief (6-7x/week sport)",
+            "activity.extreme": "Extreem actief (zwaar werk + 2x sport)",
+            weightGoal: "Wat zou u willen?",
+            maintainWeight: "Gewicht behouden",
+            loseWeight: "Gewicht verliezen",
+            gainWeight: "Spieren opbouwen",
+            saveAndCalculate: "Opslaan & Berekenen",
+            manualEntry: "Handmatige Calorieën Registratie",
+            manualEntryText: "Voer het voedingsmiddel en de details in om calorieën toe te voegen.",
+            food: "Voedingsmiddel",
+            foodPlaceholder: "Bijv. banaan of water",
+            grams: "Gewicht (in grammen)",
+            gramsPlaceholder: "Bijv. 120",
+            liters: "Aantal (L)",
+            litersPlaceholder: "Bijv. 0.5",
+            caloriesPer100g: "Calorieën per 100g",
+            caloriesPer100gPlaceholder: "Bijv. 89",
+            caloriesPerLiter: "Calorieën per 1L",
+            caloriesPerLiterPlaceholder: "Bijv. 40",
+            addCalories: "Voeg Calorieën toe",
+            today: "Vandaag",
+            totalToday: "Totaal Vandaag:",
+            nutritionOverview: "Overzicht Voeding",
+            yourHistory: "Jouw Historie",
+            noFoodAdded: "Nog geen voedsel toegevoegd vandaag.",
+            fitnessTracker: "Fitness Tracker",
+            fitnessText: "Log je workouts en houd de verbrande calorieën bij.",
+            addStrengthTraining: "Krachttraining toevoegen",
+            date: "Datum",
+            exercise: "Oefening",
+            exercisePlaceholder: "Naam van de oefening",
+            sets: "Sets",
+            weightPlaceholder: "Gewicht (kg)",
+            repsPlaceholder: "Herhalingen",
+            addSet: "Set toevoegen",
+            notes: "Notities (optioneel)",
+            notesPlaceholder: "Bijv. Ik voelde me vandaag sterk.",
+            save: "Opslaan",
+            cardio: "Cardio",
+            chooseActivity: "Kies activiteit...",
+            running: "Hardlopen",
+            walking: "Wandelen",
+            cycling: "Fietsen",
+            elliptical: "Crosstrainer",
+            rowing: "Roeien",
+            swimming: "Zwemmen",
+            durationPlaceholder: "Duur (minuten)",
+            distancePlaceholder: "Afstand (km)",
+            addCardio: "Cardio Toevoegen",
+            manualCalorieBurn: "Handmatige Calorieën Verbranden",
+            manualBurnText: "Handmatig verbrande calorieën toevoegen, bijvoorbeeld na een groepsles.",
+            burnedAmount: "Verbrande Calorieën (kcal)",
+            burnedAmountPlaceholder: "Bijv. 350",
+            logBurn: "Verbranding Loggen",
+            totalBurnedToday: "Totaal Verbrand Vandaag",
+            burnedCalories: "Verbrande Calorieën:",
+            measurements: "Lichaamsmetingen",
+            measurementsText: "Houd je lichaamsmaten bij om je vooruitgang te zien.",
+            weight: "Gewicht",
+            weightKgPlaceholder: "Gewicht in kg",
+            fatPercentage: "Vetpercentage (%)",
+            fatPercentagePlaceholder: "Vetpercentage",
+            waterPercentage: "Vochtpercentage (%)",
+            waterPercentagePlaceholder: "Vochtpercentage",
+            waist: "Taille (cm)",
+            waistPlaceholder: "Omtrek",
+            hip: "Heup (cm)",
+            hipPlaceholder: "Omtrek",
+            buttocks: "Poep (cm)",
+            buttocksPlaceholder: "Omtrek",
+            saveMeasurements: "Metingen Opslaan",
+            noMeasurementsText: "Nog geen metingen opgeslagen.",
+            dailyLogs: "Dagelijkse Logboeken",
+            dailyLogsText: "Een overzicht van al je activiteiten.",
+            noHistoryText: "Nog geen logboeken beschikbaar.",
+            close: "Sluiten",
+            // modal/en
+            noData: "Geen gegevens",
+            foodAdded: "Toegevoegd: {foodName} ({calories} kcal)",
+            enterAllFields: "Vul alle verplichte velden in.",
+            errorInit: "Fout: Initialisatie van de database mislukt.",
+            errorAddingFood: "Fout bij het toevoegen van voedsel.",
+            minWeightEntry: "Vul minimaal een datum, oefening en ten minste één set in.",
+            logWeightSuccess: "Krachttraining succesvol gelogd.",
+            logWeightError: "Fout bij het loggen van krachttraining.",
+            saveProfileSuccess: "Profiel succesvol opgeslagen.",
+            saveProfileError: "Fout bij het opslaan van profiel.",
+            logCardioSuccess: "Cardio training gelogd. Verbrande calorieën: {calories} kcal.",
+            logCardioError: "Fout bij het loggen van cardio training.",
+            logBurnSuccess: "Handmatig verbrande calorieën succesvol gelogd: {calories} kcal.",
+            logBurnError: "Fout bij het handmatig loggen van calorieën.",
+            logTrainingSuccess: "Training succesvol in de agenda opgeslagen.",
+            logTrainingError: "Fout bij het opslaan van training.",
+            minMeasurementEntry: "Vul minimaal een datum en één meting in.",
+            logMeasurementsSuccess: "Metingen succesvol opgeslagen.",
+            logMeasurementsError: "Fout bij het opslaan van meting.",
+            weightTraining: "Krachttraining",
+            cardioTraining: "Cardio",
+            plannedTraining: "Geplande training",
+            quantity: "Hoeveelheid",
+            calories: "Calorieën",
+            reps: "Herhalingen",
+            duration: "Duur",
+            distance: "Afstand",
+            "weight-grams": "Gewicht (g)",
+            "weight-liters": "Aantal (L)",
+            "calories-per-100g": "Calorieën (100g)",
+            "calories-per-liter": "Calorieën (1L)",
+            totalCalories: "Totaal (kcal)",
+            trainingLogs: "Trainingslogboeken",
+            trainingLogsText: "Een overzicht van al je krachttraining en cardio sessies."
+        },
+        fr: {
+            // Franse vertalingen (voor demo zijn ze kort gehouden)
+            title: "NutriScan",
+            "tab.dashboard": "Tableau",
+            "tab.profile": "Profil",
+            "tab.calories": "Calories",
+            "tab.fitness": "Fitness",
+            "tab.agenda": "Agenda",
+            "tab.measurements": "Mesures",
+            "tab.history": "Historique",
+            dailyOverview: "Aperçu du jour",
+            bmi: "IMC",
+            dailyGoal: "Objectif quotidien (kcal)",
+            timeToGoal: "Semaines estimées",
+            consumed: "Consommé: ",
+            burned: "Brûlé: ",
+            netCalories: "Calories nettes: ",
+            goalToday: "Objectif du jour",
+            yourDailyGoal: "Votre objectif quotidien:",
+            netCaloriesToday: "Calories nettes:",
+            caloriesRemaining: "Calories restantes:",
+            weightProgress: "Progression du poids",
+            current: "Actuel:",
+            target: "Cible:",
+            personalInfo: "Informations personnelles",
+            language: "Langue",
+            lang_nl: "Néerlandais",
+            lang_fr: "Français",
+            gender: "Sexe",
+            male: "Homme",
+            female: "Femme",
+            height: "Taille (cm)",
+            age: "Âge",
+            currentWeight: "Poids actuel (kg)",
+            targetWeight: "Poids cible (kg)",
+            activityFactor: "Facteur d'activité",
+            "activity.sedentary": "Sédentaire",
+            "activity.light": "Légèrement actif",
+            "activity.moderate": "Modérément actif",
+            "activity.veryActive": "Très actif",
+            "activity.extreme": "Extrêmement actif",
+            weightGoal: "Objectif",
+            maintainWeight: "Maintenir",
+            loseWeight: "Perdre du poids",
+            gainWeight: "Prendre du muscle",
+            saveAndCalculate: "Enregistrer & Calculer",
+            manualEntry: "Saisie manuelle des calories",
+            manualEntryText: "Entrez les aliments et les détails pour ajouter des calories.",
+            food: "Aliment",
+            foodPlaceholder: "Ex. banane ou eau",
+            grams: "Grammes",
+            gramsPlaceholder: "Ex. 120",
+            liters: "Litres",
+            litersPlaceholder: "Ex. 0.5",
+            caloriesPer100g: "Calories / 100g",
+            caloriesPer100gPlaceholder: "Ex. 89",
+            caloriesPerLiter: "Calories / L",
+            caloriesPerLiterPlaceholder: "Ex. 40",
+            addCalories: "Ajouter des calories",
+            yourHistory: "Votre historique",
+            noFoodAdded: "Aucun aliment ajouté aujourd'hui.",
+            // messages
+            enterAllFields: "Veuillez remplir tous les champs requis.",
+            saveProfileSuccess: "Profil enregistré.",
+            saveProfileError: "Erreur lors de l'enregistrement du profil.",
+            logMeasurementsSuccess: "Mesures enregistrées.",
+            logMeasurementsError: "Erreur lors de l'enregistrement des mesures.",
+            noMeasurementsText: "Aucune mesure enregistrée.",
+            noHistoryText: "Aucun historique disponible."
+        }
+    };
+
+    // Helper: get nested translation keys like "tab.dashboard"
+    function getTranslation(lang, key) {
+        if (!translations[lang]) return null;
+        if (key.includes('.')) {
+            const parts = key.split('.');
+            let cur = translations[lang];
+            for (const p of parts) {
+                if (cur && (p in cur)) cur = cur[p];
+                else { cur = null; break; }
             }
-        };
+            return cur;
+        }
+        return translations[lang][key] ?? null;
+    }
 
-        // Selecteer alle DOM-elementen
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const profileForm = document.getElementById('profile-form');
-        const bmiResult = document.getElementById('bmi-result');
-        const bmiStatus = document.getElementById('bmi-status');
-        const dailyCalorieGoalEl = document.getElementById('daily-calorie-goal');
-        const timeToGoalEl = document.getElementById('time-to-goal');
-        const consumedCaloriesDisplay = document.getElementById('consumed-calories-display');
-        const burnedCaloriesDisplay = document.getElementById('burned-calories-display');
-        const netCaloriesDisplay = document.getElementById('net-calories-display');
-        const netCaloriesTodayDisplay = document.getElementById('net-calories-today-display');
-        const logList = document.getElementById('log-list');
-        const weightDate = document.getElementById('weight-date');
-        const weightExerciseName = document.getElementById('weight-exercise-name');
-        const weightNotes = document.getElementById('weight-notes');
-        const setsContainer = document.getElementById('sets-container');
-        const logWeightBtn = document.getElementById('log-weight-btn');
-        const cardioDate = document.getElementById('cardio-date');
-        const cardioActivity = document.getElementById('cardio-activity');
-        const cardioDuration = document.getElementById('cardio-duration');
-        const cardioDistance = document.getElementById('cardio-distance');
-        const logCardioBtn = document.getElementById('log-cardio-btn');
-        const dailyBurnedCalories = document.getElementById('daily-burned-calories');
-        const progressFill = document.getElementById('progress-fill');
-        const progressText = document.getElementById('progress-text');
-        const currentWeightDisplay = document.getElementById('current-weight-display');
-        const targetWeightDisplay = document.getElementById('target-weight-display');
-        const dailyGoalDisplay = document.getElementById('daily-goal-display');
-        const caloriesRemainingDisplay = document.getElementById('calories-remaining-display');
-        const modal = document.getElementById('modal');
-        const modalMessage = document.getElementById('modal-message');
-        const modalCloseBtn = document.getElementById('modal-close-btn');
-        const measurementsForm = document.getElementById('measurements-form');
-        const measurementsList = document.getElementById('measurements-list');
-        const measurementsTableBody = document.getElementById('measurements-table-body');
-        const noMeasurementsText = document.getElementById('no-measurements-text');
-        const addSetBtn = document.getElementById('add-set-btn');
-        const dailyConsumedTableBody = document.getElementById('dailyConsumedTableBody');
-        const noFoodText = document.getElementById('no-food-text');
-        const trainingHistoryTableBody = document.getElementById('trainingHistoryTableBody');
-        const noTrainingHistoryText = document.getElementById('no-training-history-text');
-        
-        // Nieuwe DOM-elementen voor de handmatige invoer
-        const foodInput = document.getElementById('foodInput');
-        const foodSuggestions = document.getElementById('food-suggestions');
-        const gramsInputContainer = document.getElementById('grams-input-container');
-        const gramsInput = document.getElementById('gramsInput');
-        const litersInputContainer = document.getElementById('liters-input-container');
-        const litersInput = document.getElementById('litersInput');
-        const calsPer100gContainer = document.getElementById('cals-per-100g-container');
-        const caloriesPer100gInput = document.getElementById('caloriesPer100gInput');
-        const calsPerLiterContainer = document.getElementById('cals-per-liter-container');
-        const caloriesPerLiterInput = document.getElementById('caloriesPerLiterInput');
-        const addCaloriesButton = document.getElementById('addCaloriesButton');
-        const resultDisplay = document.getElementById('resultDisplay');
-        const languageSelect = document.getElementById('language-select');
-        const manualBurnedCaloriesForm = document.getElementById('manual-burned-calories-form');
-        // Functies voor de logica
-        function showModal(messageKey, ...params) {
-            let message = translations[currentLanguage][messageKey] || messageKey;
+    // DOM references (guarded - query only when present)
+    const tabButtons = Array.from(document.querySelectorAll('.tab-button'));
+    const tabContents = Array.from(document.querySelectorAll('.tab-content'));
+    const profileForm = document.getElementById('profile-form');
+    const bmiResult = document.getElementById('bmi-result');
+    const bmiStatus = document.getElementById('bmi-status');
+    const dailyCalorieGoalEl = document.getElementById('daily-calorie-goal');
+    const timeToGoalEl = document.getElementById('time-to-goal');
+    const consumedCaloriesDisplay = document.getElementById('consumed-calories-display');
+    const burnedCaloriesDisplay = document.getElementById('burned-calories-display');
+    const netCaloriesDisplay = document.getElementById('net-calories-display');
+    const netCaloriesTodayDisplay = document.getElementById('net-calories-today-display');
+    const logList = document.getElementById('log-list');
+    const weightDate = document.getElementById('weight-date');
+    const weightExerciseName = document.getElementById('weight-exercise-name');
+    const weightNotes = document.getElementById('weight-notes');
+    const setsContainer = document.getElementById('sets-container');
+    const logWeightBtn = document.getElementById('log-weight-btn');
+    const cardioDate = document.getElementById('cardio-date');
+    const cardioActivity = document.getElementById('cardio-activity');
+    const cardioDuration = document.getElementById('cardio-duration');
+    const cardioDistance = document.getElementById('cardio-distance');
+    const logCardioBtn = document.getElementById('log-cardio-btn');
+    const dailyBurnedCalories = document.getElementById('daily-burned-calories');
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    const currentWeightDisplay = document.getElementById('current-weight-display');
+    const targetWeightDisplay = document.getElementById('target-weight-display');
+    const dailyGoalDisplay = document.getElementById('daily-goal-display');
+    const caloriesRemainingDisplay = document.getElementById('calories-remaining-display');
+    const modal = document.getElementById('modal');
+    const modalMessage = document.getElementById('modal-message');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const measurementsForm = document.getElementById('measurements-form');
+    const measurementsList = document.getElementById('measurements-list');
+    const measurementsTableBody = document.getElementById('measurements-table-body');
+    const noMeasurementsText = document.getElementById('no-measurements-text');
+    const addSetBtn = document.getElementById('add-set-btn');
+    const dailyConsumedTableBody = document.getElementById('dailyConsumedTableBody');
+    const noFoodText = document.getElementById('no-food-text');
+    const trainingHistoryTableBody = document.getElementById('trainingHistoryTableBody');
+    const noTrainingHistoryText = document.getElementById('no-training-history-text');
+
+    // Handmatige invoer DOM
+    const foodInput = document.getElementById('foodInput');
+    const foodSuggestions = document.getElementById('food-suggestions');
+    const gramsInputContainer = document.getElementById('grams-input-container');
+    const gramsInput = document.getElementById('gramsInput');
+    const litersInputContainer = document.getElementById('liters-input-container');
+    const litersInput = document.getElementById('litersInput');
+    const calsPer100gContainer = document.getElementById('cals-per-100g-container');
+    const caloriesPer100gInput = document.getElementById('caloriesPer100gInput');
+    const calsPerLiterContainer = document.getElementById('cals-per-liter-container');
+    const caloriesPerLiterInput = document.getElementById('caloriesPerLiterInput');
+    const addCaloriesButton = document.getElementById('addCaloriesButton');
+    const resultDisplay = document.getElementById('resultDisplay');
+    const languageSelect = document.getElementById('language-select');
+    const manualBurnedCaloriesForm = document.getElementById('manual-burned-calories-form');
+
+    // Utility functions
+    function showModal(messageKey, ...params) {
+        try {
+            const raw = getTranslation(currentLanguage, messageKey) || (translations[currentLanguage] && translations[currentLanguage][messageKey]) || messageKey;
+            let message = raw;
             params.forEach((param) => {
-                const key = Object.keys(param)[0];
-                const value = Object.values(param)[0];
-                message = message.replace(`{${key}}`, value);
+                const k = Object.keys(param)[0];
+                const v = Object.values(param)[0];
+                message = message.replace(`{${k}}`, v);
             });
-            modalMessage.textContent = message;
-            modal.classList.remove('hidden');
+            if (modalMessage) modalMessage.textContent = message;
+            if (modal) modal.classList.remove('hidden');
+        } catch (e) {
+            console.error("showModal error:", e);
         }
+    }
 
-        function calculateBmi(height, weight) {
-            if (!height || !weight || height <= 0 || weight <= 0) return { bmi: 0, status: "" };
-            const heightInMeters = height / 100;
-            const bmi = weight / (heightInMeters * heightInMeters);
-            let status;
-            if (bmi < 18.5) {
-                status = "Ondergewicht";
-            } else if (bmi >= 18.5 && bmi < 25) {
-                status = "Gezond gewicht";
-            } else if (bmi >= 25 && bmi < 30) {
-                status = "Overgewicht";
-            } else {
-                status = "Obesitas";
-            }
-            const statusTranslations = {
-                "Ondergewicht": { nl: "Ondergewicht", fr: "Sous-poids" },
-                "Gezond gewicht": { nl: "Gezond gewicht", fr: "Poids normal" },
-                "Overgewicht": { nl: "Overgewicht", fr: "Surpoids" },
-                "Obesitas": { nl: "Obesitas", fr: "Obésité" }
-            };
-            return { bmi: bmi.toFixed(1), status: statusTranslations[status][currentLanguage] || status };
+    function calculateBmi(height, weight) {
+        if (!height || !weight || height <= 0 || weight <= 0) return { bmi: 0, status: "" };
+        const heightInMeters = height / 100;
+        const bmi = weight / (heightInMeters * heightInMeters);
+        let status;
+        if (bmi < 18.5) status = "Ondergewicht";
+        else if (bmi < 25) status = "Gezond gewicht";
+        else if (bmi < 30) status = "Overgewicht";
+        else status = "Obesitas";
+
+        const statusTranslations = {
+            "Ondergewicht": { nl: "Ondergewicht", fr: "Sous-poids" },
+            "Gezond gewicht": { nl: "Gezond gewicht", fr: "Poids normal" },
+            "Overgewicht": { nl: "Overgewicht", fr: "Surpoids" },
+            "Obesitas": { nl: "Obesitas", fr: "Obésité" }
+        };
+        return { bmi: parseFloat(bmi.toFixed(1)), status: statusTranslations[status][currentLanguage] || status };
+    }
+
+    function calculateBmr(gender, height, weight, age) {
+        if (!gender || !height || !weight || !age) return 0;
+        if (gender === 'male') {
+            return 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+        } else {
+            return 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
         }
-        
-        function calculateBmr(gender, height, weight, age) {
-            if (!gender || !height || !weight || !age) return 0;
-            if (gender === 'male') {
-                return 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+    }
+
+    function calculateDailyGoal(weight, bmr, pal, weightGoal, targetWeight) {
+        if (!weight || !bmr || !pal || !weightGoal) return { goal: 0, time: 0 };
+
+        const maintenanceCalories = bmr * parseFloat(pal);
+        let goalCalories = 0;
+        let timeInWeeks = 0;
+        if (weightGoal === 'lose') {
+            goalCalories = maintenanceCalories - 500;
+            const caloriesPerKg = 7700;
+            const dailyDeficit = 500;
+            const weightDiff = weight - (typeof targetWeight === 'number' ? targetWeight : (userProfileData.targetWeight || 0));
+            if (weightDiff > 0) {
+                timeInWeeks = (weightDiff * caloriesPerKg) / (dailyDeficit * 7);
             } else {
-                return 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
-            }
-        }
-        
-        function calculateDailyGoal(weight, bmr, pal, weightGoal) {
-            if (!weight || !bmr || !pal || !weightGoal) return { goal: 0, time: 0 };
-        
-            const maintenanceCalories = bmr * parseFloat(pal);
-            let goalCalories = 0;
-            let timeInWeeks = 0;
-        
-            if (weightGoal === 'lose') {
-                goalCalories = maintenanceCalories - 500;
-                const caloriesPerKg = 7700;
-                const dailyDeficit = 500;
-                const weightDiff = weight - userProfileData.targetWeight;
-                if (weightDiff > 0) {
-                    timeInWeeks = (weightDiff * caloriesPerKg) / (dailyDeficit * 7);
-                } else {
-                    timeInWeeks = 0;
-                }
-            } else if (weightGoal === 'gain') {
-                goalCalories = maintenanceCalories + 250;
-                timeInWeeks = 0;
-            } else {
-                goalCalories = maintenanceCalories;
                 timeInWeeks = 0;
             }
-        
-            return {
-                goal: Math.max(0, Math.round(goalCalories)),
-                time: Math.round(timeInWeeks)
-            };
+        } else if (weightGoal === 'gain') {
+            goalCalories = maintenanceCalories + 250;
+            timeInWeeks = 0;
+        } else {
+            goalCalories = maintenanceCalories;
+            timeInWeeks = 0;
         }
-        
-        function updateProgress(currentWeight, initialWeight, targetWeight) {
-            if (!initialWeight || !targetWeight || !currentWeight) return;
-            let progress = 0;
-            const isLosingWeight = initialWeight > targetWeight;
-        
-            if (isLosingWeight) {
-                const totalChange = initialWeight - targetWeight;
-                const achievedChange = initialWeight - currentWeight;
-                if (totalChange > 0) {
-                    progress = (achievedChange / totalChange) * 100;
-                }
-            } else {
-                const totalChange = targetWeight - initialWeight;
-                const achievedChange = currentWeight - initialWeight;
-                if (totalChange > 0) {
-                    progress = (achievedChange / totalChange) * 100;
-                }
-            }
-            
-            progress = Math.min(100, Math.max(0, progress));
-        
-            progressFill.style.width = `${progress}%`;
-            progressText.textContent = `${Math.round(progress)}%`;
+        return { goal: Math.max(0, Math.round(goalCalories)), time: Math.round(timeInWeeks) };
+    }
+
+    function updateProgress(currentWeight, initialWeight, targetWeight) {
+        if (!initialWeight || !targetWeight || !currentWeight) {
+            if (progressFill) progressFill.style.width = '0%';
+            if (progressText) progressText.textContent = '0%';
+            return;
         }
-        
-        function updateUIWithProfileData(data) {
-            document.getElementById('gender').value = data.gender || '';
-            document.getElementById('height').value = data.height || '';
-            document.getElementById('age').value = data.age || '';
-            document.getElementById('current-weight').value = data.currentWeight || '';
-            document.getElementById('target-weight').value = data.targetWeight || '';
-            document.getElementById('activity-factor').value = data.activityFactor || '1.2';
-            document.getElementById('weight-goal').value = data.weightGoal || 'maintain';
-            
-            currentLanguage = data.language || 'nl';
-            languageSelect.value = currentLanguage;
+        let progress = 0;
+        const isLosingWeight = initialWeight > targetWeight;
+        if (isLosingWeight) {
+            const totalChange = initialWeight - targetWeight;
+            const achievedChange = initialWeight - currentWeight;
+            if (totalChange > 0) progress = (achievedChange / totalChange) * 100;
+        } else {
+            const totalChange = targetWeight - initialWeight;
+            const achievedChange = currentWeight - initialWeight;
+            if (totalChange > 0) progress = (achievedChange / totalChange) * 100;
+        }
+        progress = Math.min(100, Math.max(0, progress));
+        if (progressFill) progressFill.style.width = `${progress}%`;
+        if (progressText) progressText.textContent = `${Math.round(progress)}%`;
+    }
+
+    function updateUIWithProfileData(data) {
+        try {
+            if (!data) data = {};
+            const el = (id) => document.getElementById(id);
+            if (el('gender')) el('gender').value = data.gender || '';
+            if (el('height')) el('height').value = data.height || '';
+            if (el('age')) el('age').value = data.age || '';
+            if (el('current-weight')) el('current-weight').value = data.currentWeight || '';
+            if (el('target-weight')) el('target-weight').value = data.targetWeight || '';
+            if (el('activity-factor')) el('activity-factor').value = data.activityFactor || '1.2';
+            if (el('weight-goal')) el('weight-goal').value = data.weightGoal || 'maintain';
+
+            currentLanguage = data.language || currentLanguage || 'nl';
+            if (languageSelect) languageSelect.value = currentLanguage;
             translatePage(currentLanguage);
-        
-            currentWeightDisplay.textContent = `${translations[currentLanguage].current} ${data.currentWeight || 0} kg`;
-            targetWeightDisplay.textContent = `${translations[currentLanguage].target} ${data.targetWeight || 0} kg`;
-        
+
+            if (currentWeightDisplay) currentWeightDisplay.textContent = `${getTranslation(currentLanguage, 'current') || 'Huidig:'} ${data.currentWeight || 0} kg`;
+            if (targetWeightDisplay) targetWeightDisplay.textContent = `${getTranslation(currentLanguage, 'target') || 'Doel:'} ${data.targetWeight || 0} kg`;
+
             if (data.height && data.currentWeight) {
                 const { bmi, status } = calculateBmi(data.height, data.currentWeight);
-                bmiResult.textContent = bmi;
-                bmiStatus.textContent = status;
+                if (bmiResult) bmiResult.textContent = bmi;
+                if (bmiStatus) bmiStatus.textContent = status;
             } else {
-                bmiResult.textContent = translations[currentLanguage].noData;
-                bmiStatus.textContent = "";
+                if (bmiResult) bmiResult.textContent = getTranslation(currentLanguage, 'noData') || 'Geen gegevens';
+                if (bmiStatus) bmiStatus.textContent = "";
             }
-        
+
             if (data.gender && data.height && data.currentWeight && data.age && data.targetWeight) {
                 const bmr = calculateBmr(data.gender, data.height, data.currentWeight, data.age);
-                const { goal, time } = calculateDailyGoal(data.currentWeight, bmr, data.activityFactor, data.weightGoal);
-                dailyCalorieGoalEl.textContent = goal;
-                dailyGoalDisplay.textContent = `${goal} kcal`;
-                timeToGoalEl.textContent = time;
-                updateProgress(data.currentWeight, data.initialWeight, data.targetWeight);
+                const { goal, time } = calculateDailyGoal(data.currentWeight, bmr, data.activityFactor, data.weightGoal, data.targetWeight);
+                if (dailyCalorieGoalEl) dailyCalorieGoalEl.textContent = goal;
+                if (dailyGoalDisplay) dailyGoalDisplay.textContent = `${goal} kcal`;
+                if (timeToGoalEl) timeToGoalEl.textContent = time;
+                updateProgress(data.currentWeight, data.initialWeight || data.currentWeight, data.targetWeight);
             } else {
-                dailyCalorieGoalEl.textContent = '0';
-                dailyGoalDisplay.textContent = '0 kcal';
-                timeToGoalEl.textContent = '0';
-                progressFill.style.width = '0%';
-                progressText.textContent = '0%';
+                if (dailyCalorieGoalEl) dailyCalorieGoalEl.textContent = '0';
+                if (dailyGoalDisplay) dailyGoalDisplay.textContent = '0 kcal';
+                if (timeToGoalEl) timeToGoalEl.textContent = '0';
+                if (progressFill) progressFill.style.width = '0%';
+                if (progressText) progressText.textContent = '0%';
             }
+        } catch (e) {
+            console.error("updateUIWithProfileData error:", e);
         }
-        
-        function updateUIWithDailyLog(data) {
-            const consumed = data.consumedCalories || 0;
-            const burned = data.burnedCalories || 0;
-            const net = consumed - burned;
-            consumedCaloriesDisplay.textContent = `${translations[currentLanguage].consumed}${consumed} kcal`;
-            burnedCaloriesDisplay.textContent = `${translations[currentLanguage].burned}${burned} kcal`;
-            netCaloriesDisplay.textContent = `${net} kcal`;
-            netCaloriesTodayDisplay.textContent = `${net} kcal`;
-            dailyBurnedCalories.textContent = `${burned} kcal`;
-            updateRemainingCalories();
-        }
-        
-        function updateRemainingCalories() {
-            const dailyGoal = parseInt(dailyCalorieGoalEl.textContent) || 0;
-            const consumed = parseInt(consumedCaloriesDisplay.textContent.match(/\d+/)?.[0] || 0);
-            const burned = parseInt(burnedCaloriesDisplay.textContent.match(/\d+/)?.[0] || 0);
-            const remaining = dailyGoal - (consumed - burned);
-            caloriesRemainingDisplay.textContent = `${remaining} kcal`;
+    }
+
+    function updateUIWithDailyLog(data) {
+        const consumed = data?.consumedCalories || 0;
+        const burned = data?.burnedCalories || 0;
+        const net = consumed - burned;
+        if (consumedCaloriesDisplay) consumedCaloriesDisplay.textContent = `${getTranslation(currentLanguage, 'consumed') || 'Verbruikt: '}${consumed} kcal`;
+        if (burnedCaloriesDisplay) burnedCaloriesDisplay.textContent = `${getTranslation(currentLanguage, 'burned') || 'Verbrand: '}${burned} kcal`;
+        if (netCaloriesDisplay) netCaloriesDisplay.textContent = `${net} kcal`;
+        if (netCaloriesTodayDisplay) netCaloriesTodayDisplay.textContent = `${net} kcal`;
+        if (dailyBurnedCalories) dailyBurnedCalories.textContent = `${burned} kcal`;
+        updateRemainingCalories();
+    }
+
+    function updateRemainingCalories() {
+        const dailyGoal = parseInt(dailyCalorieGoalEl?.textContent) || 0;
+        const consumed = parseInt((consumedCaloriesDisplay?.textContent?.match(/\d+/) || [0])[0]);
+        const burned = parseInt((burnedCaloriesDisplay?.textContent?.match(/\d+/) || [0])[0]);
+        const remaining = dailyGoal - (consumed - burned);
+        if (caloriesRemainingDisplay) caloriesRemainingDisplay.textContent = `${remaining} kcal`;
+        if (caloriesRemainingDisplay) {
             caloriesRemainingDisplay.classList.toggle('text-red-600', remaining < 0);
             caloriesRemainingDisplay.classList.toggle('text-green-600', remaining >= 0);
         }
-        async function getTodaysConsumedItems() {
-            const today = new Date().toISOString().slice(0, 10);
+    }
+
+    async function getTodaysConsumedItems() {
+        if (!consumedItemsCollectionRef) return [];
+        const today = new Date().toISOString().slice(0, 10);
+        try {
             const q = query(consumedItemsCollectionRef, where('date', '==', today), orderBy('timestamp', 'asc'));
-            
-            try {
-                const querySnapshot = await getDocs(q);
-                return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } catch (e) {
-                console.error("Fout bij het ophalen van de dagelijkse lijst: ", e);
-                return [];
-            }
+            const snapshot = await getDocs(q);
+            return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+        } catch (e) {
+            console.error("Fout bij het ophalen van de dagelijkse lijst: ", e);
+            return [];
         }
-        
-        async function renderDailyConsumedItems() {
+    }
+
+    async function renderDailyConsumedItems() {
+        try {
             const items = await getTodaysConsumedItems();
+            if (!dailyConsumedTableBody) return;
             dailyConsumedTableBody.innerHTML = '';
-            
             const tableContainer = document.querySelector('#daily-nutrition-overview .table-container');
-            if (items.length > 0) {
-                if(tableContainer) tableContainer.style.display = 'block';
-                noFoodText.style.display = 'none';
-        
-                items.forEach((item) => {
+            if (items && items.length > 0) {
+                if (tableContainer) tableContainer.style.display = 'block';
+                if (noFoodText) noFoodText.style.display = 'none';
+                items.forEach(item => {
                     const row = document.createElement('tr');
-                    
-                    const getValue = (key) => {
-                        const value = item[key];
-                        return (value === null || typeof value === 'undefined') ? '—' : value;
-                    };
-        
+                    const getValue = (k) => (item[k] === null || typeof item[k] === 'undefined') ? '—' : item[k];
                     row.innerHTML = `
                         <td>${getValue('date')}</td>
                         <td>${getValue('name')}</td>
@@ -1197,275 +1033,260 @@
                     dailyConsumedTableBody.appendChild(row);
                 });
             } else {
-                if(tableContainer) tableContainer.style.display = 'none';
-                noFoodText.style.display = 'block';
-            }
-        }
-        
-        async function addConsumedItemToLog(foodName, quantity, calories, calsPerUnit, isLiquid) {
-            try {
-                if (dailyLogRef && consumedItemsCollectionRef) {
-                    const docSnap = await getDoc(dailyLogRef);
-                    const currentData = docSnap.exists() ? docSnap.data() : { consumedCalories: 0, burnedCalories: 0 };
-                    const newConsumed = (currentData.consumedCalories || 0) + parseFloat(calories);
-                    
-                    const today = new Date().toISOString().slice(0, 10);
-                    
-                    await setDoc(dailyLogRef, { consumedCalories: newConsumed, date: today }, { merge: true });
-        
-                    const newConsumedItem = {
-                        name: foodName,
-                        grams: isLiquid ? null : quantity,
-                        liters: isLiquid ? quantity : null,
-                        calories: parseFloat(calories),
-                        caloriesPer100g: isLiquid ? null : calsPerUnit,
-                        caloriesPerLiter: isLiquid ? calsPerUnit : null,
-                        date: today,
-                        timestamp: new Date().toISOString()
-                    };
-                    
-                    await setDoc(doc(consumedItemsCollectionRef), newConsumedItem);
-        
-                    const foodDocRef = doc(db, 'foodDatabase', foodName.toLowerCase());
-                    if (isLiquid) {
-                         await setDoc(foodDocRef, { caloriesPerLiter: calsPerUnit }, { merge: true });
-                    } else {
-                        await setDoc(foodDocRef, { caloriesPer100g: calsPerUnit }, { merge: true });
-                    }
-        
-                    showModal('foodAdded', { foodName }, { calories });
-                    renderDailyConsumedItems();
-                } else {
-                    showModal('errorInit');
-                }
-            } catch (e) {
-                console.error("Fout bij het toevoegen van calorieën: ", e);
-                showModal('errorAddingFood');
-            }
-        }
-        
-        async function loadMeasurements() {
-            try {
-                if (!measurementsCollectionRef) {
-                    console.log("measurementsCollectionRef is not initialized yet.");
-                    return;
-                }
-                const q = query(measurementsCollectionRef, orderBy("date", "desc"));
-                const querySnapshot = await getDocs(q);
-                measurementsTableBody.innerHTML = '';
-                
-                const tableContainer = document.querySelector('#measurements-list .table-container');
-                if (querySnapshot.empty) {
-                    if (tableContainer) tableContainer.style.display = 'none';
-                    noMeasurementsText.style.display = 'block';
-                    return;
-                }
-        
-                if (tableContainer) tableContainer.style.display = 'block';
-                noMeasurementsText.style.display = 'none';
-                
-                querySnapshot.forEach(doc => {
-                    const data = doc.data();
-                    const row = document.createElement('tr');
-                    
-                    const getValue = (key) => {
-                        const value = data[key];
-                        if (value === null || typeof value === 'undefined') {
-                            return '—';
-                        }
-                        return value;
-                    };
-                    row.innerHTML = `
-                        <td>${getValue('date')}</td>
-                        <td>${getValue('weight') !== '—' ? getValue('weight') + ' kg' : '—'}</td>
-                        <td>${getValue('fat') !== '—' ? getValue('fat') + ' %' : '—'}</td>
-                        <td>${getValue('water') !== '—' ? getValue('water') + ' %' : '—'}</td>
-                        <td>${getValue('waist') !== '—' ? getValue('waist') + ' cm' : '—'}</td>
-                        <td>${getValue('hip') !== '—' ? getValue('hip') + ' cm' : '—'}</td>
-                        <td>${getValue('buttocks') !== '—' ? getValue('buttocks') + ' cm' : '—'}</td>
-                    `;
-                    measurementsTableBody.appendChild(row);
-                });
-            } catch (e) {
-                console.error("Fout bij het laden van metingen:", e);
-                const tableContainer = document.querySelector('#measurements-list .table-container');
                 if (tableContainer) tableContainer.style.display = 'none';
-                noMeasurementsText.style.display = 'block';
+                if (noFoodText) noFoodText.style.display = 'block';
             }
+        } catch (e) {
+            console.error("renderDailyConsumedItems error:", e);
         }
-        
-        // Functie om de actieve tab weer te geven
-        function showTab(tabId) {
-            tabButtons.forEach(button => {
-                button.classList.remove('active');
-            });
-            tabContents.forEach(content => {
-                content.classList.add('hidden');
-            });
+    }
 
-            const selectedTabButton = document.querySelector(`[data-tab="${tabId}"]`);
-            if (selectedTabButton) {
-                selectedTabButton.classList.add('active');
-            }
+    // sanitize a string for firestore doc id usage
+    function sanitizeDocId(name) {
+        if (!name) return 'unknown';
+        return name.toLowerCase().replace(/[\s\/\\#\?\[\]]+/g, '-').slice(0, 150);
+    }
 
-            const selectedTabContent = document.getElementById(tabId);
-            if (selectedTabContent) {
-                selectedTabContent.classList.remove('hidden');
+    async function addConsumedItemToLog(foodNameRaw, quantity, calories, calsPerUnit, isLiquid) {
+        try {
+            if (!dailyLogRef || !consumedItemsCollectionRef) {
+                showModal('errorInit');
+                return;
             }
+            const foodName = foodNameRaw.trim();
+            const docSnap = await getDoc(dailyLogRef);
+            const currentData = docSnap.exists() ? docSnap.data() : { consumedCalories: 0, burnedCalories: 0 };
+            const newConsumed = (currentData.consumedCalories || 0) + parseFloat(calories);
 
-            // Voer specifieke functies uit voor elke tab
-            if (tabId === 'metingen') {
-                loadMeasurements();
-            } else if (tabId === 'history') {
-                loadHistory();
-            } else if (tabId === 'agenda') {
-                loadTrainingHistory();
-            } else if (tabId === 'manual-entry') {
-                renderDailyConsumedItems();
-            }
+            const today = new Date().toISOString().slice(0, 10);
+            await setDoc(dailyLogRef, { consumedCalories: newConsumed, date: today }, { merge: true });
+
+            const newConsumedItem = {
+                name: foodName,
+                grams: isLiquid ? null : quantity,
+                liters: isLiquid ? quantity : null,
+                calories: parseFloat(calories),
+                caloriesPer100g: isLiquid ? null : calsPerUnit,
+                caloriesPerLiter: isLiquid ? calsPerUnit : null,
+                date: today,
+                timestamp: new Date().toISOString()
+            };
+
+            await addDoc(consumedItemsCollectionRef, newConsumedItem);
+
+            // Save into a foodDatabase collection with sanitized id
+            const safeId = sanitizeDocId(foodName);
+            const foodDocRef = doc(db, 'foodDatabase', safeId);
+            if (isLiquid) await setDoc(foodDocRef, { caloriesPerLiter: calsPerUnit, name: foodName }, { merge: true });
+            else await setDoc(foodDocRef, { caloriesPer100g: calsPerUnit, name: foodName }, { merge: true });
+
+            showModal('foodAdded', { foodName }, { calories });
+            await renderDailyConsumedItems();
+        } catch (e) {
+            console.error("Fout bij het toevoegen van calorieën: ", e);
+            showModal('errorAddingFood');
         }
+    }
 
-        // Functie voor het dynamisch tonen van invoervelden
-        function toggleFoodInputFields(isLiquid) {
-            gramsInputContainer.classList.toggle('hidden', isLiquid);
-            calsPer100gContainer.classList.toggle('hidden', isLiquid);
-            litersInputContainer.classList.toggle('hidden', !isLiquid);
-            calsPerLiterContainer.classList.toggle('hidden', !isLiquid);
-            
-            if (isLiquid) {
-                gramsInput.value = '';
-                caloriesPer100gInput.value = '';
-            } else {
-                litersInput.value = '';
-                caloriesPerLiterInput.value = '';
+    async function loadMeasurements() {
+        try {
+            if (!measurementsCollectionRef) {
+                console.log("measurementsCollectionRef is not initialized yet.");
+                return;
             }
-        }
-        
-        // Event listeners voor de UI-elementen
-        
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                showTab(button.dataset.tab);
+            const q = query(measurementsCollectionRef, orderBy("date", "desc"));
+            const snapshot = await getDocs(q);
+            if (!measurementsTableBody) return;
+            measurementsTableBody.innerHTML = '';
+            const tableContainer = document.querySelector('#measurements-list .table-container');
+            if (snapshot.empty) {
+                if (tableContainer) tableContainer.style.display = 'none';
+                if (noMeasurementsText) noMeasurementsText.style.display = 'block';
+                return;
+            }
+            if (tableContainer) tableContainer.style.display = 'block';
+            if (noMeasurementsText) noMeasurementsText.style.display = 'none';
+            snapshot.forEach(d => {
+                const data = d.data();
+                const row = document.createElement('tr');
+                const getValue = (k) => (data[k] === null || typeof data[k] === 'undefined') ? '—' : data[k];
+                row.innerHTML = `
+                    <td>${getValue('date')}</td>
+                    <td>${getValue('weight') !== '—' ? getValue('weight') + ' kg' : '—'}</td>
+                    <td>${getValue('fat') !== '—' ? getValue('fat') + ' %' : '—'}</td>
+                    <td>${getValue('water') !== '—' ? getValue('water') + ' %' : '—'}</td>
+                    <td>${getValue('waist') !== '—' ? getValue('waist') + ' cm' : '—'}</td>
+                    <td>${getValue('hip') !== '—' ? getValue('hip') + ' cm' : '—'}</td>
+                    <td>${getValue('buttocks') !== '—' ? getValue('buttocks') + ' cm' : '—'}</td>
+                `;
+                measurementsTableBody.appendChild(row);
             });
-        });
+        } catch (e) {
+            console.error("Fout bij het laden van metingen:", e);
+            const tableContainer = document.querySelector('#measurements-list .table-container');
+            if (tableContainer) tableContainer.style.display = 'none';
+            if (noMeasurementsText) noMeasurementsText.style.display = 'block';
+        }
+    }
 
-        // Event listener voor de "Voeg Calorieën toe" knop
+    // Tab logic
+    function showTab(tabId) {
+        tabButtons.forEach(button => button.classList.remove('active'));
+        tabContents.forEach(content => content.classList.add('hidden'));
+        const selectedTabButton = document.querySelector(`[data-tab="${tabId}"]`);
+        if (selectedTabButton) selectedTabButton.classList.add('active');
+        const selectedTabContent = document.getElementById(tabId);
+        if (selectedTabContent) selectedTabContent.classList.remove('hidden');
+
+        // Run specific functions per tab
+        if (tabId === 'metingen') loadMeasurements();
+        else if (tabId === 'history') loadHistory();
+        else if (tabId === 'agenda') loadTrainingHistory();
+        else if (tabId === 'manual-entry') renderDailyConsumedItems();
+    }
+
+    function toggleFoodInputFields(isLiquid) {
+        if (!gramsInputContainer || !calsPer100gContainer || !litersInputContainer || !calsPerLiterContainer) return;
+        gramsInputContainer.classList.toggle('hidden', isLiquid);
+        calsPer100gContainer.classList.toggle('hidden', isLiquid);
+        litersInputContainer.classList.toggle('hidden', !isLiquid);
+        calsPerLiterContainer.classList.toggle('hidden', !isLiquid);
+        if (isLiquid) {
+            if (gramsInput) gramsInput.value = '';
+            if (caloriesPer100gInput) caloriesPer100gInput.value = '';
+        } else {
+            if (litersInput) litersInput.value = '';
+            if (caloriesPerLiterInput) caloriesPerLiterInput.value = '';
+        }
+    }
+
+    // Event listeners
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => showTab(button.dataset.tab));
+    });
+
+    // add calories
+    if (addCaloriesButton) {
         addCaloriesButton.addEventListener('click', async () => {
-            const foodName = foodInput.value.trim();
+            const foodName = (foodInput?.value || '').trim();
             const isLiquid = !litersInputContainer.classList.contains('hidden');
-            let quantity, caloriesPerUnit, calculatedCalories;
-
+            let quantity = 0, caloriesPerUnit = 0, calculatedCalories = 0;
             if (isLiquid) {
-                quantity = parseFloat(litersInput.value);
-                caloriesPerUnit = parseFloat(caloriesPerLiterInput.value);
+                quantity = parseFloat(litersInput?.value) || 0;
+                caloriesPerUnit = parseFloat(caloriesPerLiterInput?.value) || 0;
                 calculatedCalories = (quantity * caloriesPerUnit).toFixed(1);
             } else {
-                quantity = parseFloat(gramsInput.value);
-                caloriesPerUnit = parseFloat(caloriesPer100gInput.value);
+                quantity = parseFloat(gramsInput?.value) || 0;
+                caloriesPerUnit = parseFloat(caloriesPer100gInput?.value) || 0;
                 calculatedCalories = ((quantity / 100) * caloriesPerUnit).toFixed(1);
             }
-
-            if (!foodName || isNaN(quantity) || isNaN(caloriesPerUnit)) {
+            if (!foodName || isNaN(quantity) || quantity <= 0) {
                 showModal('enterAllFields');
                 return;
             }
-
             await addConsumedItemToLog(foodName, quantity, calculatedCalories, caloriesPerUnit, isLiquid);
-
-            // Wis de invoervelden na succesvolle toevoeging
-            foodInput.value = '';
-            gramsInput.value = '';
-            litersInput.value = '';
-            caloriesPer100gInput.value = '';
-            caloriesPerLiterInput.value = '';
-            renderDailyConsumedItems();
+            if (foodInput) foodInput.value = '';
+            if (gramsInput) gramsInput.value = '';
+            if (litersInput) litersInput.value = '';
+            if (caloriesPer100gInput) caloriesPer100gInput.value = '';
+            if (caloriesPerLiterInput) caloriesPerLiterInput.value = '';
+            await renderDailyConsumedItems();
         });
+    }
 
-        // Event listener voor het dynamisch tonen van invoervelden
+    // food input heuristics & suggestions
+    if (foodInput) {
         foodInput.addEventListener('input', () => {
-            const foodName = foodInput.value.toLowerCase().trim();
-            const isLiquid = ['water', 'melk', 'sap', 'drank', 'koffie', 'thee'].some(liquid => foodName.includes(liquid));
+            const text = (foodInput.value || '').toLowerCase().trim();
+            const isLiquid = ['water', 'melk', 'sap', 'drank', 'koffie', 'thee'].some(liq => text.includes(liq));
             toggleFoodInputFields(isLiquid);
         });
-        // Zoekfunctionaliteit voor voedsel
+
         foodInput.addEventListener('input', async () => {
-            const searchTerm = foodInput.value.toLowerCase().trim();
-            if (searchTerm.length > 0) {
-                 const suggestions = Object.keys(localFoodDatabase)
-                    .filter(foodName => foodName.includes(searchTerm))
-                    .slice(0, 5);
-                
-                foodSuggestions.innerHTML = '';
-                if (suggestions.length > 0) {
-                    suggestions.forEach(foodName => {
-                        const suggestionDiv = document.createElement('div');
-                        suggestionDiv.textContent = foodName.charAt(0).toUpperCase() + foodName.slice(1);
-                        suggestionDiv.addEventListener('click', () => {
-                            foodInput.value = foodName.charAt(0).toUpperCase() + foodName.slice(1);
-                            const food = localFoodDatabase[foodName];
-                            const isLiquid = !!food.caloriesPerLiter;
-                            toggleFoodInputFields(isLiquid);
-                            if (isLiquid) {
-                                litersInput.value = food.liters || '';
-                                caloriesPerLiterInput.value = food.caloriesPerLiter;
-                            } else {
-                                gramsInput.value = food.grams || '';
-                                caloriesPer100gInput.value = food.caloriesPer100g;
-                            }
-                            foodSuggestions.classList.add('hidden');
-                        });
-                        foodSuggestions.appendChild(suggestionDiv);
+            const searchTerm = (foodInput.value || '').toLowerCase().trim();
+            if (!foodSuggestions) return;
+            if (searchTerm.length === 0) {
+                foodSuggestions.style.display = 'none';
+                return;
+            }
+            const suggestions = Object.keys(localFoodDatabase)
+                .filter(fn => fn.includes(searchTerm))
+                .slice(0, 5);
+            foodSuggestions.innerHTML = '';
+            if (suggestions.length > 0) {
+                suggestions.forEach(foodName => {
+                    const suggestionDiv = document.createElement('div');
+                    suggestionDiv.textContent = foodName.charAt(0).toUpperCase() + foodName.slice(1);
+                    suggestionDiv.addEventListener('click', () => {
+                        if (foodInput) foodInput.value = suggestionDiv.textContent;
+                        const food = localFoodDatabase[foodName];
+                        const isLiquid = !!food.caloriesPerLiter;
+                        toggleFoodInputFields(isLiquid);
+                        if (isLiquid && litersInput) litersInput.value = food.liters || '';
+                        if (!isLiquid && gramsInput) gramsInput.value = food.grams || '';
+                        if (isLiquid && caloriesPerLiterInput) caloriesPerLiterInput.value = food.caloriesPerLiter || '';
+                        if (!isLiquid && caloriesPer100gInput) caloriesPer100gInput.value = food.caloriesPer100g || '';
+                        foodSuggestions.style.display = 'none';
                     });
-                    foodSuggestions.classList.remove('hidden');
-                } else {
-                    foodSuggestions.classList.add('hidden');
-                }
+                    foodSuggestions.appendChild(suggestionDiv);
+                });
+                foodSuggestions.style.display = 'block';
             } else {
-                foodSuggestions.classList.add('hidden');
+                foodSuggestions.style.display = 'none';
             }
         });
-        
+
         document.addEventListener('click', (e) => {
             if (!foodInput.contains(e.target) && !foodSuggestions.contains(e.target)) {
-                foodSuggestions.classList.add('hidden');
+                if (foodSuggestions) foodSuggestions.style.display = 'none';
             }
         });
-        
-// Profielformulier opslaan
-profileForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(profileForm);
-    const data = {
-        gender: formData.get('gender'),
-        height: parseFloat(formData.get('height')),
-        age: parseInt(formData.get('age')),
-        currentWeight: parseFloat(formData.get('current-weight')),
-        targetWeight: parseFloat(formData.get('target-weight')),
-        activityFactor: parseFloat(formData.get('activity-factor')),
-        weightGoal: formData.get('weight-goal'),
-        language: formData.get('language')
-    };
-
-    // Dit zorgt ervoor dat je initialWeight (startgewicht) wordt opgeslagen bij de eerste keer
-    if (!userProfileData.initialWeight && data.currentWeight) {
-        data.initialWeight = data.currentWeight;
-    } else if (userProfileData.initialWeight) {
-        data.initialWeight = userProfileData.initialWeight;
     }
 
-    if (userProfileRef) {
-        await setDoc(userProfileRef, data, { merge: true });
-        
-        // Deze regel zorgt ervoor dat je dashboard direct wordt bijgewerkt
-        updateUIWithProfileData(data);
-        
-        showModal('saveProfileSuccess');
-    } else {
-        showModal('saveProfileError');
+    // profile save
+    if (profileForm) {
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const formData = new FormData(profileForm);
+                const data = {
+                    gender: formData.get('gender'),
+                    height: parseFloat(formData.get('height')) || null,
+                    age: parseInt(formData.get('age')) || null,
+                    currentWeight: parseFloat(formData.get('current-weight')) || null,
+                    targetWeight: parseFloat(formData.get('target-weight')) || null,
+                    activityFactor: parseFloat(formData.get('activity-factor')) || 1.2,
+                    weightGoal: formData.get('weight-goal'),
+                    language: formData.get('language') || currentLanguage
+                };
+
+                // ensure refs exist (if auth completed)
+                if (!userProfileRef && auth.currentUser) {
+                    const uid = auth.currentUser.uid;
+                    userProfileRef = doc(db, 'artifacts/nutriscan-b3449/users', uid);
+                }
+
+                // initialWeight handling
+                if (!userProfileData.initialWeight && data.currentWeight) data.initialWeight = data.currentWeight;
+                else if (userProfileData.initialWeight) data.initialWeight = userProfileData.initialWeight;
+
+                if (userProfileRef) {
+                    await setDoc(userProfileRef, data, { merge: true });
+                    userProfileData = { ...userProfileData, ...data }; // keep local copy
+                    updateUIWithProfileData(data);
+                    showModal('saveProfileSuccess');
+                } else {
+                    showModal('saveProfileError');
+                }
+            } catch (err) {
+                console.error("Error saving profile:", err);
+                showModal('saveProfileError');
+            }
+        });
     }
-});
-        
-        // Set toevoegen bij krachttraining
+
+    // add set
+    if (addSetBtn) {
         addSetBtn.addEventListener('click', () => {
             const newSetRow = document.createElement('div');
             newSetRow.classList.add('flex', 'gap-2', 'set-row');
@@ -1475,27 +1296,30 @@ profileForm.addEventListener('submit', async (e) => {
             `;
             setsContainer.appendChild(newSetRow);
         });
+    }
 
-        // Krachttraining loggen
+    // log weight (strength)
+    if (logWeightBtn) {
         logWeightBtn.addEventListener('click', async () => {
-            const date = weightDate.value;
-            const exercise = weightExerciseName.value;
+            const date = weightDate?.value;
+            const exercise = weightExerciseName?.value;
             const sets = [];
             document.querySelectorAll('.set-row').forEach(row => {
-                const weight = parseFloat(row.querySelector('input:nth-child(1)').value);
-                const reps = parseInt(row.querySelector('input:nth-child(2)').value);
-                if (weight && reps) {
-                    sets.push({ weight, reps });
-                }
+                const weight = parseFloat(row.querySelector('input:nth-child(1)')?.value) || null;
+                const reps = parseInt(row.querySelector('input:nth-child(2)')?.value) || null;
+                if (weight && reps) sets.push({ weight, reps });
             });
-            const notes = weightNotes.value;
+            const notes = weightNotes?.value || '';
 
             if (!date || !exercise || sets.length === 0) {
                 showModal('minWeightEntry');
                 return;
             }
-
             try {
+                if (!trainingLogsCollectionRef && auth.currentUser) {
+                    trainingLogsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${auth.currentUser.uid}/trainingLogs`);
+                }
+                if (!trainingLogsCollectionRef) { showModal('logWeightError'); return; }
                 const logData = { date, exercise, sets, notes, type: 'strength' };
                 await addDoc(trainingLogsCollectionRef, logData);
                 showModal('logWeightSuccess');
@@ -1504,56 +1328,64 @@ profileForm.addEventListener('submit', async (e) => {
                 showModal('logWeightError');
             }
         });
-        
-        // Cardio loggen
+    }
+
+    // cardio log
+    if (logCardioBtn) {
         logCardioBtn.addEventListener('click', async () => {
-            const date = cardioDate.value;
-            const activity = cardioActivity.value;
-            const duration = parseFloat(cardioDuration.value);
-            const distance = parseFloat(cardioDistance.value);
-            const bodyWeight = userProfileData.currentWeight;
+            const date = cardioDate?.value;
+            const activity = cardioActivity?.value;
+            const duration = parseFloat(cardioDuration?.value) || 0;
+            const distance = parseFloat(cardioDistance?.value) || 0;
+            const bodyWeight = userProfileData?.currentWeight || 0;
 
             if (!date || !activity || !duration || !bodyWeight) {
                 showModal('enterAllFields');
                 return;
             }
 
-            // Simpele calorieberekening voor cardio (verfijn dit indien gewenst)
-            const met = {
-                'hardlopen': 7,
-                'wandelen': 3.5,
-                'fietsen': 8,
-                'crosstrainer': 7,
-                'roeien': 7,
-                'zwemmen': 8
-            };
+            const met = { 'hardlopen': 7, 'wandelen': 3.5, 'fietsen': 8, 'crosstrainer': 7, 'roeien': 7, 'zwemmen': 8 };
             const metValue = met[activity] || 3.5;
             const burnedCalories = Math.round((metValue * bodyWeight * duration) / 60);
 
             try {
+                if (!trainingLogsCollectionRef && auth.currentUser) {
+                    trainingLogsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${auth.currentUser.uid}/trainingLogs`);
+                }
+                if (!trainingLogsCollectionRef) { showModal('logCardioError'); return; }
                 await addDoc(trainingLogsCollectionRef, { date, activity, duration, distance, burnedCalories, type: 'cardio' });
+
+                if (!dailyLogRef && auth.currentUser) {
+                    const today = new Date().toISOString().slice(0,10);
+                    dailyLogRef = doc(db, `artifacts/nutriscan-b3449/users/${auth.currentUser.uid}/dailyLogs`, today);
+                }
                 const dailyDocSnap = await getDoc(dailyLogRef);
                 const currentBurned = dailyDocSnap.exists() ? dailyDocSnap.data().burnedCalories || 0 : 0;
                 await setDoc(dailyLogRef, { burnedCalories: currentBurned + burnedCalories }, { merge: true });
+
                 showModal('logCardioSuccess', { calories: burnedCalories });
             } catch (e) {
                 console.error(e);
                 showModal('logCardioError');
             }
         });
+    }
 
-        // Handmatige calorieverbranding loggen
+    // manual burn form (if present)
+    if (manualBurnedCaloriesForm) {
         manualBurnedCaloriesForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const date = document.getElementById('manual-burn-date').value;
-            const burnedAmount = parseFloat(document.getElementById('manual-burn-amount').value);
-
+            const date = document.getElementById('manual-burn-date')?.value;
+            const burnedAmount = parseFloat(document.getElementById('manual-burn-amount')?.value) || NaN;
             if (!date || isNaN(burnedAmount)) {
                 showModal('enterAllFields');
                 return;
             }
-
             try {
+                if (!dailyLogRef && auth.currentUser) {
+                    const today = new Date().toISOString().slice(0,10);
+                    dailyLogRef = doc(db, `artifacts/nutriscan-b3449/users/${auth.currentUser.uid}/dailyLogs`, today);
+                }
                 const dailyDocSnap = await getDoc(dailyLogRef);
                 const currentBurned = dailyDocSnap.exists() ? dailyDocSnap.data().burnedCalories || 0 : 0;
                 await setDoc(dailyLogRef, { burnedCalories: currentBurned + burnedAmount }, { merge: true });
@@ -1563,23 +1395,25 @@ profileForm.addEventListener('submit', async (e) => {
                 showModal('logBurnError');
             }
         });
+    }
 
-        // Metingen loggen
+    // measurements form
+    if (measurementsForm) {
         measurementsForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const date = document.getElementById('measurement-date').value;
-            const weight = parseFloat(document.getElementById('measurement-weight').value);
-            const fat = parseFloat(document.getElementById('measurement-fat').value);
-            const water = parseFloat(document.getElementById('measurement-water').value);
-            const waist = parseFloat(document.getElementById('measurement-waist').value);
-            const hip = parseFloat(document.getElementById('measurement-hip').value);
-            const buttocks = parseFloat(document.getElementById('measurement-buttocks').value);
+            const date = document.getElementById('measurement-date')?.value;
+            const weight = parseFloat(document.getElementById('measurement-weight')?.value);
+            const fat = parseFloat(document.getElementById('measurement-fat')?.value);
+            const water = parseFloat(document.getElementById('measurement-water')?.value);
+            const waist = parseFloat(document.getElementById('measurement-waist')?.value);
+            const hip = parseFloat(document.getElementById('measurement-hip')?.value);
+            const buttocks = parseFloat(document.getElementById('measurement-buttocks')?.value);
 
             if (!date || (isNaN(weight) && isNaN(fat) && isNaN(water) && isNaN(waist) && isNaN(hip) && isNaN(buttocks))) {
                 showModal('minMeasurementEntry');
                 return;
             }
-            
+
             const measurementData = { date };
             if (!isNaN(weight)) measurementData.weight = weight;
             if (!isNaN(fat)) measurementData.fat = fat;
@@ -1589,173 +1423,212 @@ profileForm.addEventListener('submit', async (e) => {
             if (!isNaN(buttocks)) measurementData.buttocks = buttocks;
 
             try {
+                if (!measurementsCollectionRef && auth.currentUser) {
+                    measurementsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${auth.currentUser.uid}/measurements`);
+                }
+                if (!measurementsCollectionRef) { showModal('logMeasurementsError'); return; }
                 await addDoc(measurementsCollectionRef, measurementData);
                 showModal('logMeasurementsSuccess');
-                loadMeasurements();
+                await loadMeasurements();
             } catch (e) {
                 console.error(e);
                 showModal('logMeasurementsError');
             }
         });
-        
-        // Fitnessgeschiedenis laden
-        async function loadTrainingHistory() {
-            try {
-                if (!trainingLogsCollectionRef) return;
-                const q = query(trainingLogsCollectionRef, orderBy("date", "desc"));
-                const querySnapshot = await getDocs(q);
-                trainingHistoryTableBody.innerHTML = '';
-        
-                const tableContainer = document.querySelector('#training-history .table-container');
-                if (querySnapshot.empty) {
-                    if (tableContainer) tableContainer.style.display = 'none';
-                    noTrainingHistoryText.style.display = 'block';
-                    return;
-                }
-        
-                if (tableContainer) tableContainer.style.display = 'block';
-                noTrainingHistoryText.style.display = 'none';
-        
-                querySnapshot.forEach(doc => {
-                    const data = doc.data();
-                    const row = document.createElement('tr');
-        
-                    const isCardio = data.type === 'cardio';
-                    
-                    const getValue = (key) => {
-                        const value = data[key];
-                        return (value === null || typeof value === 'undefined' || value === '') ? '—' : value;
-                    };
-        
-                    let setsDisplay = '—';
-                    let repsDisplay = '—';
-                    if (data.sets && data.sets.length > 0) {
-                        setsDisplay = data.sets.length;
-                        repsDisplay = data.sets.map(s => s.reps).join(', ');
-                    }
-        
-                    row.innerHTML = `
-                        <td>${getValue('date')}</td>
-                        <td>${getValue('exercise') ? getValue('exercise') : '—'}</td>
-                        <td>${repsDisplay}</td>
-                        <td>${setsDisplay}</td>
-                        <td>${isCardio ? translations[currentLanguage][data.activity] || data.activity : '—'}</td>
-                        <td>${isCardio ? getValue('duration') + ' min' : '—'}</td>
-                        <td>${isCardio ? getValue('distance') + ' km' : '—'}</td>
-                    `;
-                    trainingHistoryTableBody.appendChild(row);
-                });
-            } catch (e) {
-                console.error("Fout bij het laden van trainingshistorie:", e);
-                const tableContainer = document.querySelector('#training-history .table-container');
+    }
+
+    // Training history loader
+    async function loadTrainingHistory() {
+        try {
+            if (!trainingLogsCollectionRef) {
+                if (auth.currentUser) trainingLogsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${auth.currentUser.uid}/trainingLogs`);
+                else return;
+            }
+            const q = query(trainingLogsCollectionRef, orderBy("date", "desc"));
+            const snapshot = await getDocs(q);
+            if (!trainingHistoryTableBody) return;
+            trainingHistoryTableBody.innerHTML = '';
+            const tableContainer = document.querySelector('#training-history .table-container');
+            if (snapshot.empty) {
                 if (tableContainer) tableContainer.style.display = 'none';
-                noTrainingHistoryText.style.display = 'block';
+                if (noTrainingHistoryText) noTrainingHistoryText.style.display = 'block';
+                return;
             }
-        }
-        
-        async function loadHistory() {
-            try {
-                if (!auth.currentUser) return;
-                const dailyLogsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${auth.currentUser.uid}/dailyLogs`);
-                const q = query(dailyLogsCollectionRef, orderBy("date", "desc"), limit(7));
-                const querySnapshot = await getDocs(q);
-                logList.innerHTML = '';
-                if (querySnapshot.empty) {
-                    logList.innerHTML = `<p class="text-center text-gray-500" id="no-history-text">${translations[currentLanguage].noHistoryText}</p>`;
-                } else {
-                    querySnapshot.forEach(doc => {
-                        const data = doc.data();
-                        const div = document.createElement('div');
-                        div.classList.add('card', 'mb-2');
-                        div.innerHTML = `
-                            <p class="font-bold">${data.date}</p>
-                            <p>${translations[currentLanguage].consumed}${data.consumedCalories || 0} kcal</p>
-                            <p>${translations[currentLanguage].burned}${data.burnedCalories || 0} kcal</p>
-                        `;
-                        logList.appendChild(div);
-                    });
+            if (tableContainer) tableContainer.style.display = 'block';
+            if (noTrainingHistoryText) noTrainingHistoryText.style.display = 'none';
+            snapshot.forEach(d => {
+                const data = d.data();
+                const row = document.createElement('tr');
+                const isCardio = data.type === 'cardio';
+                const getValue = (k) => (data[k] === null || typeof data[k] === 'undefined' || data[k] === '') ? '—' : data[k];
+                let setsDisplay = '—';
+                let repsDisplay = '—';
+                if (data.sets && data.sets.length > 0) {
+                    setsDisplay = data.sets.length;
+                    repsDisplay = data.sets.map(s => s.reps).join(', ');
                 }
-            } catch (e) {
-                console.error("Fout bij het laden van geschiedenis:", e);
-                logList.innerHTML = `<p class="text-center text-gray-500">${translations[currentLanguage].noHistoryText}</p>`;
+                row.innerHTML = `
+                    <td>${getValue('date')}</td>
+                    <td>${getValue('exercise') ? getValue('exercise') : '—'}</td>
+                    <td>${repsDisplay}</td>
+                    <td>${setsDisplay}</td>
+                    <td>${isCardio ? (getTranslation(currentLanguage, data.activity) || data.activity) : '—'}</td>
+                    <td>${isCardio ? (getValue('duration') + ' min') : '—'}</td>
+                    <td>${isCardio ? (getValue('distance') + ' km') : '—'}</td>
+                `;
+                trainingHistoryTableBody.appendChild(row);
+            });
+        } catch (e) {
+            console.error("Fout bij het laden van trainingshistorie:", e);
+            const tableContainer = document.querySelector('#training-history .table-container');
+            if (tableContainer) tableContainer.style.display = 'none';
+            if (noTrainingHistoryText) noTrainingHistoryText.style.display = 'block';
+        }
+    }
+
+    async function loadHistory() {
+        try {
+            if (!auth.currentUser) return;
+            if (!dailyLogsCollectionRef) dailyLogsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${auth.currentUser.uid}/dailyLogs`);
+            const q = query(dailyLogsCollectionRef, orderBy("date", "desc"), limit(7));
+            const snapshot = await getDocs(q);
+            if (!logList) return;
+            logList.innerHTML = '';
+            if (snapshot.empty) {
+                logList.innerHTML = `<p class="text-center text-gray-500" id="no-history-text">${getTranslation(currentLanguage, 'noHistoryText') || 'Nog geen logboeken beschikbaar.'}</p>`;
+            } else {
+                snapshot.forEach(d => {
+                    const data = d.data();
+                    const div = document.createElement('div');
+                    div.classList.add('card', 'mb-2');
+                    div.innerHTML = `
+                        <p class="font-bold">${data.date}</p>
+                        <p>${getTranslation(currentLanguage, 'consumed') || 'Verbruikt: '}${data.consumedCalories || 0} kcal</p>
+                        <p>${getTranslation(currentLanguage, 'burned') || 'Verbrand: '}${data.burnedCalories || 0} kcal</p>
+                    `;
+                    logList.appendChild(div);
+                });
             }
+        } catch (e) {
+            console.error("Fout bij het laden van geschiedenis:", e);
+            if (logList) logList.innerHTML = `<p class="text-center text-gray-500">${getTranslation(currentLanguage, 'noHistoryText') || 'Nog geen logboeken beschikbaar.'}</p>`;
         }
-        
-        const translatePage = (lang) => {
-            document.querySelectorAll('[data-translate]').forEach(el => {
-                const key = el.dataset.translate;
-                if (translations[lang] && translations[lang][key]) {
-                    el.textContent = translations[lang][key];
-                }
-            });
-            document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
-                const key = el.dataset.translatePlaceholder;
-                if (translations[lang] && translations[lang][key]) {
-                    el.placeholder = translations[lang][key];
-                }
-            });
-            updateUIWithProfileData(userProfileData);
-            updateUIWithDailyLog({ consumedCalories: 0, burnedCalories: 0 }); // Zorgt ervoor dat de UI direct wordt bijgewerkt bij het wijzigen van de taal
-        };
-                // Hoofd-initialisatiefunctie en event listeners
-        document.addEventListener('DOMContentLoaded', async () => {
-            showTab('dashboard'); 
-            
-            modalCloseBtn.addEventListener('click', () => {
-                modal.classList.add('hidden');
-            });
-        
-            signInAnonymously(auth);
-        
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    const uid = user.uid;
-                    const today = new Date().toISOString().slice(0, 10);
-                    userProfileRef = doc(db, 'artifacts/nutriscan-b3449/users', uid);
-                    dailyLogRef = doc(db, `artifacts/nutriscan-b3449/users/${uid}/dailyLogs`, today);
-                    consumedItemsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${uid}/consumedItems`);
-                    trainingLogsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${uid}/trainingLogs`);
-                    measurementsCollectionRef = collection(db, `artifacts/nutriscan-b3449/users/${uid}/measurements`);
-        
-                    const lastLoginDate = localStorage.getItem('lastLoginDate');
-                    if (lastLoginDate !== today) {
-                        await setDoc(dailyLogRef, { consumedCalories: 0, burnedCalories: 0, date: today });
-                        localStorage.setItem('lastLoginDate', today);
-                    }
-        
-                    onSnapshot(userProfileRef, (docSnap) => {
-                        if (docSnap.exists()) {
-                            userProfileData = docSnap.data();
-                        } else {
-                            userProfileData = {};
-                        }
-                        updateUIWithProfileData(userProfileData);
-                        updateRemainingCalories();
-                    });
-        
-                    onSnapshot(dailyLogRef, (docSnap) => {
-                        if (docSnap.exists()) {
-                            updateUIWithDailyLog(docSnap.data());
-                        } else {
-                            updateUIWithDailyLog({});
-                        }
-                    });
-                    
-                    onSnapshot(consumedItemsCollectionRef, () => {
-                        renderDailyConsumedItems();
-                    });
-        
-                    languageSelect.addEventListener('change', async () => {
-                        const newLang = languageSelect.value;
-                        if (userProfileRef) {
-                            await setDoc(userProfileRef, { language: newLang }, { merge: true });
-                        }
-                        currentLanguage = newLang;
-                        translatePage(newLang);
-                    });
-                }
-            });
+    }
+
+    const translatePage = (lang) => {
+        document.querySelectorAll('[data-translate]').forEach(el => {
+            const key = el.dataset.translate;
+            const t = getTranslation(lang, key);
+            if (t) el.textContent = t;
         });
+        document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+            const key = el.dataset.translatePlaceholder;
+            const t = getTranslation(lang, key);
+            if (t) el.placeholder = t;
+        });
+        updateUIWithProfileData(userProfileData);
+        updateUIWithDailyLog({ consumedCalories: 0, burnedCalories: 0 });
+    };
+
+    // Initialization
+    document.addEventListener('DOMContentLoaded', async () => {
+        showTab('dashboard');
+
+        if (modalCloseBtn) modalCloseBtn.addEventListener('click', () => modal.classList.add('hidden'));
+
+        // Sign in anonymously and set refs on auth change
+        try {
+            await signInAnonymously(auth);
+        } catch (e) {
+            console.warn("Aanmelden anoniem mislukt (mogelijk al aangemeld):", e);
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) return;
+            const uid = user.uid;
+            const today = new Date().toISOString().slice(0,10);
+
+            // Create references
+            userProfileRef = doc(db, 'artifacts', 'nutriscan-b3449', 'users', uid); // changed path to nested docs to be safe
+            // Note: For daily logs we use a collection 'dailyLogs' and documents keyed by date
+            dailyLogRef = doc(db, 'artifacts', 'nutriscan-b3449', 'users', uid, 'dailyLogs', today);
+            consumedItemsCollectionRef = collection(db, 'artifacts', 'nutriscan-b3449', 'users', uid, 'consumedItems');
+            trainingLogsCollectionRef = collection(db, 'artifacts', 'nutriscan-b3449', 'users', uid, 'trainingLogs');
+            measurementsCollectionRef = collection(db, 'artifacts', 'nutriscan-b3449', 'users', uid, 'measurements');
+            dailyLogsCollectionRef = collection(db, 'artifacts', 'nutriscan-b3449', 'users', uid, 'dailyLogs');
+
+            // ensure today's doc exists (reset if new day)
+            const lastLoginDate = localStorage.getItem('lastLoginDate');
+            if (lastLoginDate !== today) {
+                try {
+                    await setDoc(dailyLogRef, { consumedCalories: 0, burnedCalories: 0, date: today }, { merge: true });
+                    localStorage.setItem('lastLoginDate', today);
+                } catch (e) {
+                    console.warn("Kon today's daily log niet initialiseren:", e);
+                }
+            }
+
+            // Listen to changes
+            try {
+                onSnapshot(userProfileRef, (docSnap) => {
+                    if (docSnap.exists()) userProfileData = docSnap.data();
+                    else userProfileData = {};
+                    updateUIWithProfileData(userProfileData);
+                    updateRemainingCalories();
+                });
+            } catch (e) { console.warn("userProfileRef snapshot failed:", e); }
+
+            try {
+                onSnapshot(dailyLogRef, (docSnap) => {
+                    if (docSnap.exists()) updateUIWithDailyLog(docSnap.data());
+                    else updateUIWithDailyLog({});
+                });
+            } catch (e) { console.warn("dailyLogRef snapshot failed:", e); }
+
+            try {
+                onSnapshot(consumedItemsCollectionRef, () => {
+                    if (document.getElementById('manual-entry') && !document.getElementById('manual-entry').classList.contains('hidden')) {
+                        renderDailyConsumedItems();
+                    } else {
+                        renderDailyConsumedItems();
+                    }
+                });
+            } catch (e) { console.warn("consumedItemsCollectionRef snapshot failed:", e); }
+
+            try {
+                onSnapshot(trainingLogsCollectionRef, () => {
+                    if (!document.getElementById('agenda') || document.getElementById('agenda').classList.contains('hidden')) return;
+                    loadTrainingHistory();
+                });
+            } catch (e) { console.warn("trainingLogsCollectionRef snapshot failed:", e); }
+
+            try {
+                onSnapshot(measurementsCollectionRef, () => {
+                    if (!document.getElementById('metingen') || document.getElementById('metingen').classList.contains('hidden')) return;
+                    loadMeasurements();
+                });
+            } catch (e) { console.warn("measurementsCollectionRef snapshot failed:", e); }
+
+            try {
+                onSnapshot(dailyLogsCollectionRef, () => {
+                    if (!document.getElementById('history') || document.getElementById('history').classList.contains('hidden')) return;
+                    loadHistory();
+                });
+            } catch (e) { console.warn("dailyLogsCollectionRef snapshot failed:", e); }
+
+            // language selector change persists to profile
+            if (languageSelect) {
+                languageSelect.addEventListener('change', async () => {
+                    const newLang = languageSelect.value;
+                    try {
+                        if (userProfileRef) await setDoc(userProfileRef, { language: newLang }, { merge: true });
+                    } catch (e) { console.warn("Kon taal niet opslaan:", e); }
+                    currentLanguage = newLang;
+                    translatePage(newLang);
+                });
+            }
+        });
+    });
     </script>
 </body>
 </html>
