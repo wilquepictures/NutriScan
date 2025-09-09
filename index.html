@@ -1436,7 +1436,6 @@
                 foodSuggestions.classList.add('hidden');
             }
         });
-
 // Profielformulier opslaan
 profileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -1461,6 +1460,10 @@ profileForm.addEventListener('submit', async (e) => {
 
     if (userProfileRef) {
         await setDoc(userProfileRef, data, { merge: true });
+        
+        // Deze regel zorgt ervoor dat de UI direct wordt bijgewerkt na het opslaan
+        updateUIWithProfileData(data);
+        
         showModal('saveProfileSuccess');
     } else {
         showModal('saveProfileError');
