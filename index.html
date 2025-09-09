@@ -388,7 +388,6 @@
                     Voeg Calorieën toe
                 </button>
             </div>
-
             <div id="resultDisplay" class="text-lg font-medium mt-4 text-center text-green-600"></div>
 
             <div id="daily-nutrition-overview" class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
@@ -490,90 +489,90 @@
             </div>
         </div>
         
-        <div id="agenda" class="tab-content hidden flex flex-col gap-6">
-            <h2 class="text-2xl font-semibold mb-2" data-translate="trainingLogs">Trainingslogboeken</h2>
-            <p class="text-gray-600" data-translate="trainingLogsText">Een overzicht van al je krachttraining en cardio sessies.</p>
-            <div id="training-history" class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                <h4 class="text-xl font-semibold mb-2" data-translate="yourHistory">Jouw Historie</h4>
-                <div class="table-container mt-4">
-                    <table class="measurements-table">
-                        <thead>
-                            <tr>
-                                <th data-translate="date">Datum</th>
-                                <th data-translate="exercise">Oefening</th>
-                                <th data-translate="reps">Herhalingen</th>
-                                <th data-translate="sets">Sets</th>
-                                <th data-translate="cardio">Cardio</th>
-                                <th data-translate="duration">Duur</th>
-                                <th data-translate="distance">Afstand</th>
-                            </tr>
-                        </thead>
-                        <tbody id="trainingHistoryTableBody">
-                            </tbody>
-                    </table>
-                </div>
-                <p class="text-center text-gray-500 mt-4" id="no-training-history-text" data-translate="noHistoryText">Nog geen logboeken beschikbaar.</p>
-            </div>
+       <div id="agenda" class="tab-content hidden flex flex-col gap-6">
+    <h2 class="text-2xl font-semibold mb-2" data-translate="trainingLogs">Trainingslogboeken</h2>
+    <p class="text-gray-600" data-translate="trainingLogsText">Een overzicht van al je krachttraining en cardio sessies.</p>
+    <div id="training-history" class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+        <h4 class="text-xl font-semibold mb-2" data-translate="yourHistory">Jouw Historie</h4>
+        <div class="table-container mt-4">
+            <table class="measurements-table min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="date">Datum</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="exercise">Oefening</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="reps">Herhalingen</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="sets">Sets</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="cardio">Cardio</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="duration">Duur</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="distance">Afstand</th>
+                    </tr>
+                </thead>
+                <tbody id="trainingHistoryTableBody" class="text-gray-700">
+                    </tbody>
+            </table>
         </div>
+        <p class="text-center text-gray-500 mt-4" id="no-training-history-text" data-translate="noHistoryText">Nog geen logboeken beschikbaar.</p>
+    </div>
+</div>
 
-        <div id="metingen" class="tab-content hidden flex flex-col gap-6">
-            <h2 class="text-2xl font-semibold mb-2" data-translate="measurements">Lichaamsmetingen</h2>
-            <p class="text-gray-600" data-translate="measurementsText">Houd je lichaamsmaten bij om je vooruitgang te zien.</p>
-            <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                <form id="measurements-form" class="space-y-4">
-                    <div>
-                        <label for="measurement-date" class="block text-sm font-medium text-gray-700" data-translate="date">Datum</label>
-                        <input type="date" id="measurement-date" required>
-                    </div>
-                    <div>
-                        <label for="measurement-weight" class="block text-sm font-medium text-gray-700" data-translate="weight">Gewicht (kg)</label>
-                        <input type="number" id="measurement-weight" placeholder="Gewicht in kg" step="0.1" data-translate-placeholder="weightKgPlaceholder">
-                    </div>
-                    <div>
-                        <label for="measurement-fat" class="block text-sm font-medium text-gray-700" data-translate="fatPercentage">Vetpercentage (%)</label>
-                        <input type="number" id="measurement-fat" placeholder="Vetpercentage" step="0.1" data-translate-placeholder="fatPercentagePlaceholder">
-                    </div>
-                     <div>
-                        <label for="measurement-water" class="block text-sm font-medium text-gray-700" data-translate="waterPercentage">Vochtpercentage (%)</label>
-                        <input type="number" id="measurement-water" placeholder="Vochtpercentage" step="0.1" data-translate-placeholder="waterPercentagePlaceholder">
-                    </div>
-                    <div>
-                        <label for="measurement-waist" class="block text-sm font-medium text-gray-700" data-translate="waist">Taille (cm)</label>
-                        <input type="number" id="measurement-waist" placeholder="Omtrek" step="0.1" data-translate-placeholder="waistPlaceholder">
-                    </div>
-                     <div>
-                        <label for="measurement-hip" class="block text-sm font-medium text-gray-700" data-translate="hip">Heup (cm)</label>
-                        <input type="number" id="measurement-hip" placeholder="Omtrek" step="0.1" data-translate-placeholder="hipPlaceholder">
-                     </div>
-                     <div>
-                        <label for="measurement-buttocks" class="block text-sm font-medium text-gray-700" data-translate="buttocks">Poep (cm)</label>
-                        <input type="number" id="measurement-buttocks" placeholder="Omtrek" step="0.1" data-translate-placeholder="buttocksPlaceholder">
-                    </div>
-                    <button type="submit" class="btn-primary w-full" data-translate="saveMeasurements">Metingen Opslaan</button>
-                </form>
+      <div id="metingen" class="tab-content hidden flex flex-col gap-6">
+    <h2 class="text-2xl font-semibold mb-2" data-translate="measurements">Lichaamsmetingen</h2>
+    <p class="text-gray-600" data-translate="measurementsText">Houd je lichaamsmaten bij om je vooruitgang te zien.</p>
+    <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+        <form id="measurements-form" class="space-y-4">
+            <div>
+                <label for="measurement-date" class="block text-sm font-medium text-gray-700" data-translate="date">Datum</label>
+                <input type="date" id="measurement-date" required>
             </div>
-            <div id="measurements-list" class="mt-4 space-y-2">
-                <h3 class="text-xl font-semibold mb-2" data-translate="yourHistory">Jouw Historie</h3>
-                 <div class="table-container">
-                    <table class="measurements-table">
-                        <thead>
-                            <tr>
-                                <th data-translate="date">Datum</th>
-                                <th data-translate="weight">Gewicht (kg)</th>
-                                <th data-translate="fatPercentage">Vetpercentage (%)</th>
-                                <th data-translate="waterPercentage">Vochtpercentage (%)</th>
-                                <th data-translate="waist">Taille (cm)</th>
-                                <th data-translate="hip">Heup (cm)</th>
-                                <th data-translate="buttocks">Poep (cm)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="measurements-table-body">
-                            </tbody>
-                    </table>
-                </div>
-                <p class="text-center text-gray-500" id="no-measurements-text" data-translate="noMeasurementsText">Nog geen metingen opgeslagen.</p>
+            <div>
+                <label for="measurement-weight" class="block text-sm font-medium text-gray-700" data-translate="weight">Gewicht (kg)</label>
+                <input type="number" id="measurement-weight" placeholder="Gewicht in kg" step="0.1" data-translate-placeholder="weightKgPlaceholder">
             </div>
+            <div>
+                <label for="measurement-fat" class="block text-sm font-medium text-gray-700" data-translate="fatPercentage">Vetpercentage (%)</label>
+                <input type="number" id="measurement-fat" placeholder="Vetpercentage" step="0.1" data-translate-placeholder="fatPercentagePlaceholder">
+            </div>
+            <div>
+                <label for="measurement-water" class="block text-sm font-medium text-gray-700" data-translate="waterPercentage">Vochtpercentage (%)</label>
+                <input type="number" id="measurement-water" placeholder="Vochtpercentage" step="0.1" data-translate-placeholder="waterPercentagePlaceholder">
+            </div>
+            <div>
+                <label for="measurement-waist" class="block text-sm font-medium text-gray-700" data-translate="waist">Taille (cm)</label>
+                <input type="number" id="measurement-waist" placeholder="Omtrek" step="0.1" data-translate-placeholder="waistPlaceholder">
+            </div>
+            <div>
+                <label for="measurement-hip" class="block text-sm font-medium text-gray-700" data-translate="hip">Heup (cm)</label>
+                <input type="number" id="measurement-hip" placeholder="Omtrek" step="0.1" data-translate-placeholder="hipPlaceholder">
+            </div>
+            <div>
+                <label for="measurement-buttocks" class="block text-sm font-medium text-gray-700" data-translate="buttocks">Poep (cm)</label>
+                <input type="number" id="measurement-buttocks" placeholder="Omtrek" step="0.1" data-translate-placeholder="buttocksPlaceholder">
+            </div>
+            <button type="submit" class="btn-primary w-full" data-translate="saveMeasurements">Metingen Opslaan</button>
+        </form>
+    </div>
+    <div id="measurements-list" class="mt-4 space-y-2">
+        <h3 class="text-xl font-semibold mb-2" data-translate="yourHistory">Jouw Historie</h3>
+        <div class="table-container">
+            <table class="measurements-table min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="date">Datum</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="weight">Gewicht (kg)</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="fatPercentage">Vetpercentage (%)</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="waterPercentage">Vochtpercentage (%)</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="waist">Taille (cm)</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="hip">Heup (cm)</th>
+                        <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="buttocks">Poep (cm)</th>
+                    </tr>
+                </thead>
+                <tbody id="measurements-table-body" class="text-gray-700">
+                    </tbody>
+            </table>
         </div>
+        <p class="text-center text-gray-500" id="no-measurements-text" data-translate="noMeasurementsText">Nog geen metingen opgeslagen.</p>
+    </div>
+</div>
         <div id="history" class="tab-content hidden flex flex-col gap-6">
             <h2 class="text-2xl font-semibold mb-2" data-translate="dailyLogs">Dagelijkse Logboeken</h2>
             <p class="text-gray-600" data-translate="dailyLogsText">Een overzicht van al je activiteiten.</p>
@@ -592,7 +591,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         // Import foodDatabase.js
         // Zorg ervoor dat je dit bestand lokaal hebt
         // import { foodData } from './foodDatabase.js';
@@ -1158,7 +1157,6 @@
             caloriesRemainingDisplay.classList.toggle('text-red-600', remaining < 0);
             caloriesRemainingDisplay.classList.toggle('text-green-600', remaining >= 0);
         }
-        
         async function getTodaysConsumedItems() {
             const today = new Date().toISOString().slice(0, 10);
             const q = query(consumedItemsCollectionRef, where('date', '==', today), orderBy('timestamp', 'asc'));
@@ -1389,7 +1387,6 @@
             const isLiquid = ['water', 'melk', 'sap', 'drank', 'koffie', 'thee'].some(liquid => foodName.includes(liquid));
             toggleFoodInputFields(isLiquid);
         });
-
         // Zoekfunctionaliteit voor voedsel
         foodInput.addEventListener('input', async () => {
             const searchTerm = foodInput.value.toLowerCase().trim();
@@ -1433,6 +1430,7 @@
                 foodSuggestions.classList.add('hidden');
             }
         });
+        
 // Profielformulier opslaan
 profileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -1499,7 +1497,7 @@ profileForm.addEventListener('submit', async (e) => {
 
             try {
                 const logData = { date, exercise, sets, notes, type: 'strength' };
-                await setDoc(doc(trainingLogsCollectionRef), logData);
+                await addDoc(trainingLogsCollectionRef, logData);
                 showModal('logWeightSuccess');
             } catch (e) {
                 console.error(e);
@@ -1533,7 +1531,7 @@ profileForm.addEventListener('submit', async (e) => {
             const burnedCalories = Math.round((metValue * bodyWeight * duration) / 60);
 
             try {
-                await setDoc(doc(trainingLogsCollectionRef), { date, activity, duration, distance, burnedCalories, type: 'cardio' });
+                await addDoc(trainingLogsCollectionRef, { date, activity, duration, distance, burnedCalories, type: 'cardio' });
                 const dailyDocSnap = await getDoc(dailyLogRef);
                 const currentBurned = dailyDocSnap.exists() ? dailyDocSnap.data().burnedCalories || 0 : 0;
                 await setDoc(dailyLogRef, { burnedCalories: currentBurned + burnedCalories }, { merge: true });
@@ -1591,7 +1589,7 @@ profileForm.addEventListener('submit', async (e) => {
             if (!isNaN(buttocks)) measurementData.buttocks = buttocks;
 
             try {
-                await setDoc(doc(measurementsCollectionRef), measurementData);
+                await addDoc(measurementsCollectionRef, measurementData);
                 showModal('logMeasurementsSuccess');
                 loadMeasurements();
             } catch (e) {
@@ -1691,7 +1689,7 @@ profileForm.addEventListener('submit', async (e) => {
                 }
             });
             document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
-                const key = el.dataset.translate-placeholder;
+                const key = el.dataset.translatePlaceholder;
                 if (translations[lang] && translations[lang][key]) {
                     el.placeholder = translations[lang][key];
                 }
