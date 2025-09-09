@@ -220,7 +220,7 @@
         #food-suggestions div:hover {
             background-color: #f0f0f0;
         }
-    </style>
+ </style>
 </head>
 <body class="p-4 flex flex-col items-center">
     <div class="container flex flex-col gap-6">
@@ -613,7 +613,6 @@
             messagingSenderId: "1033379364886",
             appId: "1:1033379364886:web:6e1c070f64c1c91104e1c7"
         };
-        
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
@@ -997,7 +996,6 @@
         const resultDisplay = document.getElementById('resultDisplay');
         const languageSelect = document.getElementById('language-select');
         const manualBurnedCaloriesForm = document.getElementById('manual-burned-calories-form');
-        
         // Functies voor de logica
         function showModal(messageKey, ...params) {
             let message = translations[currentLanguage][messageKey] || messageKey;
@@ -1279,7 +1277,6 @@
                         }
                         return value;
                     };
-        
                     row.innerHTML = `
                         <td>${getValue('date')}</td>
                         <td>${getValue('weight') !== '—' ? getValue('weight') + ' kg' : '—'}</td>
@@ -1451,7 +1448,7 @@ profileForm.addEventListener('submit', async (e) => {
         language: formData.get('language')
     };
 
-    // Voeg initialWeight toe als het nog niet bestaat in de userProfileData
+    // Dit zorgt ervoor dat je initialWeight (startgewicht) wordt opgeslagen bij de eerste keer
     if (!userProfileData.initialWeight && data.currentWeight) {
         data.initialWeight = data.currentWeight;
     } else if (userProfileData.initialWeight) {
@@ -1461,7 +1458,7 @@ profileForm.addEventListener('submit', async (e) => {
     if (userProfileRef) {
         await setDoc(userProfileRef, data, { merge: true });
         
-        // Deze regel zorgt ervoor dat de UI direct wordt bijgewerkt na het opslaan
+        // Deze regel zorgt ervoor dat je dashboard direct wordt bijgewerkt
         updateUIWithProfileData(data);
         
         showModal('saveProfileSuccess');
@@ -1702,8 +1699,7 @@ profileForm.addEventListener('submit', async (e) => {
             updateUIWithProfileData(userProfileData);
             updateUIWithDailyLog({ consumedCalories: 0, burnedCalories: 0 }); // Zorgt ervoor dat de UI direct wordt bijgewerkt bij het wijzigen van de taal
         };
-        
-        // Hoofd-initialisatiefunctie en event listeners
+                // Hoofd-initialisatiefunctie en event listeners
         document.addEventListener('DOMContentLoaded', async () => {
             showTab('dashboard'); 
             
