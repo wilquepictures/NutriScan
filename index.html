@@ -1437,30 +1437,35 @@
             }
         });
 
+// Profielformulier opslaan
+profileForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(profileForm);
+    const data = {
+        gender: formData.get('gender'),
+        height: parseFloat(formData.get('height')),
+        age: parseInt(formData.get('age')),
+        currentWeight: parseFloat(formData.get('current-weight')),
+        targetWeight: parseFloat(formData.get('target-weight')),
+        activityFactor: parseFloat(formData.get('activity-factor')),
+        weightGoal: formData.get('weight-goal'),
+        language: formData.get('language')
+    };
 
-        // Profielformulier opslaan
-        profileForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(profileForm);
-            const data = {
-                gender: formData.get('gender'),
-                height: parseFloat(formData.get('height')),
-                age: parseInt(formData.get('age')),
-                currentWeight: parseFloat(formData.get('current-weight')),
-                targetWeight: parseFloat(formData.get('target-weight')),
-                activityFactor: parseFloat(formData.get('activity-factor')),
-                weightGoal: formData.get('weight-goal'),
-                language: formData.get('language'),
-                initialWeight: userProfileData.initialWeight || parseFloat(formData.get('current-weight'))
-            };
-        
-            if (userProfileRef) {
-                await setDoc(userProfileRef, data, { merge: true });
-                showModal('saveProfileSuccess');
-            } else {
-                showModal('saveProfileError');
-            }
-        });
+    // Voeg initialWeight toe als het nog niet bestaat in de userProfileData
+    if (!userProfileData.initialWeight && data.currentWeight) {
+        data.initialWeight = data.currentWeight;
+    } else if (userProfileData.initialWeight) {
+        data.initialWeight = userProfileData.initialWeight;
+    }
+
+    if (userProfileRef) {
+        await setDoc(userProfileRef, data, { merge: true });
+        showModal('saveProfileSuccess');
+    } else {
+        showModal('saveProfileError');
+    }
+});
         
         // Set toevoegen bij krachttraining
         addSetBtn.addEventListener('click', () => {
