@@ -220,7 +220,7 @@
             <p data-translate="quote">"Your body can stand almost anything. It’s your mind that you have to convince"</p>
         </div>
 
-        <nav class="flex justify-center space-x-4 mb-8">
+       <nav class="flex justify-center space-x-4 mb-8">
             <button class="tab-button active" data-tab="dashboard" data-translate="tab.dashboard">Dashboard</button>
             <button class="tab-button" data-tab="profile" data-translate="tab.profile">Profiel</button>
             <button class="tab-button" data-tab="calories" data-translate="tab.calories">Calorieën</button>
@@ -612,51 +612,49 @@
     </div>
     
     <script type="module">
-    // Firebase SDK imports
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { 
-        getAuth, 
-        onAuthStateChanged, 
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-        signOut 
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // Firebase SDK imports - Aangepast om alles in één blok te hebben
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged, 
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // You can use a local food database or an external one
-    const localFoodDatabase = {
-        'banaan': { 'caloriesPer100g': 89 },
-        'appel': { 'caloriesPer100g': 52 },
-        'water': { 'caloriesPerLiter': 0 },
-        'melk': { 'caloriesPerLiter': 610 }
-    };
+        // Uw web-app's Firebase-configuratie
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWlRgSuD25KDBlMvtv5_7Cun_RhjLUIFo",
+            authDomain: "nutriscan-b3449.firebaseapp.com",
+            projectId: "nutriscan-b3449",
+            storageBucket: "nutriscan-b3449.firebasestorage.app",
+            messagingSenderId: "1033379364886",
+            appId: "1:1033379364886:web:3470ffb0516f436584f537",
+            measurementId: "G-JT83LGDC94"
+        };
+        
+        // Initialiseer Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const analytics = getAnalytics(app);
 
-   // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+        // U kunt een lokale voedseldatabase of een externe gebruiken
+        const localFoodDatabase = {
+            'banaan': { 'caloriesPer100g': 89 },
+            'appel': { 'caloriesPer100g': 52 },
+            'water': { 'caloriesPerLiter': 0 },
+            'melk': { 'caloriesPerLiter': 610 }
+        };
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDWlRgSuD25KDBlMvtv5_7Cun_RhjLUIFo",
-  authDomain: "nutriscan-b3449.firebaseapp.com",
-  projectId: "nutriscan-b3449",
-  storageBucket: "nutriscan-b3449.firebasestorage.app",
-  messagingSenderId: "1033379364886",
-  appId: "1:1033379364886:web:3470ffb0516f436584f537",
-  measurementId: "G-JT83LGDC94"
-};
+        // Globale variabelen voor gebruikersgegevens en referenties
+        let userProfileData = {};
+        let userProfileRef, dailyLogRef, consumedItemsCollectionRef, trainingLogsCollectionRef, measurementsCollectionRef;
+        let currentLanguage = 'nl'; // Standaardtaal
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-    
-    // Global variables for user data and references
-    let userProfileData = {};
-    let userProfileRef, dailyLogRef, consumedItemsCollectionRef, trainingLogsCollectionRef, measurementsCollectionRef;
-    let currentLanguage = 'nl'; // Default language
+        // ... (de rest van uw code, inclusief alle event listeners en functies)
 
     const translations = {
         nl: {
