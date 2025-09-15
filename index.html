@@ -4,20 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-translate="title">NutriScan</title>
-    <link rel="manifest" href="./manifest.json">
-    <script>
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./serviceworker.js')
-              .then(reg => console.log('Service Worker geregistreerd.'))
-              .catch(err => console.log('Service Worker registratie mislukt: ', err));
-          });
-        }
-    </script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
         /* Algemene stijlen */
         body {
             font-family: 'Inter', sans-serif;
@@ -229,116 +219,108 @@
         <div class="quote-box">
             <p data-translate="quote">"Your body can stand almost anything. It’s your mind that you have to convince"</p>
         </div>
-        
-      <div class="flex flex-col md:flex-row border-b border-gray-200 -mx-6 px-6">
-    <button class="tab-button active" data-tab="dashboard" data-translate="tab.dashboard">Dashboard</button>
-    <button class="tab-button" data-tab="profile" data-translate="tab.profile">Profiel</button>
-    <button class="tab-button" data-tab="manual-entry" data-translate="tab.calories">Calorieën</button>
-    <button class="tab-button" data-tab="fitness" data-translate="tab.fitness">Fitness</button>
-    <button class="tab-button" data-tab="agenda" data-translate="tab.agenda">Agenda</button>
-    <button class="tab-button" data-tab="metingen" data-translate="tab.measurements">Metingen</button>
-    <button class="tab-button" data-tab="history" data-translate="tab.history">Geschiedenis</button>
-</div>
-        
+
+        <nav class="flex justify-center space-x-4 mb-8">
+            <button class="tab-button active" data-tab="dashboard" data-translate="tab.dashboard">Dashboard</button>
+            <button class="tab-button" data-tab="profile" data-translate="tab.profile">Profiel</button>
+            <button class="tab-button" data-tab="calories" data-translate="tab.calories">Calorieën</button>
+            <button class="tab-button" data-tab="fitness" data-translate="tab.fitness">Fitness</button>
+            <button class="tab-button" data-tab="agenda" data-translate="tab.agenda">Agenda</button>
+            <button class="tab-button" data-tab="metingen" data-translate="tab.measurements">Metingen</button>
+            <button class="tab-button" data-tab="history" data-translate="tab.history">Geschiedenis</button>
+        </nav>
+
         <div id="dashboard" class="tab-content flex flex-col gap-6">
             <h2 class="text-2xl font-semibold mb-2" data-translate="dailyOverview">Overzicht Vandaag</h2>
-            <div id="results-section" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="card flex flex-col items-center justify-center text-center">
-                    <i class="fa-solid fa-scale-balanced text-4xl text-blue-600 mb-2"></i>
-                    <span class="text-4xl font-bold text-blue-600" id="bmi-result">0</span>
-                    <span class="text-gray-600 font-medium mt-1" data-translate="bmi">BMI</span>
-                    <span class="text-sm text-gray-400" id="bmi-status"></span>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800" data-translate="bmi">BMI</h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-5xl font-bold text-red-600" id="bmi-result">0.0</span>
+                        <span class="text-gray-600" id="bmi-status"></span>
+                    </div>
                 </div>
-                <div class="card flex flex-col items-center justify-center text-center">
-                    <i class="fa-solid fa-fire text-4xl text-green-600 mb-2"></i>
-                    <span class="text-4xl font-bold text-green-600" id="daily-calorie-goal">0</span>
-                    <span class="text-gray-600 font-medium mt-1" data-translate="dailyGoal">Dagelijks Doel (kcal)</span>
-                </div>
-                <div class="card flex flex-col items-center justify-center text-center">
-                    <i class="fa-solid fa-hourglass-half text-4xl text-indigo-600 mb-2"></i>
-                    <span class="text-4xl font-bold text-indigo-600" id="time-to-goal">0</span>
-                    <span class="text-gray-600 font-medium mt-1" data-translate="timeToGoal">Haalbaar In (weken)</span>
-                </div>
-            </div>
-        
-            <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800" data-translate="calories">Calorieën</h2>
-                <div class="flex flex-col md:flex-row justify-between items-center mb-4 text-sm font-medium text-gray-700">
-                    <span id="consumed-calories-display" data-translate="consumed">Verbruikt: 0 kcal</span>
-                    <span class="text-sm text-gray-400 mt-2 md:mt-0"> - </span>
-                    <span id="burned-calories-display" data-translate="burned">Verbrand: 0 kcal</span>
-                </div>
-                <div class="p-4 bg-gray-100 rounded-lg text-center">
-                    <span class="font-bold text-xl text-gray-800" data-translate="netCalories">Netto Calorieën: </span>
-                    <span class="font-bold text-xl text-blue-600" id="net-calories-display">0 kcal</span>
+                <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800" data-translate="dailyGoal">Dagelijks Doel (kcal)</h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-5xl font-bold text-green-600" id="daily-calorie-goal">0</span>
+                        <div class="text-right">
+                            <p class="text-gray-600" data-translate="timeToGoal">Haalbaar In (weken)</p>
+                            <span class="text-xl font-bold text-gray-800" id="time-to-goal">0</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        
+
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800" data-translate="goalToday">Doel voor vandaag</h2>
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-600" data-translate="yourDailyGoal">Jouw Dagelijks Doel:</span>
-                    <span class="font-bold text-xl text-green-600" id="daily-goal-display">0 kcal</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-600" data-translate="netCaloriesToday">Netto Calorieën:</span>
-                    <span class="font-bold text-xl" id="net-calories-today-display">0 kcal</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-600" data-translate="caloriesRemaining">Calorieën Over:</span>
-                    <span class="font-bold text-xl" id="calories-remaining-display">0 kcal</span>
+                <h3 class="text-xl font-semibold mb-2 text-gray-800" data-translate="goalToday">Doel voor vandaag</h3>
+                <div class="flex flex-col space-y-4 text-center">
+                    <div class="flex justify-between items-center text-gray-700 font-semibold text-lg">
+                        <span data-translate="yourDailyGoal">Jouw Dagelijks Doel:</span>
+                        <span id="daily-goal-display">0 kcal</span>
+                    </div>
+                    <div class="flex justify-between items-center text-gray-700 font-semibold text-lg">
+                        <span data-translate="netCaloriesToday">Netto Calorieën:</span>
+                        <span id="net-calories-today-display">0 kcal</span>
+                    </div>
+                    <div class="flex justify-between items-center text-green-600 font-bold text-xl">
+                        <span data-translate="caloriesRemaining">Calorieën Over:</span>
+                        <span id="calories-remaining-display">0 kcal</span>
+                    </div>
                 </div>
             </div>
-        
+            
             <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800" data-translate="weightProgress">Gewichtsvoortgang</h2>
-                <div class="mb-2 text-sm font-medium text-gray-700 flex justify-between">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800" data-translate="weightProgress">Gewichtsvoortgang</h3>
+                <div class="flex justify-between items-center text-gray-600 mb-2">
                     <span id="current-weight-display" data-translate="current">Huidig: 0 kg</span>
                     <span id="target-weight-display" data-translate="target">Doel: 0 kg</span>
                 </div>
-                <div class="progress-bar relative">
-                    <div id="progress-fill" class="progress-bar-fill" style="width: 0%;"></div>
-                    <span id="progress-text" class="absolute inset-0 flex items-center justify-center font-bold text-white text-sm drop-shadow-md">0%</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill">
+                        <span id="progress-text">0%</span>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div id="profile" class="tab-content hidden">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-800" data-translate="personalInfo">Persoonlijke Gegevens</h2>
-            <form id="profile-form" class="space-y-4">
-                <div>
+
+        <div id="profile" class="tab-content hidden flex flex-col gap-6">
+            <h2 class="text-2xl font-semibold mb-2" data-translate="personalInfo">Persoonlijke Gegevens</h2>
+            <form id="profile-form" class="p-6 bg-white rounded-xl shadow-lg border border-gray-200 space-y-4">
+                <div class="flex items-center space-x-4">
                     <label for="language-select" class="block text-sm font-medium text-gray-700" data-translate="language">Taal</label>
-                    <select id="language-select" name="language" class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
+                    <select id="language-select" name="language" class="input-style flex-grow">
                         <option value="nl" data-translate="lang_nl">Nederlands</option>
                         <option value="fr" data-translate="lang_fr">Français</option>
                     </select>
                 </div>
                 <div>
                     <label for="gender" class="block text-sm font-medium text-gray-700" data-translate="gender">Geslacht</label>
-                    <select id="gender" name="gender" class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
+                    <select id="gender" name="gender" class="input-style">
                         <option value="male" data-translate="male">Man</option>
                         <option value="female" data-translate="female">Vrouw</option>
                     </select>
                 </div>
                 <div>
                     <label for="height" class="block text-sm font-medium text-gray-700" data-translate="height">Lengte (cm)</label>
-                    <input type="number" id="height" name="height" required class="mt-1 block w-full rounded-md shadow-sm" min="50" max="250">
+                    <input type="number" id="height" name="height" placeholder="175" class="input-style" required min="1" step="0.1">
                 </div>
                 <div>
                     <label for="age" class="block text-sm font-medium text-gray-700" data-translate="age">Leeftijd</label>
-                    <input type="number" id="age" name="age" required class="mt-1 block w-full rounded-md shadow-sm" min="10" max="120">
+                    <input type="number" id="age" name="age" placeholder="30" class="input-style" required min="1">
                 </div>
                 <div>
                     <label for="current-weight" class="block text-sm font-medium text-gray-700" data-translate="currentWeight">Huidig Gewicht (kg)</label>
-                    <input type="number" id="current-weight" name="current-weight" required class="mt-1 block w-full rounded-md shadow-sm" min="20" max="300" step="0.1">
+                    <input type="number" id="current-weight" name="current-weight" placeholder="70" class="input-style" required min="1" step="0.1">
                 </div>
                 <div>
                     <label for="target-weight" class="block text-sm font-medium text-gray-700" data-translate="targetWeight">Streefgewicht (kg)</label>
-                    <input type="number" id="target-weight" name="target-weight" required class="mt-1 block w-full rounded-md shadow-sm" min="20" max="300" step="0.1">
+                    <input type="number" id="target-weight" name="target-weight" placeholder="65" class="input-style" required min="1" step="0.1">
                 </div>
                 <div>
                     <label for="activity-factor" class="block text-sm font-medium text-gray-700" data-translate="activityFactor">Activiteitsfactor</label>
-                    <select id="activity-factor" name="activity-factor" class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
+                    <select id="activity-factor" name="activity-factor" class="input-style">
                         <option value="1.2" data-translate="activity.sedentary">Zittend werk</option>
                         <option value="1.375" data-translate="activity.light">Licht actief (1-3x/week sport)</option>
                         <option value="1.55" data-translate="activity.moderate">Gemiddeld actief (3-5x/week sport)</option>
@@ -348,69 +330,76 @@
                 </div>
                 <div>
                     <label for="weight-goal" class="block text-sm font-medium text-gray-700" data-translate="weightGoal">Wat zou u willen?</label>
-                    <select id="weight-goal" name="weight-goal" class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
+                    <select id="weight-goal" name="weight-goal" class="input-style">
                         <option value="maintain" data-translate="maintainWeight">Gewicht behouden</option>
                         <option value="lose" data-translate="loseWeight">Gewicht verliezen</option>
                         <option value="gain" data-translate="gainWeight">Spieren opbouwen</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-primary w-full shadow-md hover:shadow-lg" data-translate="saveAndCalculate">Opslaan & Berekenen</button>
+                <button type="submit" class="btn-primary w-full" data-translate="saveAndCalculate">Opslaan & Berekenen</button>
             </form>
         </div>
-        
-        <div id="manual-entry" class="tab-content hidden flex flex-col gap-6">
+
+        <div id="calories" class="tab-content hidden flex flex-col gap-6">
             <h2 class="text-2xl font-semibold mb-2" data-translate="manualEntry">Handmatige Calorieën Registratie</h2>
             <p class="text-gray-600" data-translate="manualEntryText">Voer het voedingsmiddel en de details in om calorieën toe te voegen.</p>
 
-            <div class="space-y-4 relative">
-                <div class="flex flex-col space-y-2">
-                    <label for="foodInput" class="text-sm font-medium text-gray-700" data-translate="food">Voedingsmiddel</label>
-                    <input type="text" id="foodInput" placeholder="Bijv. banaan of water" class="input" data-translate-placeholder="foodPlaceholder">
-                    <div id="food-suggestions" class="absolute top-full left-0 right-0 z-10 hidden"></div>
+            <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200 space-y-4">
+                <div class="relative">
+                    <label for="foodInput" class="block text-sm font-medium text-gray-700" data-translate="food">Voedingsmiddel</label>
+                    <input type="text" id="foodInput" placeholder="Bijv. banaan of water" class="input-style" data-translate-placeholder="foodPlaceholder">
+                    <div id="food-suggestions" class="hidden"></div>
                 </div>
-                <div id="grams-input-container" class="flex flex-col space-y-2">
-                    <label for="gramsInput" class="text-sm font-medium text-gray-700" data-translate="grams">Gewicht (in grammen)</label>
-                    <input type="number" id="gramsInput" placeholder="Bijv. 120" class="input" step="0.1" data-translate-placeholder="gramsPlaceholder">
-                </div>
-                <div id="liters-input-container" class="flex flex-col space-y-2 hidden">
-                    <label for="litersInput" class="text-sm font-medium text-gray-700" data-translate="liters">Gewicht (in liters)</label>
-                    <input type="number" id="litersInput" placeholder="Bijv. 0.5" class="input" step="0.01" data-translate-placeholder="litersPlaceholder">
-                </div>
-                <div id="cals-per-100g-container" class="flex flex-col space-y-2">
-                    <label for="caloriesPer100gInput" class="text-sm font-medium text-gray-700" data-translate="caloriesPer100g">Calorieën per 100g</label>
-                    <input type="number" id="caloriesPer100gInput" placeholder="Bijv. 89" class="input" data-translate-placeholder="caloriesPer100gPlaceholder" step="0.1">
-                </div>
-                <div id="cals-per-liter-container" class="flex flex-col space-y-2 hidden">
-                    <label for="caloriesPerLiterInput" class="text-sm font-medium text-gray-700" data-translate="caloriesPerLiter">Calorieën per 1L</label>
-                    <input type="number" id="caloriesPerLiterInput" placeholder="Bijv. 40" class="input" step="0.1" data-translate-placeholder="caloriesPerLiterPlaceholder">
-                </div>
-                <button id="addCaloriesButton" class="btn-primary w-full shadow-md hover:shadow-lg" data-translate="addCalories">
-                    Voeg Calorieën toe
-                </button>
-            </div>
-            <div id="resultDisplay" class="text-lg font-medium mt-4 text-center text-green-600"></div>
 
-            <div id="daily-nutrition-overview" class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                <h4 class="text-base font-semibold text-gray-700" data-translate="yourHistory">Jouw Historie</h4>
+                <div id="grams-input-container">
+                    <label for="gramsInput" class="block text-sm font-medium text-gray-700" data-translate="grams">Gewicht (in grammen)</label>
+                    <input type="number" id="gramsInput" placeholder="Bijv. 120" min="0.1" step="0.1" class="input-style" data-translate-placeholder="gramsPlaceholder">
+                </div>
+
+                <div id="liters-input-container" class="hidden">
+                    <label for="litersInput" class="block text-sm font-medium text-gray-700" data-translate="liters">Gewicht (in liters)</label>
+                    <input type="number" id="litersInput" placeholder="Bijv. 0.5" min="0.01" step="0.01" class="input-style" data-translate-placeholder="litersPlaceholder">
+                </div>
+
+                <div id="cals-per-100g-container">
+                    <label for="caloriesPer100gInput" class="block text-sm font-medium text-gray-700" data-translate="caloriesPer100g">Calorieën per 100g</label>
+                    <input type="number" id="caloriesPer100gInput" placeholder="Bijv. 89" min="0.1" step="0.1" class="input-style" data-translate-placeholder="caloriesPer100gPlaceholder">
+                </div>
+
+                <div id="cals-per-liter-container" class="hidden">
+                    <label for="caloriesPerLiterInput" class="block text-sm font-medium text-gray-700" data-translate="caloriesPerLiter">Calorieën per 1L</label>
+                    <input type="number" id="caloriesPerLiterInput" placeholder="Bijv. 40" min="0.1" step="0.1" class="input-style" data-translate-placeholder="caloriesPerLiterPlaceholder">
+                </div>
+                
+                <button id="addCaloriesButton" class="btn-primary w-full" data-translate="addCalories">Voeg Calorieën toe</button>
+            </div>
+            
+            <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800" data-translate="nutritionOverview">Overzicht Voeding</h3>
+                <p class="text-gray-600" data-translate="totalToday">Totaal Vandaag: <span class="font-bold" id="resultDisplay">0 kcal</span></p>
+            </div>
+        
+            <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200" id="daily-nutrition-overview">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800" data-translate="yourHistory">Jouw Historie</h3>
                 <div class="table-container mt-4">
-                    <table class="measurements-table">
+                    <table class="consumed-table min-w-full bg-white">
                         <thead>
                             <tr>
-                                <th data-translate="date">Datum</th>
-                                <th data-translate="food">Voedingsmiddel</th>
-                                <th data-translate="weight-grams">Gewicht (g)</th>
-                                <th data-translate="weight-liters">Gewicht (L)</th>
-                                <th data-translate="totalCalories">Totaal (kcal)</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="date">Datum</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="food">Voedsel</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="weight-grams">Gewicht (g)</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="weight-liters">Gewicht (L)</th>
+                                <th class="py-2 px-4 bg-gray-200 text-gray-600 text-sm font-semibold uppercase tracking-wider text-left" data-translate="totalCalories">Totaal (kcal)</th>
                             </tr>
                         </thead>
-                        <tbody id="dailyConsumedTableBody">
-                            </tbody>
+                        <tbody id="dailyConsumedTableBody" class="text-gray-700">
+                        </tbody>
                     </table>
                 </div>
                 <p class="text-center text-gray-500 mt-4" id="no-food-text" data-translate="noFoodAdded">Nog geen voedsel toegevoegd vandaag.</p>
             </div>
         </div>
-        
+
         <div id="fitness" class="tab-content hidden flex flex-col gap-6">
             <h2 class="text-2xl font-semibold mb-2" data-translate="fitnessTracker">Fitness Tracker</h2>
             <p class="text-gray-600" data-translate="fitnessText">Log je workouts en houd de verbrande calorieën bij.</p>
@@ -522,31 +511,31 @@
         <form id="measurements-form" class="space-y-4">
             <div>
                 <label for="measurement-date" class="block text-sm font-medium text-gray-700" data-translate="date">Datum</label>
-                <input type="date" id="measurement-date" required>
+                <input type="date" id="measurement-date" required class="input-style">
             </div>
             <div>
                 <label for="measurement-weight" class="block text-sm font-medium text-gray-700" data-translate="weight">Gewicht (kg)</label>
-                <input type="number" id="measurement-weight" placeholder="Gewicht in kg" step="0.1" data-translate-placeholder="weightKgPlaceholder">
+                <input type="number" id="measurement-weight" placeholder="Gewicht in kg" step="0.1" data-translate-placeholder="weightKgPlaceholder" class="input-style">
             </div>
             <div>
                 <label for="measurement-fat" class="block text-sm font-medium text-gray-700" data-translate="fatPercentage">Vetpercentage (%)</label>
-                <input type="number" id="measurement-fat" placeholder="Vetpercentage" step="0.1" data-translate-placeholder="fatPercentagePlaceholder">
+                <input type="number" id="measurement-fat" placeholder="Vetpercentage" step="0.1" data-translate-placeholder="fatPercentagePlaceholder" class="input-style">
             </div>
             <div>
                 <label for="measurement-water" class="block text-sm font-medium text-gray-700" data-translate="waterPercentage">Vochtpercentage (%)</label>
-                <input type="number" id="measurement-water" placeholder="Vochtpercentage" step="0.1" data-translate-placeholder="waterPercentagePlaceholder">
+                <input type="number" id="measurement-water" placeholder="Vochtpercentage" step="0.1" data-translate-placeholder="waterPercentagePlaceholder" class="input-style">
             </div>
             <div>
                 <label for="measurement-waist" class="block text-sm font-medium text-gray-700" data-translate="waist">Taille (cm)</label>
-                <input type="number" id="measurement-waist" placeholder="Omtrek" step="0.1" data-translate-placeholder="waistPlaceholder">
+                <input type="number" id="measurement-waist" placeholder="Omtrek" step="0.1" data-translate-placeholder="waistPlaceholder" class="input-style">
             </div>
             <div>
                 <label for="measurement-hip" class="block text-sm font-medium text-gray-700" data-translate="hip">Heup (cm)</label>
-                <input type="number" id="measurement-hip" placeholder="Omtrek" step="0.1" data-translate-placeholder="hipPlaceholder">
+                <input type="number" id="measurement-hip" placeholder="Omtrek" step="0.1" data-translate-placeholder="hipPlaceholder" class="input-style">
             </div>
             <div>
                 <label for="measurement-buttocks" class="block text-sm font-medium text-gray-700" data-translate="buttocks">Poep (cm)</label>
-                <input type="number" id="measurement-buttocks" placeholder="Omtrek" step="0.1" data-translate-placeholder="buttocksPlaceholder">
+                <input type="number" id="measurement-buttocks" placeholder="Omtrek" step="0.1" data-translate-placeholder="buttocksPlaceholder" class="input-style">
             </div>
             <button type="submit" class="btn-primary w-full" data-translate="saveMeasurements">Metingen Opslaan</button>
         </form>
@@ -581,6 +570,26 @@
             </div>
         </div>
         
+        <div id="auth-container" class="tab-content hidden flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+            <h2 class="text-2xl font-semibold mb-6" data-translate="authTitle">Welkom terug</h2>
+            <p class="text-gray-600 mb-4" data-translate="authText">Meld je aan om verder te gaan met je fitnesstraject.</p>
+            <form id="auth-form" class="space-y-4 w-full max-w-sm">
+                <div>
+                    <label for="auth-email" class="block text-sm font-medium text-gray-700">E-mailadres</label>
+                    <input type="email" id="auth-email" placeholder="jouw@email.com" required class="input-style w-full">
+                </div>
+                <div>
+                    <label for="auth-password" class="block text-sm font-medium text-gray-700">Wachtwoord</label>
+                    <input type="password" id="auth-password" placeholder="********" required class="input-style w-full">
+                </div>
+                <button type="submit" id="login-btn" class="btn-primary w-full" data-translate="login">Aanmelden</button>
+            </form>
+            <p class="mt-4 text-sm text-gray-600">
+                <span data-translate="noAccountText">Nog geen account?</span>
+                <button id="register-link" class="text-blue-600 hover:text-blue-800 font-medium" data-translate="register">Registreer hier</button>
+            </p>
+        </div>
+        
         <div id="modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-20">
             <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
                 <p id="modal-message" class="text-gray-800 text-lg mb-4"></p>
@@ -588,10 +597,30 @@
             </div>
         </div>
     </div>
+
+    <div style="display: none;">
+        <span data-translate="authTitle">Welkom terug</span>
+        <span data-translate="authText">Meld je aan om verder te gaan met je fitnesstraject.</span>
+        <span data-translate="login">Aanmelden</span>
+        <span data-translate="noAccountText">Nog geen account?</span>
+        <span data-translate="register">Registreer hier</span>
+        <span data-translate="registerTitle">Nieuwe gebruiker</span>
+        <span data-translate="registerText">Maak een account aan om te beginnen.</span>
+        <span data-translate="signup">Registreren</span>
+        <span data-translate="haveAccountText">Al een account?</span>
+        <span data-translate="loginLink">Meld je hier aan</span>
+    </div>
+    
     <script type="module">
     // Firebase SDK imports
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { 
+        getAuth, 
+        onAuthStateChanged, 
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        signOut 
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // You can use a local food database or an external one
@@ -604,8 +633,7 @@
 
     // Firebase project configuration
     const firebaseConfig = {
-        // IMPORTANT: Replace with your new, secure API key from the Firebase console
-        apiKey: 
+        apiKey: , 
         authDomain: "nutriscan-b3449.firebaseapp.com",
         projectId: "nutriscan-b3449",
         storageBucket: "nutriscan-b3449.appspot.com",
@@ -703,8 +731,7 @@
             repsPlaceholder: "Herhalingen",
             addSet: "Set toevoegen",
             notes: "Notities (optioneel)",
-            notesPlaceholder: "Bijv. Ik voelde me vandaag sterk."
-            ,
+            notesPlaceholder: "Bijv. Ik voelde me vandaag sterk.",
             save: "Opslaan",
             cardio: "Cardio",
             chooseActivity: "Kies activiteit...",
@@ -745,7 +772,6 @@
             dailyLogsText: "Een overzicht van al je activiteiten.",
             noHistoryText: "Nog geen logboeken beschikbaar.",
             close: "Sluiten",
-            // Modal berichten
             noData: "Geen gegevens",
             foodAdded: "Toegevoegd: {foodName} ({calories} kcal)",
             enterAllFields: "Vul alle verplichte velden in.",
@@ -779,7 +805,25 @@
             "calories-per-liter": "Calorieën (1L)",
             totalCalories: "Totaal (kcal)",
             trainingLogs: "Trainingslogboeken",
-            trainingLogsText: "Een overzicht van al je krachttraining en cardio sessies."
+            trainingLogsText: "Een overzicht van al je krachttraining en cardio sessies.",
+            "authTitle": "Welkom terug",
+            "authText": "Meld je aan om verder te gaan met je fitnesstraject.",
+            "login": "Aanmelden",
+            "register": "Registreer hier",
+            "noAccountText": "Nog geen account?",
+            "registerTitle": "Nieuwe gebruiker",
+            "registerText": "Maak een account aan om te beginnen.",
+            "signup": "Registreren",
+            "haveAccountText": "Al een account?",
+            "loginLink": "Meld je hier aan",
+            "loginSuccess": "Aanmelding gelukt!",
+            "registerSuccess": "Registratie gelukt. Je bent nu ingelogd.",
+            "errorEmailInUse": "Dit e-mailadres is al in gebruik.",
+            "errorInvalidEmail": "Ongeldig e-mailadres.",
+            "errorAuthNotAllowed": "Aanmelden met e-mail en wachtwoord is niet ingeschakeld. Controleer je Firebase-instellingen.",
+            "errorWeakPassword": "Het wachtwoord is te zwak. Gebruik minimaal 6 tekens.",
+            "errorInvalidCredentials": "De inloggegevens zijn onjuist.",
+            "errorDefault": "Er is een onbekende fout opgetreden. Probeer het later opnieuw."
         },
         fr: {
             title: "NutriScan",
@@ -901,7 +945,6 @@
             dailyLogsText: "Un aperçu de toutes vos activités.",
             noHistoryText: "Aucun journal disponible.",
             close: "Fermer",
-            // Modal messages
             noData: "Pas de données",
             foodAdded: "Ajouté: {foodName} ({calories} kcal)",
             enterAllFields: "Veuillez remplir tous les champs obligatoires.",
@@ -918,7 +961,7 @@
             logBurnError: "Erreur lors de l'enregistrement manuel des calories.",
             logTrainingSuccess: "Entraînement enregistré avec succès dans le calendrier.",
             logTrainingError: "Erreur lors de l'enregistrement de l'entraînement.",
-            minMeasurementEntry: "Veuillez entrer au moins une date en une mesure.",
+            minMeasurementEntry: "Veuillez entrer au moins une date en een mesure.",
             logMeasurementsSuccess: "Mensurations enregistrées avec succès.",
             logMeasurementsError: "Erreur lors de l'enregistrement des mensurations.",
             weightTraining: "Musculation",
@@ -935,7 +978,25 @@
             "calories-per-liter": "Calories (1L)",
             totalCalories: "Total (kcal)",
             trainingLogs: "Journaux d'entraînement",
-            trainingLogsText: "Un aperçu de toutes vos séances de musculation et de cardio."
+            trainingLogsText: "Un aperçu de toutes vos séances de musculation et de cardio.",
+            "authTitle": "Bienvenue",
+            "authText": "Connectez-vous pour continuer votre parcours de fitness.",
+            "login": "Se connecter",
+            "register": "S'inscrire ici",
+            "noAccountText": "Pas encore de compte?",
+            "registerTitle": "Nouvel utilisateur",
+            "registerText": "Créez un compte pour commencer.",
+            "signup": "S'inscrire",
+            "haveAccountText": "Vous avez déjà un compte?",
+            "loginLink": "Connectez-vous ici",
+            "loginSuccess": "Connexion réussie!",
+            "registerSuccess": "Inscription réussie. Vous êtes maintenant connecté.",
+            "errorEmailInUse": "Cette adresse e-mail est déjà utilisée.",
+            "errorInvalidEmail": "Adresse e-mail invalide.",
+            "errorAuthNotAllowed": "L'authentification par e-mail et mot de passe n'est pas activée. Vérifiez vos paramètres Firebase.",
+            "errorWeakPassword": "Le mot de passe est trop faible. Utilisez au moins 6 caractères.",
+            "errorInvalidCredentials": "Les identifiants sont incorrects.",
+            "errorDefault": "Une erreur inconnue s'est produite. Veuillez réessayer plus tard."
         }
     };
     
@@ -997,19 +1058,60 @@
     const resultDisplay = document.getElementById('resultDisplay');
     const languageSelect = document.getElementById('language-select');
     const manualBurnedCaloriesForm = document.getElementById('manual-burned-calories-form');
+    
+    // Nieuwe auth DOM-elementen
+    const authContainer = document.getElementById('auth-container');
+    const authForm = document.getElementById('auth-form');
+    const loginBtn = document.getElementById('login-btn');
+    const registerLink = document.getElementById('register-link');
 
     // Functies voor de logica
     function showModal(messageKey, ...params) {
         let message = translations[currentLanguage][messageKey] || messageKey;
         params.forEach((param) => {
-            const key = Object.keys(param)[0];
-            const value = Object.values(param)[0];
-            message = message.replace(`{${key}}`, value);
+            if (typeof param === 'object' && param !== null) {
+                const key = Object.keys(param)[0];
+                const value = Object.values(param)[0];
+                message = message.replace(`{${key}}`, value);
+            } else {
+                 message = message.replace(`{${param}}`, translations[currentLanguage][param] || param);
+            }
         });
         modalMessage.textContent = message;
         modal.classList.remove('hidden');
     }
 
+    // Verbeterde foutafhandeling
+    function handleFirebaseError(error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        let userMessage;
+
+        switch (errorCode) {
+            case 'auth/email-already-in-use':
+                userMessage = translations[currentLanguage].errorEmailInUse || "Dit e-mailadres is al in gebruik.";
+                break;
+            case 'auth/invalid-email':
+                userMessage = translations[currentLanguage].errorInvalidEmail || "Ongeldig e-mailadres.";
+                break;
+            case 'auth/operation-not-allowed':
+                userMessage = translations[currentLanguage].errorAuthNotAllowed || "Aanmelden met e-mail en wachtwoord is niet ingeschakeld.";
+                break;
+            case 'auth/weak-password':
+                userMessage = translations[currentLanguage].errorWeakPassword || "Wachtwoord is te zwak.";
+                break;
+            case 'auth/wrong-password':
+            case 'auth/user-not-found':
+                userMessage = translations[currentLanguage].errorInvalidCredentials || "Onjuist e-mailadres of wachtwoord.";
+                break;
+            default:
+                userMessage = translations[currentLanguage].errorDefault || "Er is een onbekende fout opgetreden.";
+                console.error(errorCode, errorMessage);
+                break;
+        }
+        showModal(userMessage);
+    }
+    
     function calculateBmi(height, weight) {
         if (!height || !weight || height <= 0 || weight <= 0) return { bmi: 0, status: "" };
         const heightInMeters = height / 100;
@@ -1143,9 +1245,9 @@
         const consumed = data.consumedCalories || 0;
         const burned = data.burnedCalories || 0;
         const net = consumed - burned;
-        consumedCaloriesDisplay.textContent = `${translations[currentLanguage].consumed}${consumed} kcal`;
-        burnedCaloriesDisplay.textContent = `${translations[currentLanguage].burned}${burned} kcal`;
-        netCaloriesDisplay.textContent = `${net} kcal`;
+        // consumedCaloriesDisplay.textContent = `${translations[currentLanguage].consumed}${consumed} kcal`;
+        // burnedCaloriesDisplay.textContent = `${translations[currentLanguage].burned}${burned} kcal`;
+        // netCaloriesDisplay.textContent = `${net} kcal`;
         netCaloriesTodayDisplay.textContent = `${net} kcal`;
         dailyBurnedCalories.textContent = `${burned} kcal`;
         updateRemainingCalories();
@@ -1153,14 +1255,16 @@
     
     function updateRemainingCalories() {
         const dailyGoal = parseInt(dailyCalorieGoalEl.textContent) || 0;
-        const consumed = parseInt(consumedCaloriesDisplay.textContent.match(/\d+/)?.[0] || 0);
-        const burned = parseInt(burnedCaloriesDisplay.textContent.match(/\d+/)?.[0] || 0);
+        const consumed = parseInt(document.getElementById('resultDisplay').textContent.match(/\d+/)?.[0] || 0);
+        const burned = parseInt(dailyBurnedCalories.textContent.match(/\d+/)?.[0] || 0);
         const remaining = dailyGoal - (consumed - burned);
         caloriesRemainingDisplay.textContent = `${remaining} kcal`;
         caloriesRemainingDisplay.classList.toggle('text-red-600', remaining < 0);
         caloriesRemainingDisplay.classList.toggle('text-green-600', remaining >= 0);
     }
+    
     async function getTodaysConsumedItems() {
+        if (!consumedItemsCollectionRef) return [];
         const today = new Date().toISOString().slice(0, 10);
         const q = query(consumedItemsCollectionRef, where('date', '==', today), orderBy('timestamp', 'asc'));
         
@@ -1169,6 +1273,7 @@
             return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         } catch (e) {
             console.error("Fout bij het ophalen van de dagelijkse lijst: ", e);
+            handleFirebaseError(e);
             return [];
         }
     }
@@ -1177,12 +1282,14 @@
         const items = await getTodaysConsumedItems();
         dailyConsumedTableBody.innerHTML = '';
         
+        let totalConsumed = 0;
         const tableContainer = document.querySelector('#daily-nutrition-overview .table-container');
         if (items.length > 0) {
             if(tableContainer) tableContainer.style.display = 'block';
             noFoodText.style.display = 'none';
     
             items.forEach((item) => {
+                totalConsumed += item.totalCalories;
                 const row = document.createElement('tr');
                 
                 const getValue = (key) => {
@@ -1191,11 +1298,11 @@
                 };
     
                 row.innerHTML = `
-                    <td>${getValue('date')}</td>
-                    <td>${getValue('name')}</td>
-                    <td>${getValue('grams') !== '—' ? getValue('grams') + ' g' : '—'}</td>
-                    <td>${getValue('liters') !== '—' ? getValue('liters') + ' L' : '—'}</td>
-                    <td>${getValue('calories') !== '—' ? getValue('calories') + ' kcal' : '—'}</td>
+                    <td class="py-2 px-4">${getValue('date')}</td>
+                    <td class="py-2 px-4">${getValue('name')}</td>
+                    <td class="py-2 px-4">${getValue('grams') !== '—' ? getValue('grams') + ' g' : '—'}</td>
+                    <td class="py-2 px-4">${getValue('liters') !== '—' ? getValue('liters') + ' L' : '—'}</td>
+                    <td class="py-2 px-4">${getValue('totalCalories') !== '—' ? getValue('totalCalories') + ' kcal' : '—'}</td>
                 `;
                 dailyConsumedTableBody.appendChild(row);
             });
@@ -1203,56 +1310,55 @@
             if(tableContainer) tableContainer.style.display = 'none';
             noFoodText.style.display = 'block';
         }
+        resultDisplay.textContent = `${Math.round(totalConsumed)} kcal`;
+        updateRemainingCalories();
     }
     
     async function addConsumedItemToLog(foodName, quantity, calories, calsPerUnit, isLiquid) {
         try {
-            if (dailyLogRef && consumedItemsCollectionRef) {
-                const docSnap = await getDoc(dailyLogRef);
-                const currentData = docSnap.exists() ? docSnap.data() : { consumedCalories: 0, burnedCalories: 0 };
-                const newConsumed = (currentData.consumedCalories || 0) + parseFloat(calories);
-                
-                const today = new Date().toISOString().slice(0, 10);
-                
-                await setDoc(dailyLogRef, { consumedCalories: newConsumed, date: today }, { merge: true });
-    
-                const newConsumedItem = {
-                    name: foodName,
-                    grams: isLiquid ? null : quantity,
-                    liters: isLiquid ? quantity : null,
-                    calories: parseFloat(calories),
-                    caloriesPer100g: isLiquid ? null : calsPerUnit,
-                    caloriesPerLiter: isLiquid ? calsPerUnit : null,
-                    date: today,
-                    timestamp: new Date().toISOString()
-                };
-                
-                await addDoc(consumedItemsCollectionRef, newConsumedItem);
-    
-                const foodDocRef = doc(db, 'foodDatabase', foodName.toLowerCase());
-                if (isLiquid) {
-                     await setDoc(foodDocRef, { caloriesPerLiter: calsPerUnit }, { merge: true });
-                } else {
-                    await setDoc(foodDocRef, { caloriesPer100g: calsPerUnit }, { merge: true });
-                }
-    
-                showModal('foodAdded', { foodName }, { calories });
-                renderDailyConsumedItems();
-            } else {
+            if (!dailyLogRef || !consumedItemsCollectionRef) {
                 showModal('errorInit');
+                return;
             }
+            
+            const docSnap = await getDoc(dailyLogRef);
+            const currentData = docSnap.exists() ? docSnap.data() : { consumedCalories: 0, burnedCalories: 0 };
+            const newConsumed = (currentData.consumedCalories || 0) + parseFloat(calories);
+            
+            const today = new Date().toISOString().slice(0, 10);
+            
+            await setDoc(dailyLogRef, { consumedCalories: newConsumed, date: today }, { merge: true });
+
+            const newConsumedItem = {
+                name: foodName,
+                grams: isLiquid ? null : quantity,
+                liters: isLiquid ? quantity : null,
+                totalCalories: parseFloat(calories),
+                caloriesPer100g: isLiquid ? null : calsPerUnit,
+                caloriesPerLiter: isLiquid ? calsPerUnit : null,
+                date: today,
+                timestamp: new Date().toISOString()
+            };
+            
+            await addDoc(consumedItemsCollectionRef, newConsumedItem);
+
+            const foodDocRef = doc(db, 'foodDatabase', foodName.toLowerCase());
+            if (isLiquid) {
+                 await setDoc(foodDocRef, { caloriesPerLiter: calsPerUnit }, { merge: true });
+            } else {
+                await setDoc(foodDocRef, { caloriesPer100g: calsPerUnit }, { merge: true });
+            }
+
+            showModal('foodAdded', { foodName }, { calories });
         } catch (e) {
             console.error("Fout bij het toevoegen van calorieën: ", e);
-            showModal('errorAddingFood');
+            handleFirebaseError(e);
         }
     }
     
     async function loadMeasurements() {
         try {
-            if (!measurementsCollectionRef) {
-                console.log("measurementsCollectionRef is not initialized yet.");
-                return;
-            }
+            if (!measurementsCollectionRef) return;
             const q = query(measurementsCollectionRef, orderBy("date", "desc"));
             const querySnapshot = await getDocs(q);
             measurementsTableBody.innerHTML = '';
@@ -1279,18 +1385,19 @@
                     return value;
                 };
                 row.innerHTML = `
-                    <td>${getValue('date')}</td>
-                    <td>${getValue('weight') !== '—' ? getValue('weight') + ' kg' : '—'}</td>
-                    <td>${getValue('fat') !== '—' ? getValue('fat') + ' %' : '—'}</td>
-                    <td>${getValue('water') !== '—' ? getValue('water') + ' %' : '—'}</td>
-                    <td>${getValue('waist') !== '—' ? getValue('waist') + ' cm' : '—'}</td>
-                    <td>${getValue('hip') !== '—' ? getValue('hip') + ' cm' : '—'}</td>
-                    <td>${getValue('buttocks') !== '—' ? getValue('buttocks') + ' cm' : '—'}</td>
+                    <td class="py-2 px-4">${getValue('date')}</td>
+                    <td class="py-2 px-4">${getValue('weight') !== '—' ? getValue('weight') + ' kg' : '—'}</td>
+                    <td class="py-2 px-4">${getValue('fat') !== '—' ? getValue('fat') + ' %' : '—'}</td>
+                    <td class="py-2 px-4">${getValue('water') !== '—' ? getValue('water') + ' %' : '—'}</td>
+                    <td class="py-2 px-4">${getValue('waist') !== '—' ? getValue('waist') + ' cm' : '—'}</td>
+                    <td class="py-2 px-4">${getValue('hip') !== '—' ? getValue('hip') + ' cm' : '—'}</td>
+                    <td class="py-2 px-4">${getValue('buttocks') !== '—' ? getValue('buttocks') + ' cm' : '—'}</td>
                 `;
                 measurementsTableBody.appendChild(row);
             });
         } catch (e) {
             console.error("Fout bij het laden van metingen:", e);
+            handleFirebaseError(e);
             const tableContainer = document.querySelector('#measurements-list .table-container');
             if (tableContainer) tableContainer.style.display = 'none';
             noMeasurementsText.style.display = 'block';
@@ -1316,14 +1423,13 @@
             selectedTabContent.classList.remove('hidden');
         }
 
-        // Voer specifieke functies uit voor elke tab
         if (tabId === 'metingen') {
             loadMeasurements();
         } else if (tabId === 'history') {
             loadHistory();
         } else if (tabId === 'agenda') {
             loadTrainingHistory();
-        } else if (tabId === 'manual-entry') {
+        } else if (tabId === 'calories') {
             renderDailyConsumedItems();
         }
     }
@@ -1352,6 +1458,247 @@
         });
     });
 
+    // Event listener voor het Metingen-formulier
+    measurementsForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if (!user) {
+            showModal('errorInit');
+            return;
+        }
+    
+        const date = document.getElementById('measurement-date').value;
+        if (!date) {
+            showModal('minMeasurementEntry');
+            return;
+        }
+
+        const measurementData = {
+            date: date,
+            weight: parseFloat(document.getElementById('measurement-weight').value) || null,
+            fat: parseFloat(document.getElementById('measurement-fat').value) || null,
+            water: parseFloat(document.getElementById('measurement-water').value) || null,
+            waist: parseFloat(document.getElementById('measurement-waist').value) || null,
+            hip: parseFloat(document.getElementById('measurement-hip').value) || null,
+            buttocks: parseFloat(document.getElementById('measurement-buttocks').value) || null,
+            userID: user.uid,
+            timestamp: new Date()
+        };
+    
+        try {
+            await addDoc(measurementsCollectionRef, measurementData);
+            showModal('logMeasurementsSuccess');
+            loadMeasurements(); // Laad de lijst opnieuw
+        } catch (error) {
+            console.error("Fout bij het opslaan van meting:", error);
+            handleFirebaseError(error);
+        }
+    });
+
+    // Event listener voor de Handmatige calorieverbranding knop
+    manualBurnedCaloriesForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if (!user) {
+            showModal('errorInit');
+            return;
+        }
+
+        const date = document.getElementById('manual-burn-date').value;
+        const amount = parseFloat(document.getElementById('manual-burn-amount').value);
+        if (!date || !amount) {
+            showModal('enterAllFields');
+            return;
+        }
+
+        try {
+            await addDoc(collection(db, `users/${user.uid}/burnedCalories`), {
+                userID: user.uid,
+                calories: amount,
+                date: date,
+                source: 'manual',
+                timestamp: new Date()
+            });
+            showModal('logBurnSuccess', { calories: amount });
+            updateDashboard(); // Werk het dashboard bij met de nieuwe verbrande calorieën
+        } catch (error) {
+            console.error("Fout bij het loggen van handmatige verbranding:", error);
+            handleFirebaseError(error);
+        }
+    });
+    
+    // Event listener voor de Cardio Toevoegen knop
+    logCardioBtn.addEventListener('click', async () => {
+        const user = auth.currentUser;
+        if (!user || !userProfileData.currentWeight) {
+            showModal('errorInit');
+            return;
+        }
+
+        const date = cardioDate.value;
+        const activity = cardioActivity.value;
+        const duration = parseFloat(cardioDuration.value);
+        const distance = parseFloat(cardioDistance.value) || null;
+        
+        if (!date || !activity || !duration) {
+            showModal('enterAllFields');
+            return;
+        }
+        
+        const metValues = {
+            'hardlopen': 10,
+            'wandelen': 3.5,
+            'fietsen': 8,
+            'crosstrainer': 7,
+            'roeien': 7,
+            'zwemmen': 8
+        };
+
+        const met = metValues[activity];
+        if (!met) {
+            showModal('logCardioError');
+            return;
+        }
+        
+        const burned = (met * 3.5 * userProfileData.currentWeight) / 200 * duration;
+        
+        try {
+            await addDoc(collection(db, `users/${user.uid}/burnedCalories`), {
+                userID: user.uid,
+                calories: burned,
+                date: date,
+                source: 'cardio',
+                activity: activity,
+                duration: duration,
+                distance: distance,
+                timestamp: new Date()
+            });
+
+            await addDoc(trainingLogsCollectionRef, {
+                userID: user.uid,
+                date: date,
+                type: 'cardio',
+                activity: activity,
+                duration: duration,
+                distance: distance,
+                timestamp: new Date()
+            });
+
+            showModal('logCardioSuccess', { calories: Math.round(burned) });
+            updateDashboard(); // Werk het dashboard bij
+            loadTrainingHistory(); // Werk de agenda bij
+        } catch (error) {
+            console.error("Fout bij het loggen van cardio:", error);
+            handleFirebaseError(error);
+        }
+    });
+
+    // Event listener voor de Set Toevoegen knop
+    addSetBtn.addEventListener('click', () => {
+        const setRow = document.querySelector('.set-row');
+        const newSetRow = setRow.cloneNode(true);
+        newSetRow.querySelector('input[placeholder="Gewicht (kg)"]').value = '';
+        newSetRow.querySelector('input[placeholder="Herhalingen"]').value = '';
+        setsContainer.appendChild(newSetRow);
+    });
+
+    // Event listener voor de Krachttraining Opslaan knop
+    logWeightBtn.addEventListener('click', async () => {
+        const user = auth.currentUser;
+        if (!user) {
+            showModal('errorInit');
+            return;
+        }
+
+        const date = weightDate.value;
+        const exerciseName = weightExerciseName.value;
+        const notes = weightNotes.value;
+
+        const setRows = document.querySelectorAll('.set-row');
+        const sets = [];
+        setRows.forEach(row => {
+            const weight = parseFloat(row.querySelector('input[placeholder="Gewicht (kg)"]').value);
+            const reps = parseInt(row.querySelector('input[placeholder="Herhalingen"]').value);
+            if (weight && reps) {
+                sets.push({ weight, reps });
+            }
+        });
+        
+        if (!date || !exerciseName || sets.length === 0) {
+            showModal('minWeightEntry');
+            return;
+        }
+        
+        try {
+            await addDoc(trainingLogsCollectionRef, {
+                userID: user.uid,
+                date: date,
+                type: 'strength',
+                exercise: exerciseName,
+                sets: sets,
+                notes: notes,
+                timestamp: new Date()
+            });
+            showModal('logWeightSuccess');
+            loadTrainingHistory();
+        } catch (error) {
+            console.error("Fout bij het loggen van krachttraining:", error);
+            handleFirebaseError(error);
+        }
+    });
+
+    // Functie voor het laden van de trainingsgeschiedenis
+    async function loadTrainingHistory() {
+        try {
+            if (!trainingLogsCollectionRef) return;
+            const q = query(trainingLogsCollectionRef, orderBy("date", "desc"), orderBy("timestamp", "desc"));
+            const querySnapshot = await getDocs(q);
+            trainingHistoryTableBody.innerHTML = '';
+            
+            if (querySnapshot.empty) {
+                if (noTrainingHistoryText) noTrainingHistoryText.style.display = 'block';
+                return;
+            }
+            
+            if (noTrainingHistoryText) noTrainingHistoryText.style.display = 'none';
+
+            querySnapshot.forEach(doc => {
+                const data = doc.data();
+                const row = document.createElement('tr');
+                let exerciseText = '';
+                let repsText = '';
+                let setsText = '';
+                let cardioText = '';
+                let durationText = '';
+                let distanceText = '';
+
+                if (data.type === 'strength') {
+                    exerciseText = data.exercise;
+                    setsText = data.sets.length;
+                    repsText = data.sets.map(s => `${s.reps}`).join(', ');
+                } else if (data.type === 'cardio') {
+                    cardioText = data.activity;
+                    durationText = `${data.duration} min`;
+                    distanceText = data.distance ? `${data.distance} km` : '—';
+                }
+
+                row.innerHTML = `
+                    <td class="py-2 px-4">${data.date}</td>
+                    <td class="py-2 px-4">${exerciseText}</td>
+                    <td class="py-2 px-4">${repsText}</td>
+                    <td class="py-2 px-4">${setsText}</td>
+                    <td class="py-2 px-4">${cardioText}</td>
+                    <td class="py-2 px-4">${durationText}</td>
+                    <td class="py-2 px-4">${distanceText}</td>
+                `;
+                trainingHistoryTableBody.appendChild(row);
+            });
+        } catch (e) {
+            console.error("Fout bij het laden van trainingsgeschiedenis:", e);
+            handleFirebaseError(e);
+        }
+    }
+    
     // Event listener voor de "Voeg Calorieën toe" knop
     addCaloriesButton.addEventListener('click', async () => {
         const foodName = foodInput.value.trim();
@@ -1383,7 +1730,6 @@
         litersInput.value = '';
         caloriesPer100gInput.value = '';
         caloriesPerLiterInput.value = '';
-        renderDailyConsumedItems();
     });
 
     // Event listener voor het dynamisch tonen van invoervelden
@@ -1459,12 +1805,14 @@
         }
     
         if (userProfileRef) {
-            await setDoc(userProfileRef, data, { merge: true });
-            
-            // Deze regel zorgt ervoor dat je dashboard direct wordt bijgewerkt
-            updateUIWithProfileData(data);
-            
-            showModal('saveProfileSuccess');
+            try {
+                await setDoc(userProfileRef, data, { merge: true });
+                updateUIWithProfileData(data);
+                showModal('saveProfileSuccess');
+            } catch (e) {
+                console.error(e);
+                handleFirebaseError(e);
+            }
         } else {
             showModal('saveProfileError');
         }
@@ -1506,7 +1854,7 @@
             showModal('logWeightSuccess');
         } catch (e) {
             console.error(e);
-            showModal('logWeightError');
+            handleFirebaseError(e);
         }
     });
     
@@ -1543,7 +1891,7 @@
             showModal('logCardioSuccess', { calories: burnedCalories });
         } catch (e) {
             console.error(e);
-            showModal('logCardioError');
+            handleFirebaseError(e);
         }
     });
 
@@ -1565,7 +1913,7 @@
             showModal('logBurnSuccess', { calories: burnedAmount });
         } catch (e) {
             console.error(e);
-            showModal('logBurnError');
+            handleFirebaseError(e);
         }
     });
 
@@ -1585,7 +1933,7 @@
             return;
         }
         
-        const measurementData = { date };
+        const measurementData = { date, timestamp: new Date() };
         if (!isNaN(weight)) measurementData.weight = weight;
         if (!isNaN(fat)) measurementData.fat = fat;
         if (!isNaN(water)) measurementData.water = water;
@@ -1599,7 +1947,7 @@
             loadMeasurements();
         } catch (e) {
             console.error(e);
-            showModal('logMeasurementsError');
+            handleFirebaseError(e);
         }
     });
     
@@ -1640,18 +1988,19 @@
                 }
     
                 row.innerHTML = `
-                    <td>${getValue('date')}</td>
-                    <td>${getValue('exercise') ? getValue('exercise') : '—'}</td>
-                    <td>${repsDisplay}</td>
-                    <td>${setsDisplay}</td>
-                    <td>${isCardio ? translations[currentLanguage][data.activity] || data.activity : '—'}</td>
-                    <td>${isCardio ? getValue('duration') + ' min' : '—'}</td>
-                    <td>${isCardio ? getValue('distance') + ' km' : '—'}</td>
+                    <td class="py-2 px-4">${getValue('date')}</td>
+                    <td class="py-2 px-4">${getValue('exercise') ? getValue('exercise') : '—'}</td>
+                    <td class="py-2 px-4">${repsDisplay}</td>
+                    <td class="py-2 px-4">${setsDisplay}</td>
+                    <td class="py-2 px-4">${isCardio ? translations[currentLanguage][data.activity] || data.activity : '—'}</td>
+                    <td class="py-2 px-4">${isCardio ? getValue('duration') + ' min' : '—'}</td>
+                    <td class="py-2 px-4">${isCardio ? getValue('distance') + ' km' : '—'}</td>
                 `;
                 trainingHistoryTableBody.appendChild(row);
             });
         } catch (e) {
             console.error("Fout bij het laden van trainingshistorie:", e);
+            handleFirebaseError(e);
             const tableContainer = document.querySelector('#training-history .table-container');
             if (tableContainer) tableContainer.style.display = 'none';
             noTrainingHistoryText.style.display = 'block';
@@ -1682,6 +2031,7 @@
             }
         } catch (e) {
             console.error("Fout bij het laden van geschiedenis:", e);
+            handleFirebaseError(e);
             logList.innerHTML = `<p class="text-center text-gray-500">${translations[currentLanguage].noHistoryText}</p>`;
         }
     }
@@ -1702,7 +2052,81 @@
         updateUIWithProfileData(userProfileData);
         updateUIWithDailyLog({ consumedCalories: 0, burnedCalories: 0 }); // Zorgt ervoor dat de UI direct wordt bijgewerkt bij het wijzigen van de taal
     };
-            // Hoofd-initialisatiefunctie en event listeners
+    
+    // Functie om de dashboard-UI bij te werken
+    async function updateDashboard() {
+        // 1. Haal de gebruikersdata op
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+            userProfileData = userDoc.data();
+        } else {
+            console.log("Geen profielgegevens gevonden.");
+            return;
+        }
+
+        // 2. Haal de calorieën van vandaag op
+        const today = new Date().toISOString().split('T')[0];
+        const foodQuery = query(collection(db, `users/${user.uid}/consumedItems`), where("date", "==", today));
+        const foodDocs = await getDocs(foodQuery);
+        
+        let consumedCalories = 0;
+        foodDocs.forEach(doc => {
+            consumedCalories += doc.data().totalCalories;
+        });
+
+        // 3. Haal de verbrande calorieën van vandaag op
+        const burnQuery = query(collection(db, `users/${user.uid}/burnedCalories`), where("date", "==", today));
+        const burnDocs = await getDocs(burnQuery);
+        
+        let burnedCalories = 0;
+        burnDocs.forEach(doc => {
+            burnedCalories += doc.data().calories;
+        });
+
+        // 4. Update de dashboard-elementen
+        const { bmi, status } = calculateBmi(userProfileData.height, userProfileData.currentWeight);
+        bmiResult.textContent = bmi;
+        bmiStatus.textContent = status;
+
+        const { goal, time } = calculateDailyGoal(
+            userProfileData.currentWeight,
+            calculateBmr(userProfileData.gender, userProfileData.height, userProfileData.currentWeight, userProfileData.age),
+            userProfileData.activityFactor,
+            userProfileData.weightGoal
+        );
+        dailyCalorieGoalEl.textContent = goal;
+        timeToGoalEl.textContent = time;
+        dailyGoalDisplay.textContent = `${goal} kcal`;
+
+        // consumedCaloriesDisplay.textContent = `${translations[currentLanguage].consumed} ${Math.round(consumedCalories)} kcal`;
+        // burnedCaloriesDisplay.textContent = `${translations[currentLanguage].burned} ${Math.round(burnedCalories)} kcal`;
+        
+        const netCalories = consumedCalories - burnedCalories;
+        // netCaloriesDisplay.textContent = `${Math.round(netCalories)} kcal`;
+        netCaloriesTodayDisplay.textContent = `${Math.round(netCalories)} kcal`;
+
+        const remainingCalories = goal - netCalories;
+        caloriesRemainingDisplay.textContent = `${Math.round(remainingCalories)} kcal`;
+
+        currentWeightDisplay.textContent = `${translations[currentLanguage].current} ${userProfileData.currentWeight} kg`;
+        targetWeightDisplay.textContent = `${translations[currentLanguage].target} ${userProfileData.targetWeight} kg`;
+        updateProgress(userProfileData.currentWeight, userProfileData.initialWeight, userProfileData.targetWeight);
+    }
+    
+    // Functie voor het tonen of verbergen van de auth-container
+    function toggleAuthUI(show) {
+        if (show) {
+            authContainer.classList.remove('hidden');
+            tabContents.forEach(content => content.classList.add('hidden'));
+        } else {
+            authContainer.classList.add('hidden');
+        }
+    }
+    
+    // Hoofd-initialisatiefunctie en event listeners
     document.addEventListener('DOMContentLoaded', async () => {
         showTab('dashboard'); 
         
@@ -1710,10 +2134,39 @@
             modal.classList.add('hidden');
         });
     
-        signInAnonymously(auth);
-    
+        // Event listener voor het auth-formulier
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showModal('loginSuccess');
+            } catch (error) {
+                handleFirebaseError(error);
+            }
+        });
+
+        // Event listener voor de registratielink
+        registerLink.addEventListener('click', async () => {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                showModal('registerSuccess');
+            } catch (error) {
+                handleFirebaseError(error);
+            }
+        });
+
         onAuthStateChanged(auth, async (user) => {
             if (user) {
+                // Gebruiker is ingelogd
+                toggleAuthUI(false); // Verberg het inlogformulier
+                showTab('dashboard'); // Toon de dashboard-tab
+                
                 const uid = user.uid;
                 const today = new Date().toISOString().slice(0, 10);
                 userProfileRef = doc(db, 'users', uid);
@@ -1724,7 +2177,7 @@
     
                 const lastLoginDate = localStorage.getItem('lastLoginDate');
                 if (lastLoginDate !== today) {
-                    await setDoc(dailyLogRef, { consumedCalories: 0, burnedCalories: 0, date: today });
+                    await setDoc(dailyLogRef, { consumedCalories: 0, burnedCalories: 0, date: today }, { merge: true });
                     localStorage.setItem('lastLoginDate', today);
                 }
     
@@ -1735,7 +2188,7 @@
                         userProfileData = {};
                     }
                     updateUIWithProfileData(userProfileData);
-                    updateRemainingCalories();
+                    updateDashboard();
                 });
     
                 onSnapshot(dailyLogRef, (docSnap) => {
@@ -1760,7 +2213,7 @@
                     loadMeasurements();
                 });
 
-                onSnapshot(dailyLogsCollectionRef, () => {
+                onSnapshot(collection(db, `users/${user.uid}/dailyLogs`), () => {
                     if (document.getElementById('history').classList.contains('hidden')) return;
                     loadHistory();
                 });
@@ -1773,9 +2226,20 @@
                     currentLanguage = newLang;
                     translatePage(newLang);
                 });
+            } else {
+                // Geen gebruiker ingelogd
+                toggleAuthUI(true); // Toon het inlogformulier
+                userProfileRef = null;
+                dailyLogRef = null;
+                consumedItemsCollectionRef = null;
+                trainingLogsCollectionRef = null;
+                measurementsCollectionRef = null;
+                // Zorg ervoor dat de UI wordt gereset
+                updateUIWithProfileData({});
+                updateUIWithDailyLog({});
             }
         });
     });
-</script>
+    </script>
 </body>
 </html>
