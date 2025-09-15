@@ -594,13 +594,22 @@
     import { getAuth, onAuthStateChanged, linkWithCredential, EmailAuthProvider, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // Je lokale dummy-database, zoals je die eerder had
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Je lokale dummy-database en andere variabelen
     const localFoodDatabase = {
         'banaan': { 'caloriesPer100g': 89 },
         'appel': { 'caloriesPer100g': 52 },
         'water': { 'caloriesPerLiter': 0 },
         'melk': { 'caloriesPerLiter': 610 }
     };
+    
+    let userProfileData = {};
+    let userProfileRef, dailyLogRef, consumedItemsCollectionRef, trainingLogsCollectionRef, measurementsCollectionRef;
+    let currentLanguage = 'nl'; // Standaardtaal
 
     const firebaseConfig = {
         apiKey: "AIzaSyDWlRgSuD25KDBlMvtv5_7Cun_RhjLUIFo",
@@ -611,21 +620,52 @@
         appId: "1:1033379364886:web:6e1c070f64c1c91104e1c7"
     };
 
+    // Initialiseer Firebase-services
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
-    let userProfileData = {};
-    let userProfileRef, dailyLogRef, consumedItemsCollectionRef, trainingLogsCollectionRef, measurementsCollectionRef;
-    let currentLanguage = 'nl'; // Standaardtaal
 
-    // Start een anonieme aanmeldingssessie als er nog geen gebruiker is
-    onAuthStateChanged(auth, async (user) => {
+    // Functie voor gebruikersregistratie
+    // Deze functie kan worden gekoppeld aan een 'Registreren' knop in je HTML
+    async function handleUserSignUp(email, password) {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log("Gebruiker succesvol geregistreerd:", userCredential.user);
+        } catch (error) {
+            console.error("Fout bij registratie:", error.message);
+        }
+    }
+
+    // Functie voor gebruikersaanmelding
+    // Deze functie kan worden gekoppeld aan een 'Inloggen' knop in je HTML
+    async function handleUserSignIn(email, password) {
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            console.log("Gebruiker succesvol ingelogd:", userCredential.user);
+        } catch (error) {
+            console.error("Fout bij aanmelding:", error.message);
+        }
+    }
+
+    // Functie om de gebruiker uit te loggen
+    async function handleUserSignOut() {
+        try {
+            await signOut(auth);
+            console.log("Gebruiker succesvol uitgelogd.");
+        } catch (error) {
+            console.error("Fout bij het uitloggen:", error.message);
+        }
+    }
+
+    // De centrale luisteraar voor de authenticatiestatus
+    // Deze luisteraar zal de Firestore-referenties instellen ZODRA de gebruiker is ingelogd
+    onAuthStateChanged(auth, (user) => {
         if (user) {
-            // Gebruiker is ingelogd, ofwel anoniem of met een permanente methode
+            // Gebruiker is ingelogd
             const uid = user.uid;
-            console.log("Gebruiker is ingelogd met UID:", uid);
+            console.log("Gebruiker is ingelogd met permanente UID:", uid);
 
-            // Initialiseer je databasereferenties met de permanente UID
+            // Initialiseer al je Firestore-referenties hier
             userProfileRef = doc(db, 'users', uid);
             dailyLogRef = collection(db, 'users', uid, 'dagelijkslogboeken');
             consumedItemsCollectionRef = collection(db, 'users', uid, 'consumedItems');
@@ -633,32 +673,13 @@
             measurementsCollectionRef = collection(db, 'users', uid, 'measurements');
 
             // Roep hier de functies aan om de data op te halen en te tonen
-            // bijv. loadUserProfile();
+            // Bijvoorbeeld: loadUserProfile(); loadDailyLog();
         } else {
-            // Geen gebruiker ingelogd, log anoniem in
-            try {
-                const userCredential = await signInAnonymously(auth);
-                const user = userCredential.user;
-                console.log("Anoniem ingelogd met UID:", user.uid);
-            } catch (error) {
-                console.error("Fout bij anonieme aanmelding:", error);
-            }
+            // Geen gebruiker ingelogd
+            console.log("Geen gebruiker ingelogd. Toon het inlogscherm.");
+            // Je kunt hier code toevoegen om het inlogscherm te tonen
         }
     });
-
-    // Functie om de anonieme gebruiker te koppelen aan een e-mail en wachtwoord
-    async function linkAnonymouslyToEmail(email, password) {
-        const user = auth.currentUser;
-        if (user) {
-            const credential = EmailAuthProvider.credential(email, password);
-            try {
-                await linkWithCredential(user, credential);
-                console.log("Gebruiker succesvol gekoppeld aan e-mail/wachtwoord.");
-            } catch (error) {
-                console.error("Fout bij het koppelen:", error.message);
-            }
-        }
-    }
 
         // NIEUW: Vertaalobject
         const translations = {
