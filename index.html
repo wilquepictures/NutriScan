@@ -589,37 +589,76 @@
             </div>
         </div>
     </div>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        // Import foodDatabase.js
-        // Zorg ervoor dat je dit bestand lokaal hebt
-        // import { foodData } from './foodDatabase.js';
+   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, linkWithCredential, EmailAuthProvider, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, orderBy, limit, getDocs, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Vervang de dummy-database door je eigen data als je foodDatabase.js niet hebt
-        const localFoodDatabase = {
-            'banaan': { 'caloriesPer100g': 89 },
-            'appel': { 'caloriesPer100g': 52 },
-            'water': { 'caloriesPerLiter': 0 },
-            'melk': { 'caloriesPerLiter': 610 }
-        };
+    // Je lokale dummy-database, zoals je die eerder had
+    const localFoodDatabase = {
+        'banaan': { 'caloriesPer100g': 89 },
+        'appel': { 'caloriesPer100g': 52 },
+        'water': { 'caloriesPerLiter': 0 },
+        'melk': { 'caloriesPerLiter': 610 }
+    };
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDWlRgSuD25KDBlMvtv5_7Cun_RhjLUIFo",
-            authDomain: "nutriscan-b3449.firebaseapp.com",
-            projectId: "nutriscan-b3449",
-            storageBucket: "nutriscan-b3449.appspot.com",
-            messagingSenderId: "1033379364886",
-            appId: "1:1033379364886:web:6e1c070f64c1c91104e1c7"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        let userProfileData = {};
-        let userProfileRef, dailyLogRef, consumedItemsCollectionRef, trainingLogsCollectionRef, measurementsCollectionRef;
-        let currentLanguage = 'nl'; // Standaardtaal
-        //const localFoodDatabase = foodData;
+    const firebaseConfig = {
+        apiKey: "AIzaSyDWlRgSuD25KDBlMvtv5_7Cun_RhjLUIFo",
+        authDomain: "nutriscan-b3449.firebaseapp.com",
+        projectId: "nutriscan-b3449",
+        storageBucket: "nutriscan-b3449.appspot.com",
+        messagingSenderId: "1033379364886",
+        appId: "1:1033379364886:web:6e1c070f64c1c91104e1c7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    let userProfileData = {};
+    let userProfileRef, dailyLogRef, consumedItemsCollectionRef, trainingLogsCollectionRef, measurementsCollectionRef;
+    let currentLanguage = 'nl'; // Standaardtaal
+
+    // Start een anonieme aanmeldingssessie als er nog geen gebruiker is
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            // Gebruiker is ingelogd, ofwel anoniem of met een permanente methode
+            const uid = user.uid;
+            console.log("Gebruiker is ingelogd met UID:", uid);
+
+            // Initialiseer je databasereferenties met de permanente UID
+            userProfileRef = doc(db, 'users', uid);
+            dailyLogRef = collection(db, 'users', uid, 'dagelijkslogboeken');
+            consumedItemsCollectionRef = collection(db, 'users', uid, 'consumedItems');
+            trainingLogsCollectionRef = collection(db, 'users', uid, 'trainingslogs');
+            measurementsCollectionRef = collection(db, 'users', uid, 'measurements');
+
+            // Roep hier de functies aan om de data op te halen en te tonen
+            // bijv. loadUserProfile();
+        } else {
+            // Geen gebruiker ingelogd, log anoniem in
+            try {
+                const userCredential = await signInAnonymously(auth);
+                const user = userCredential.user;
+                console.log("Anoniem ingelogd met UID:", user.uid);
+            } catch (error) {
+                console.error("Fout bij anonieme aanmelding:", error);
+            }
+        }
+    });
+
+    // Functie om de anonieme gebruiker te koppelen aan een e-mail en wachtwoord
+    async function linkAnonymouslyToEmail(email, password) {
+        const user = auth.currentUser;
+        if (user) {
+            const credential = EmailAuthProvider.credential(email, password);
+            try {
+                await linkWithCredential(user, credential);
+                console.log("Gebruiker succesvol gekoppeld aan e-mail/wachtwoord.");
+            } catch (error) {
+                console.error("Fout bij het koppelen:", error.message);
+            }
+        }
+    }
 
         // NIEUW: Vertaalobject
         const translations = {
